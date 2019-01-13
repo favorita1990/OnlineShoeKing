@@ -1,0 +1,425 @@
+﻿
+@using OnlineShoeShopAndChat.Models;
+
+
+
+<link href="~/Content/photosHoverbox.css" rel="stylesheet" />
+
+
+<div id="ControlNavigationId">
+    <div class="bottom-grids collections">
+        <div class="container">
+
+            <script type="text/javascript">
+                document.title = 'Photos - Shoe King';
+                window.history.pushState(
+                    null,
+                    null,
+                    '/Admin/Profile/Photos'
+                    );
+            </script>
+
+            <!---start-product-details--->
+            <div class="product-details">
+                <div class="container">
+                    <div class="product-head">
+                        @if (TempData["profileGender"] as string == OnlineShoeShopAndChat.Resources.Language.ManTitle)
+                        {
+                        <img alt="User Pic" id="imageInitial" src="@OnlineShoeShopAndChat.Resources.Pictures.PicMen" class="img-circle img-responsive">
+                        }
+                        else
+                        {
+                        <img alt="User Pic" id="imageInitial" src="@OnlineShoeShopAndChat.Resources.Pictures.PicGirl" class="img-circle img-responsive">
+                        }
+
+                        <h2>@OnlineShoeShopAndChat.Resources.Language.ProfileTitle</h2>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="profile">
+
+                        @using (Html.BeginForm("CreateCoverPhotos", "Profile", FormMethod.Post, new { @id = "formProfileCover", enctype = "multipart/form-data" }))
+                        {
+                        @Html.AntiForgeryToken()
+
+                            if (TempData["profileCover"] as string == null)
+                            {
+                            <div>
+                                <img class="image-lg image-cover" src="@OnlineShoeShopAndChat.Resources.Pictures.ProfileCover" alt="Cover" />
+                            </div>
+                            }
+                            else
+                            {
+                            <div class="removeProfileCover">
+                                <img class="image-lg image-cover" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages@TempData["profileCover"]" alt="Cover" />
+
+                                <button type="submit" name="removeProfile" class="btn btn-warning btn-sm buttonRemoveCover">@OnlineShoeShopAndChat.Resources.Language.RemoveTitle</button>
+
+                            </div>
+                            }
+
+                            <input id="cover-image-upload" name="file" class="hidden" type="file" accept="image/x-png, image/gif, image/jpg image/jpeg">
+                        }
+
+
+                        @using (Html.BeginForm("CreatePhotos", "Profile", FormMethod.Post, new { @id = "formProfilePicture", enctype = "multipart/form-data" }))
+                        {
+                        @Html.AntiForgeryToken()
+
+                            if (TempData["profilePhoto"] as string == null)
+                            {
+                                if (TempData["profileGender"] as string == OnlineShoeShopAndChat.Resources.Language.ManTitle)
+                                {
+                                    <img class="image-profile thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.ProfilePic" alt="Profile image" />
+                                }
+                                else
+                                {
+                                    <img class="image-profile thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.ProfileWoman" alt="Profile image" />
+                                }
+                            }
+                            else
+                            {
+                            <div class="removeProfilePicture">
+                                <img class="image-profile thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages@TempData["profilePhoto"]" alt="Profile image" />
+
+                                <button type="submit" name="removeProfile" class="btn btn-warning btn-xs buttonRemoveProfile">@OnlineShoeShopAndChat.Resources.Language.RemoveTitle</button>
+
+                            </div>
+                            }
+
+                            <input id="profile-image-upload" name="file" class="hidden" type="file" accept="image/x-png, image/gif, image/jpg image/jpeg">
+                        }
+
+                        <div class="profile-text">
+                            <h3>
+                                @if ((TempData["profileFirstName"] as string != null) && (TempData["profileLastName"] as string != null))
+                                {
+                                @TempData["profileFirstName"] <span> </span> @TempData["profileLastName"]
+                                    <span> </span> if (@TempData["profileAdmin"] != null)
+                                    { <span>(@OnlineShoeShopAndChat.Resources.Language.AdminTitle)</span>}
+                                }
+                                else
+                                {
+                                <span>...</span>
+                                }
+                            </h3>
+                        </div>
+                        <div class="profile-buttons">
+                            <ul>
+                                <li>
+                                    @Ajax.ActionLink(OnlineShoeShopAndChat.Resources.Language.OverviewTitle, "IndexPartial",
+                                    new AjaxOptions
+                                    {
+                                        UpdateTargetId = "ControlNavigationId",
+                                        InsertionMode = InsertionMode.Replace,
+                                        HttpMethod = "Get"
+                                    })
+                                </li>
+                                <li>
+                                    @Ajax.ActionLink(OnlineShoeShopAndChat.Resources.Language.PhotosTitle, "PhotosPartial",
+                                    new AjaxOptions
+                                    {
+                                        UpdateTargetId = "ControlNavigationId",
+                                        InsertionMode = InsertionMode.Replace,
+                                        HttpMethod = "Get"
+                                    })
+                                </li>
+                            </ul>
+                            <div class="clearfix"> </div>
+                        </div>
+
+                        <div class="profilePhotos">
+                            <div class="profilePhotos-headingOverview">
+                                <h4 class="profilePhotosInline">@OnlineShoeShopAndChat.Resources.Language.AllPhotosTitle</h4>
+
+                                @using (Html.BeginForm("PhotoAlbum", "Profile", FormMethod.Post, new { @id = "formProfileAlbum", @class = "profilePhotosInlineForm", enctype = "multipart/form-data" }))
+                                {
+
+                                @Html.AntiForgeryToken()
+
+                                    <span class="btn btn-primary btn-file">
+                                        @OnlineShoeShopAndChat.Resources.Language.AddPictureTitle<input multiple name="files" id="files" type="file" accept="image/x-png, image/gif, image/jpg image/jpeg">
+                                    </span>
+
+                                }
+
+                                <div class="profilePhotosInlineForm">
+                                    <span class="btn btn-warning btn-delete" id="checkBtnId" style="display:none;">
+                                        <i class="glyphicon glyphicon-trash" style="display:inline-block;">
+                                            <input title="Delete" type="submit">
+                                        </i>
+                                    </span>
+
+
+
+                                    <input class="deleteAll" id="checkboxId" name="checkboxId" type="checkbox" onclick="DeleteAllCheckBoxes(this)">
+                                    <label class="checkbox" for="checkboxId" title="Select all"></label>
+                                </div>
+
+                            </div>
+                            @using (Ajax.BeginForm("DeletePhoto", "Profile",
+                             new AjaxOptions
+                             {
+                                 UpdateTargetId = "ControlNavigationId",
+                                 InsertionMode = InsertionMode.Replace,
+                                 HttpMethod = "POST"
+                             }, new { @id = "deletePhotoId" }))
+                            {
+                            @Html.AntiForgeryToken()
+
+                                <ul class="hoverbox"></ul>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+                <br><br><br><br><br><br>
+            </div>
+            <!---//End-product-details--->
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $('#ulControlNavigationId li').removeClass('active');
+
+    $(function () {
+
+        $.getJSON("/Admin/Profile/GetPhotosAlbum", function (gallery) {
+            if (gallery != null) {
+                var countPhotos = 0;
+                $('.hoverbox').html('');
+                $.each(gallery, function (index, photo) {
+
+                    countPhotos = countPhotos + 1;
+                    if ((countPhotos % 4) == 0) {
+                        if (gallery.length < 5) {
+                            $('.hoverbox').append('<li><div style="text-align:center;"><input class="deleteAll" type="checkbox" id="checkboxId' + photo.Id + '" name="deleteInputs" value="' + photo.Id + '">' +
+                                    '<label class="checkboxGallery" for="checkboxId' + photo.Id + '" title="Select element"></label></div><a href="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                    photo.ImageUrl + '" target="_blank"><img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + photo.ImageUrl + '" alt="Image" />' +
+                                    '<img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                    photo.ImageUrl + '" alt="image" class="previewLeft" /></a></li>');
+                        }
+                        else {
+                            if ((gallery.length - 1) == index) {
+                                $('.hoverbox').append('<li><div style="text-align:center;"><input class="deleteAll" type="checkbox" id="checkboxId' + photo.Id + '" name="deleteInputs" value="' + photo.Id + '">' +
+                                    '<label class="checkboxGallery" for="checkboxId' + photo.Id + '" title="Select element"></label></div><a href="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                    photo.ImageUrl + '" target="_blank"><img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + photo.ImageUrl + '" alt="Image" />' +
+                                    '<img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                    photo.ImageUrl + '" alt="image" class="previewLeftLast" /></a></li>');
+                            }
+                            else {
+                                $('.hoverbox').append('<li><div style="text-align:center;"><input class="deleteAll" type="checkbox" id="checkboxId' + photo.Id + '" name="deleteInputs" value="' + photo.Id + '">' +
+                                    '<label class="checkboxGallery" for="checkboxId' + photo.Id + '" title="Select element"></label></div><a href="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                    photo.ImageUrl + '" target="_blank"><img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + photo.ImageUrl + '" alt="Image" />' +
+                                    '<img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                    photo.ImageUrl + '" alt="image" class="previewLeft" /></a></li>');
+                            }
+                        }
+                    }
+                    else {
+                        if (gallery.length > 4) {
+                            if (index < 4) {
+
+                                $('.hoverbox').append('<li><div style="text-align:center;"><input class="deleteAll" type="checkbox" id="checkboxId' + photo.Id + '" name="deleteInputs" value="' + photo.Id + '">' +
+                                '<label class="checkboxGallery" for="checkboxId' + photo.Id + '" title="Select element"></label></div><a href="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                    photo.ImageUrl + '" target="_blank"><img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + photo.ImageUrl + '" alt="Image" />' +
+                                    '<img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                    photo.ImageUrl + '" alt="image" class="preview" /></a></li>');
+
+                            }
+                            else {
+
+                                $('.hoverbox').append('<li><div style="text-align:center;"><input class="deleteAll" type="checkbox" id="checkboxId' + photo.Id + '" name="deleteInputs" value="' + photo.Id + '">' +
+                                '<label class="checkboxGallery" for="checkboxId' + photo.Id + '" title="Select element"></label></div><a href="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                    photo.ImageUrl + '" target="_blank"><img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + photo.ImageUrl + '" alt="Image" />' +
+                                    '<img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                    photo.ImageUrl + '" alt="image" class="previewLastTree" /></a></li>');
+
+                            }
+                        }
+                        else {
+
+                            $('.hoverbox').append('<li><div style="text-align:center;"><input class="deleteAll" type="checkbox" id="checkboxId' + photo.Id + '" name="deleteInputs" value="' + photo.Id + '">' +
+                                '<label class="checkboxGallery" for="checkboxId' + photo.Id + '" title="Select element"></label></div><a href="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                photo.ImageUrl + '" target="_blank"><img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + photo.ImageUrl + '" alt="Image" />' +
+                                '<img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                photo.ImageUrl + '" alt="description" class="preview" /></a></li>');
+
+                        }
+                    }
+                });
+
+                //Delete Photo from album
+                //Check Boxes
+
+                function DeleteAllCheckBoxes(obj) {
+                    var c = new Array();
+                    c = document.getElementsByClassName('deleteAll');
+                    alert(c.length);
+                    for (var i = 0; i < c.length; i++) {
+                        if (c[i].type == 'checkbox') {
+                            c[i].checked = obj.checked;
+                        }
+                    }
+                }
+
+
+                $.each(gallery, function (index, photo) {
+
+                    $('input[id="checkboxId' + photo.Id + '"]').change(function () {
+
+                        var submitBtn = $('#checkBtnId');
+                        if ($('input[id="checkboxId' + photo.Id + '"]:checked').length > 0) {
+                            submitBtn.show();
+                            return true;
+                        } else {
+
+                            var countChecked = 0;
+                            $.each(gallery, function (indexx, photox) {
+                                if ($('input[id="checkboxId' + photox.Id + '"]:checked').length > 0) {
+                                    countChecked = countChecked + 1;
+                                    submitBtn.show();
+                                }
+                            });
+
+                            if (countChecked == 0) {
+                                submitBtn.hide();
+                            }
+                        }
+                    });
+                });
+            }
+            else {
+                $('.hoverbox').html('');
+            }
+        });
+
+
+
+        //Profile image
+        $('.image-profile').on('click', function () {
+            $('#profile-image-upload').click();
+
+            $('#profile-image-upload').on("change", function () {
+                var $file = $("#profile-image-upload");
+                var $filePath = $.trim($file.val());
+                if ($filePath == "") {
+                    alert("Please browse a file to upload");
+                    return;
+                }
+                var $ext = $filePath.split(".").pop().toLowerCase();
+                var $allow = new Array("gif", "png", "jpg", "jpeg");
+                if ($.inArray($ext, $allow) == -1) {
+                    alert("@OnlineShoeShopAndChat.Resources.Language.MessageFileFormat");
+                    return;
+                }
+                else {
+                    $("#formProfilePicture").submit();
+                }
+            });
+        });
+
+
+        //Profile cover
+        $('.image-cover').on('click', function () {
+            $('#cover-image-upload').click();
+
+            $('#cover-image-upload').on("change", function () {
+                var $file = $("#cover-image-upload");
+                var $filePath = $.trim($file.val());
+                if ($filePath == "") {
+                    alert("Please browse a file to upload");
+                    return;
+                }
+                var $ext = $filePath.split(".").pop().toLowerCase();
+                var $allow = new Array("gif", "png", "jpg", "jpeg");
+                if ($.inArray($ext, $allow) == -1) {
+                    alert("@OnlineShoeShopAndChat.Resources.Language.MessageFileFormat");
+                    return;
+                }
+                else {
+                    $("#formProfileCover").submit();
+                }
+            });
+
+        });
+
+
+        //Add photos to album
+
+        $('#files').on('click', function () {
+
+            $('#files').on("change", function () {
+                var countFiles = 0;
+                for (var i = 0; i < this.files.length; i++) {
+
+                    var $filePath = $.trim(this.files[i].name);
+                    if ($filePath == "") {
+
+                        countFiles = countFiles + 1;
+
+                        if (this.files.length > 1) {
+                            $('#files').attr('title', 'Files not uploaded. Try again!');
+                        }
+                        else {
+                            $('#files').attr('title', 'File not uploaded. Try again!');
+                        }
+
+                        alert("Please browse a file to upload")[0];
+                        return;
+                    }
+
+
+                    var $ext = $filePath.split(".").pop().toLowerCase();
+                    var $allow = new Array("gif", "png", "jpg", "jpeg");
+                    if ($.inArray($ext, $allow) == -1) {
+
+                        countFiles = countFiles + 1;
+
+                        if (this.files.length > 1) {
+                            $('#files').attr('title', 'Files not uploaded. Try again!');
+                        }
+                        else {
+                            $('#files').attr('title', 'File not uploaded. Try again!');
+                        }
+
+                        alert("@OnlineShoeShopAndChat.Resources.Language.MessageFileFormat")[0];
+                        return;
+                    }
+                }
+
+                if (countFiles == 0) {
+                    $("#formProfileAlbum").submit();
+                }
+
+            });
+        });
+
+    });
+
+    $('#checkBtnId').on('click', function () {
+        $("#deletePhotoId").submit();
+    });
+
+
+    function DeleteAllCheckBoxes(obj) {
+        var c = new Array();
+        c = document.getElementsByClassName('deleteAll');
+        for (var i = 0; i < c.length; i++) {
+            if (c[i].type == 'checkbox') {
+                c[i].checked = obj.checked;
+            }
+        }
+    }
+
+    $('input[id="checkboxId"]').change(function () {
+        var submitBtn = $('#checkBtnId');
+        if ($('input[id="checkboxId"]:checked').length > 0) {
+            submitBtn.show();
+            return true;
+        } else {
+            submitBtn.hide();
+        }
+    });
+</script>

@@ -1,0 +1,92 @@
+﻿
+<link href="~/Content/changeSlides.css" rel="stylesheet" />
+
+
+<div class="d-products f-products">
+    <h2>@OnlineShoeKing.Resources.Language.MostPurchasedProducts</h2>
+    <div class="sreen-gallery-cursual">
+        <div id="owl1" class="owl-carousel text-center">
+
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/changeSlides.js"></script>
+
+<script>
+    $(function () {
+
+        $.getJSON("/Home/GetMostBought", function (discounts) {
+
+            $('#owl1').html('');
+            if (discounts.length === 0) {
+                $('.d-products').remove();
+            }
+
+            $.each(discounts,
+                function (index, discount) {
+                    $('.owl-carousel').append(
+                        '<div class="item" ><div class="product-grid" ><div class="product-pic" >' +
+                        '<img src="' + discount.Photo + '" title="' + discount.Name + '" title="' + discount.Name + '" /></div><div class="product-pic-info" >' +
+                        '<h3><a href="/Products/Product/' + discount.Id + '" >' + discount.Name + '</a></h3>' +
+                        '<div class="product-pic-info-price-cart" ><div class="product-pic-info-cart" ><a class="p-btn" href="/Products/Product/' + discount.Id + '" >' + '@OnlineShoeKing.Resources.Language.View' + '</a></div>' +
+                        '<div class="clearfix"></div></div></div></div></div>');
+
+                    $('.product-pic-info a, .product-pic-info-cart .p-btn').on('click',
+                        function(e) {
+                            e.stopImmediatePropagation();
+                            e.preventDefault();
+
+                            $('#add-loading').html('<div id="div-loading"></div>');
+                            const loading_dialog = $("#div-loading").kendoWindow({
+                                draggable: false,
+                                resizable: false,
+                                modal: true,
+                                actions: [""],
+                                open: function (event) { $(this.element).closest(".k-window").css("position", "fixed") },
+                                position: {
+                                    top: "40%",
+                                    left: "46%"
+                                }
+                            }).data("kendoWindow").content('@OnlineShoeKing.Resources.Language.Loading');
+
+                            $('.k-window-actions').remove();
+                            $('.k-header').addClass('resize-loading-window');
+                            $('.k-header').removeClass('k-header k-window-titlebar');
+                            $('.k-widget').removeClass('k-widget k-window');
+
+                            $('div.k-window-content').css('padding', '1.2em 1.3em');
+                            $('div.k-window-content').css('border-radius', '10px');
+
+                            $('body').css('overflow', 'hidden');
+
+                            $.ajax({
+                                url: '@Url.Action("ProductPartial", "Products", new { Area = "Admin" })',
+                                data: { productId: discount.Id },
+                                type: "POST",
+                                dataType: "html",
+                                success: function (data) {
+                                    $('body').css('overflow', 'auto');
+                                    loading_dialog.close();
+                                    $('#ControlNavigationId').html(data);
+                                },
+                                error: function () {
+                                    $('body').css('overflow', 'auto');
+                                    loading_dialog.close();
+                                }
+                            });
+                        });
+
+                });
+
+            $("#owl1").owlCarousel({
+                items: 4,
+                lazyLoad: true,
+                autoPlay: true,
+                navigation: true,
+                navigationText: false,
+                pagination: true
+            });
+        });
+    });
+</script>

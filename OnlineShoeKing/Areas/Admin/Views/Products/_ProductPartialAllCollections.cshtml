@@ -1,0 +1,93 @@
+﻿@using OnlineShoeShopAndChat.Models
+@model List<ProductViewModel>
+
+<div id="ControlNavigationId">
+    <script type="text/javascript">
+        document.title = 'Collections - Shoe King';
+        window.history.pushState(
+            null,
+            null,
+            '/Admin/Products/Collections'
+            );
+    </script>
+    <div class="bottom-grids collections">
+        <div class="container">
+            <div class="product-head">
+                <img alt="User Pic" id="imageInitial" src="@TempData["directoryOfProductIco"]" class="img-circle img-responsive">
+                <h2>@OnlineShoeShopAndChat.Resources.Language.Products - @OnlineShoeShopAndChat.Resources.Language.AllCollections</h2>
+                <div class="clearfix"> </div>
+            </div>
+
+
+            <div id="allProductsId">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+
+    $('#ulControlNavigationId li').removeClass('active');
+
+    (function () {
+
+        $.getJSON("/Admin/Products/GetAllCollections", function (collections) {
+
+            $('#allProductsId').html('');
+
+            if (collections.length > 0) {
+                $.each(collections, function (index, collection) {
+
+                    $('#allProductsId').append('<div class="item-product col-xs-12 col-sm-6 col-md-4 col-lg-3"><div class="product-grid">' +
+                    '<div class="product-pic"><img src="' + collection.Photo + '" id="goToProductId" title="@OnlineShoeShopAndChat.Resources.Language.SeeDetailsTitle" /></div>' +
+                    '<div class="product-pic-info"><h3><a id="goToProductId" style="cursor:pointer;" title="@OnlineShoeShopAndChat.Resources.Language.SeeDetailsTitle">' + collection.Name +
+                    '</a><span class="spanSizeProduct">@OnlineShoeShopAndChat.Resources.Language.QuantityTitle: ' + collection.ProductCount + '</span></h3><div class="product-pic-info-price-cart">' +
+                    '<div class="product-info-price-dateAdded"><span class="product-span-info-price-dateAdded">@OnlineShoeShopAndChat.Resources.Language.AddedTitle: ' + collection.ProductLastAdded + '</span></div>' +
+                    '<div class="clearfix"></div></div></div></div></div>');
+
+
+
+                    $('a#goToProductId,img#goToProductId').click(function (e) {
+                        e.stopImmediatePropagation();
+
+                        $('#add-loading').html('<div id="div-loading"></div>');
+                        var dialog = $("#div-loading").kendoWindow({
+                            draggable: false,
+                            resizable: false,
+                            modal: true,
+                            actions: [""],
+                            open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                            position: {
+                                top: "40%",
+                                left: "45%"
+                            }
+                        }).data("kendoWindow").content("@OnlineShoeShopAndChat.Resources.Language.Loading");
+
+                        $.ajax({
+                            url: '@Url.Action("ProductPartialCollections", "Products", new { Area = "Admin" })',
+                            dataType: "html",
+                            type: "POST",
+                            cache: false,
+                            data: { categoryId: collection.CollectionId },
+                            success: function (productHtmlPartial) {
+
+                                dialog.close();
+                                $('#ControlNavigationId').html(productHtmlPartial);
+                            },
+                            error: function (error) {
+                                dialog.close();
+                                alert('@OnlineShoeShopAndChat.Resources.Language.MessageRefreshPage');
+                            }
+                        });
+                    });
+                });
+            }
+            else {
+                $('#allProductsId').html('<h2 class="text-center;">@OnlineShoeShopAndChat.Resources.Language.NoCollections</h2>');
+            }
+            $('#allProductsId').append('<div class="clearfix"> </div>');
+        });
+
+    })();
+</script>

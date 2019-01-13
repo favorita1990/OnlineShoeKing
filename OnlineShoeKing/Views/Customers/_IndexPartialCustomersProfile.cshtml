@@ -1,0 +1,360 @@
+﻿
+
+
+<div id="ControlNavigationId">
+    <div class="bottom-grids collections">
+        <div class="container">
+
+            <script type="text/javascript">
+                document.title = 'Profile - Shoe King';
+                window.history.pushState(
+                    null,
+                    null,
+                '/Founder/Customers/Profile?email=@TempData["profileEmail"]'
+                    );
+            </script>
+
+            <!---start-product-details--->
+            <div class="product-details">
+                <div class="container">
+                    <div class="product-head">
+                        @if (TempData["profileGender"] as string == OnlineShoeShopAndChat.Resources.Language.ManTitle)
+                        {
+                        <img alt="User Pic" id="imageInitial" src="@OnlineShoeShopAndChat.Resources.Pictures.PicMen" class="img-circle img-responsive">
+                        }
+                        else
+                        {
+                        <img alt="User Pic" id="imageInitial" src="@OnlineShoeShopAndChat.Resources.Pictures.PicGirl" class="img-circle img-responsive">
+                        }
+
+                        <h2>@OnlineShoeShopAndChat.Resources.Language.ProfileTitle</h2>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="profile">
+
+
+                        @if (TempData["profileCover"] as string == null)
+                        {
+                        <div>
+                            <img class="image-lg image-cover" src="@OnlineShoeShopAndChat.Resources.Pictures.ProfileCover" alt="Cover" />
+                        </div>
+                        }
+                        else
+                        {
+                        <div class="removeProfileCover">
+                            <a href="/UsersImages/@TempData["profileCover"]" target="_blank">
+                                <img class="image-lg image-cover" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages@TempData["profileCover"]" alt="Cover" />
+                            </a>
+                        </div>
+                        }
+
+
+                        @if (TempData["profilePhoto"] as string == null)
+                        {
+                            if (TempData["profileGender"] as string == OnlineShoeShopAndChat.Resources.Language.ManTitle)
+                            {
+                            <div>
+                                <img class="image-profile thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.ProfilePic" alt="Profile image" />
+                            </div>
+                            }
+                            else
+                            {
+                            <div>
+                                <img class="image-profile thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.ProfileWoman" alt="Profile image" />
+                            </div>
+                            }
+                        }
+                        else
+                        {
+                        <div class="removeProfilePicture">
+                            <a href="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages@TempData["profilePhoto"]" target="_blank">
+                                <img class="image-profile thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages@TempData["profilePhoto"]" alt="Profile image" />
+                            </a>
+                        </div>
+                        }
+
+
+
+
+                        <div class="profile-text">
+                            <h3>
+                                @if ((TempData["profileFirstName"] as string != null) && (TempData["profileLastName"] as string != null))
+                                {
+                                @TempData["profileFirstName"] <span> </span> @TempData["profileLastName"]
+                                    <span> </span> if (@TempData["profileAdmin"] != null)
+                                    { <span>(@OnlineShoeShopAndChat.Resources.Language.AdminTitle)</span>}
+                                }
+                                else
+                                {
+                                <span>...</span>
+                                }
+                            </h3>
+                        </div>
+                        <div class="profile-buttons">
+                            <ul>
+                                <li>
+                                    @Ajax.ActionLink(OnlineShoeShopAndChat.Resources.Language.OverviewTitle, "IndexPartialCustomersProfile", new { id = @TempData["profileId"] },
+                                new AjaxOptions
+                                {
+                                    UpdateTargetId = "ControlNavigationId",
+                                    InsertionMode = InsertionMode.Replace,
+                                    HttpMethod = "Post"
+                                })
+                                </li>
+                                <li>
+                                    @Ajax.ActionLink(OnlineShoeShopAndChat.Resources.Language.PhotosTitle, "PhotosPartialCustomersProfile", new { id = @TempData["profileId"] },
+                                new AjaxOptions
+                                {
+                                    UpdateTargetId = "ControlNavigationId",
+                                    InsertionMode = InsertionMode.Replace,
+                                    HttpMethod = "Post"
+                                })
+                                </li>
+                                @if ((TempData["profileOnlineOffline"] as string != null) || (TempData["profileOnlineOffline"] as string != ""))
+                                {
+                                    if (TempData["profileOnlineOffline"] as bool? == true)
+                                    {
+                                    <li><a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.OnlineTitle</a></li>
+                                    <li></li>
+                                    <li></li>
+                                    }
+                                    else
+                                    {
+                                    <li></li>
+                                    <li><span>@OnlineShoeShopAndChat.Resources.Language.OfflineTitle</span></li>
+                                    <li><a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.MessageTitle</a></li>
+                                    }
+                                }
+                            </ul>
+                            <div class="clearfix"> </div>
+                        </div>
+                        <div class="profileInfo">
+                            <div class="panel-headingOverview">
+                                <h4>@OnlineShoeShopAndChat.Resources.Language.BasicInfoTitle</h4>
+                            </div>
+                            <div class="panel-bodyOverview">
+                                <div class="col-sm-5 col-xs-6">@OnlineShoeShopAndChat.Resources.Language.EmailTitle:</div><div class="col-sm-7">
+                                    @if (TempData["profileEmail"] as string != null)
+                                    {
+                                    @TempData["profileEmail"]
+                                    }
+                                    else
+                                    {
+                                    <span>...</span>
+                                    }
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+                                <div class="col-sm-5 col-xs-6">@OnlineShoeShopAndChat.Resources.Language.FirstNameTitle:</div><div class="col-sm-7 col-xs-6 ">
+                                    @if (TempData["profileFirstName"] as string != null)
+                                    {
+                                    @TempData["profileFirstName"]
+                                    }
+                                    else
+                                    {
+                                    <span>...</span>
+                                    }
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+                                <div class="col-sm-5 col-xs-6">@OnlineShoeShopAndChat.Resources.Language.LastNameTitle:</div><div class="col-sm-7">
+                                    @if (TempData["profileLastName"] as string != null)
+                                    {
+                                    @TempData["profileLastName"]
+                                    }
+                                    else
+                                    {
+                                    <span>...</span>
+                                    }
+                                </div>
+
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+                                <div class="col-sm-5 col-xs-6">@OnlineShoeShopAndChat.Resources.Language.DateOfJoiningTitle:</div><div class="col-sm-7">
+                                    @if (TempData["profileCreationDate"] as string != null)
+                                    {
+                                    @TempData["profileCreationDate"]
+                                    }
+                                    else
+                                    {
+                                    <span>...</span>
+                                    }
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+                                <div class="col-sm-5 col-xs-6">@OnlineShoeShopAndChat.Resources.Language.GenderTitle:</div><div class="col-sm-7">
+                                    @if (TempData["profileGender"] as string != null)
+                                    {
+                                    @TempData["profileGender"]
+                                    }
+                                    else
+                                    {
+                                    <span>...</span>
+                                    }
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+                                <div class="col-sm-5 col-xs-6">@OnlineShoeShopAndChat.Resources.Language.PhotoCountTitle:</div><div class="col-sm-7">
+                                    @if (TempData["profilePictureCount"] != null)
+                                    {
+                                    @TempData["profilePictureCount"]
+                                    }
+                                    else
+                                    {
+                                    <span>0</span>
+                                    }
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br><br><br><br>
+            </div>
+            <!---//End-product-details--->
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+    var notificationsHub = $.connection.notifications;
+    var currentUser = '@User.Identity.Name';
+
+    $('#customerChatId').click(function () {
+        notificationsHub.server.sendUserChat('@TempData["profileId"]');
+    });
+
+    var countOfGetUserChatArrayClick = [];
+    var countOfGetUserChatClick = 1;
+
+    notificationsHub.client.getUserChat = function (fromUser, toUser, messages) {
+
+        $('.msg_wrap').show("fold");
+        $('.msg_box').show("fold");
+
+        countOfGetUserChatArrayClick.push(' ');
+
+        var chatMsg_footer = $(".msg_footer");
+        chatMsg_footer.empty();
+        var chatMsg_inputButton = $(".msg_inputButton");
+        chatMsg_inputButton.empty();
+        $(".msg_body").empty();
+        var fullName = toUser.FirstName + " " + toUser.LastName;
+        var chatMsg_body = $(".msg_body");
+
+        if (fullName.length > 21) {
+            $('.msg_head').html(fullName.substring(0, 20) + "..." + '<div class="close">X</div>');
+        }
+        else {
+            $('.msg_head').html(fullName + '<div class="close">X</div>');
+        }
+
+
+        $.each(messages, function (key, item) {
+            if (item.Item3 != toUser.Id) {
+
+                if (fromUser.ImageUrl == null) {
+                    chatMsg_body.append('<div class="msgAFullwidth"><div class="msgAPhoto"><img src="@OnlineShoeShopAndChat.Resources.Pictures.ProfilePic"><div class="msg_a msgAPhoto">' +
+                    $.emoticons.replace(item.Item1) + '</div></div></div>');
+                }
+                else {
+                    chatMsg_body.append('<div class="msgAFullwidth"><div class="msgAPhoto"><img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + fromUser.ImageUrl + '"><div class="msg_a msgAPhoto">' +
+                    $.emoticons.replace(item.Item1) + '</div></div></div>');
+                }
+
+            }
+            else {
+                chatMsg_body.append('<div class="msg_b">' + $.emoticons.replace(item.Item1) + '</div>');
+            }
+        });
+        chatMsg_body.append('<div class="msg_push"></div>');
+        // $(".msg_body").append(' <div class="msgAPhoto"><img src="/Content/images/winter-soldier.jpg"><div class="msg_a msgAPhoto">This is from A	</div></div>' +
+        //'<div class="msgAPhoto"><img src="/Content/images/winter-soldier.jpg"><div class="msg_a msgAPhoto">dadad	</div></div>' +
+        //'<div class="msgAPhoto"><img src="/Content/images/winter-soldier.jpg"><div class="msg_a msgAPhoto">fddf	</div></div>' +
+        //'<div class="msg_b">This is from B, and its amazingly kool nah... i know it even i liked it :)</div>' +
+        //'<div class="msgAPhoto"><img src="/Content/images/winter-soldier.jpg"><div class="msg_a msgAPhoto">Wow, Thats great to hear from you man </div></div>' +
+        //' <div class="msg_push"></div>');
+
+
+        //var scroll_Thumb_Body = $('.msg_body');
+        //scroll_Thumb_Body.animate({ scrollTop: scroll_Thumb_Body.prop('scrollHeight') }, 1000);
+        var scrollHeight = 0;
+        $('.msg_body div').each(function (i, value) {
+            scrollHeight += parseInt($(this).height());
+        });
+        scrollHeight += '';
+        $('.msg_body').animate({ scrollTop: scrollHeight });
+
+        chatMsg_footer.append('<textarea rows="2" id="textAreaId" class="msg_input" placeholder="@OnlineShoeShopAndChat.Resources.Language.MessageInputText"></textarea>');
+
+        chatMsg_inputButton.append('<input id="btnIconsTextarea" class="btn btn-danger" value="@OnlineShoeShopAndChat.Resources.Language.EmojiTitle" type="button"><input class="btn btn-primary userMen" id="btnTextarea" type="button" value="@OnlineShoeShopAndChat.Resources.Language.SendBtn">');
+
+
+        $('.close').on('click', function () {
+            $(".msg_box").hide("fold", 1000);
+            var userName = '@User.Identity.Name';
+            notificationsHub.server.closeChat(userName);
+        });
+
+        var countOfClick = 0;
+        var countOfFocus = 0;
+        $('.msg_body').click(function (e) {
+            e.preventDefault();
+            var countOfClick2 = countOfClick++;
+            if (countOfClick2 == 0) {
+                var countOfGetUserChat2 = countOfGetUserChatClick++;
+                if (countOfGetUserChatArrayClick.length == countOfGetUserChat2) {
+                    notificationsHub.server.sendMessageAsRead(toUser.ConnectionId, fromUser.Id);
+                }
+            }
+        });
+
+        $('#textAreaId').focus(function (e) {
+            e.preventDefault();
+            notificationsHub.server.sendMessageAsRead(toUser.ConnectionId, fromUser.Id)[0];
+        });
+
+
+        $('#textAreaId').keypress(function (e) {
+            if ($(this).val().trim() != '' && e.keyCode == 13) {
+                e.preventDefault();
+                var msg = $(this).val();
+                $(this).val('');
+                if (msg != '')
+                    $('<div class="msg_b">' + $.emoticons.replace(msg) + '</div>').insertBefore('.msg_push');
+                $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
+                notificationsHub.server.sendChatMessage(toUser.ConnectionId, fromUser.Id, msg);
+            }
+        });
+
+        $('#btnTextarea').on('click', function (e) {
+            e.preventDefault();
+            var message = $('#textAreaId').val();
+            $('#textAreaId').val('');
+            if (message != '') {
+                $('<div><div class="msg_b">' + $.emoticons.replace(message) + '</div></div>').insertBefore('.msg_push');
+                $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
+                notificationsHub.server.sendChatMessage(toUser.ConnectionId, fromUser.Id, message);
+            }
+        });
+
+        $('#btnIconsTextarea').on('click', function (e) {
+            e.preventDefault();
+            $('#textAreaId').emojiPicker({
+                width: '320px',
+                height: '400px',
+                button: false,
+                fadeTime: 400,
+                emojiSet: 'apple'
+            });
+            $('#textAreaId').emojiPicker('toggle');
+        });
+    };
+
+
+    $.connection.hub.start();
+
+</script>

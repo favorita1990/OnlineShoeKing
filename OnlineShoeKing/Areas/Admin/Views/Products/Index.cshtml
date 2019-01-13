@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Products";
+}
+
+@Html.Partial("_IndexPartialProducts")
+
+
+@Scripts.Render("~/bundles/jqueryunob")
+
+<script>
+        $('#ulControlNavigationId li').removeClass('active');
+        $('#productsIndexId').addClass('active');
+</script>

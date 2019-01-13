@@ -1,0 +1,295 @@
+﻿@using OnlineShoeShopAndChat.Models
+
+@{ 
+    var productSizes = TempData["productSizesOfProduct"] as List<SizesOfProduct>;
+    var productPhotos = TempData["productPhotosOfProduct"] as List<string>;
+}
+
+<div id="ControlNavigationId">
+    <script type="text/javascript">
+        document.title = 'Products - Shoe King';
+        window.history.pushState(
+            null,
+            null,
+            '/Admin/Products/Product/' + '@TempData["productId"]'
+            );
+    </script>
+
+
+    <div class="content details-page">
+        <!---start-product-details--->
+        <div class="product-details">
+            <br /><br />
+            <div class="container">
+                <div class="product-head">
+                    <img alt="User Pic" id="imageInitial" src="@TempData["directoryOfProductIco"]" class="img-circle img-responsive">
+                    <h2>@OnlineShoeShopAndChat.Resources.Language.ProductTitle</h2>
+                    <div class="clearfix"> </div>
+                </div>
+                <!----details-product-slider--->
+                <!-- Include the Etalage files -->
+                <link href="~/Content/etalage.css" rel="stylesheet" />
+                <script src="~/Scripts/jquery.etalage.min.js"></script>
+                <!-- Include the Etalage files -->
+                <!----//details-product-slider--->
+                <div class="details-left">
+                    <div class="details-left-slider">
+                        <ul id="etalage" class="etalage" style="display: block; width: 314px; height: 552px;">
+
+                            @for(int item = 0; item < productPhotos.Count - 1; item++)
+                            {
+                                
+                                <li class="etalage_thumb thumb_1" style="display: none; opacity: 0; background-image: none;">
+                                    <img class="etalage_thumb_image" src="@productPhotos[item]" style="display: inline; width: 300px; height: 400px; opacity: 1;">
+                                    <img class="etalage_source_image" src="@productPhotos[item]">
+                                </li>
+                            }
+                            <li class="etalage_thumb thumb_3 etalage_thumb_active" style="display: list-item; opacity: 1; background-image: none;">
+                                <img class="etalage_thumb_image" src="@productPhotos.LastOrDefault()" style="display: inline; width: 300px; height: 400px; opacity: 1;">
+                                <img class="etalage_source_image" src="@productPhotos.LastOrDefault()">
+                            </li>
+
+                            <li class="etalage_icon" style="display: list-item; top: 380px; left: 20px; opacity: 1;">&nbsp;</li>
+                            <li class="etalage_hint" style="display: none; margin: 0px; top: -15px; right: -15px;">&nbsp;</li>
+                            <li class="etalage_zoom_area" style="margin: 0px; opacity: 0; left: 324px; display: none; background-image: none;">
+                                <div class="etalage_description" style="width: 546px; bottom: 6px; left: 6px; opacity: 0.7; display: none;"></div>
+                                <div style="width: 586px; height: 538px;">
+                                    <img class="etalage_zoom_img" src="@productPhotos.LastOrDefault()" style="width: 900px; height: 1000px; left: -157.34166420232418px; top: 0px;">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="details-left-info">
+                        <div class="details-right-head">
+                            <div>
+                                <h1 style="text-align:center; color: #ffffff;">@OnlineShoeShopAndChat.Resources.Language.ProductNameTitle </h1><h1 style="text-align:center; color: #000;">@TempData["productName"]</h1>
+                            </div>
+                           
+
+                            <div>
+                                <h4 style="text-align:center; color: #fff;">@OnlineShoeShopAndChat.Resources.Language.ColectionTitle </h4><h4 style="text-align:center; color: #000;">@TempData["productCategoryName"]</h4>
+                            </div>
+                            
+
+                            <p class="product-detail-info" style="color:#000000;">
+                                @TempData["productDescription"] 
+                            </p>
+
+                            <div class="product-more-details">
+                                <ul class="price-avl">
+                                    @if ((bool?)TempData["productSpecials"] != null)
+                                    {
+                                        if ((bool)TempData["productSpecials"] == true)
+                                        {
+                                        <li class="price">
+                                            <span>$@TempData["productPrice"]</span>
+                                            <label>$@TempData["productPromotionPrice"]</label>
+                                        </li>
+                                        }
+                                        else
+                                        {
+                                        <li class="price"><label>$@TempData["productPrice"]</label></li>
+                                        }
+                                    }
+                                    <li class="stock"><i>@OnlineShoeShopAndChat.Resources.Language.ProductInStockTitle</i></li>
+                                </ul>
+                                <div class="clearfix"> </div>
+                                <span>@OnlineShoeShopAndChat.Resources.Language.SizeTitle:</span>
+                                <div>
+                                    <select id="dropdownSizeId" style="width:15%; margin-top:20px; margin-bottom: 10px;">
+
+                                        @foreach (var item in productSizes)
+                                        {
+                                        <option id="@item.SizeId">@item.Size</option>
+                                        }
+                                    </select>
+                                </div>
+
+                                <input type="button" id="AddToCartBtnId" value="@OnlineShoeShopAndChat.Resources.Language.BuyNowBtn">
+                                <div class="clearfix"> </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="details-right">
+
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+            <!---//End-product-details--->
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $('#ulControlNavigationId li').removeClass('active');
+
+        $('#etalage').etalage({
+            thumb_image_width: 300,
+            thumb_image_height: 400,
+            source_image_width: 900,
+            source_image_height: 1000,
+            show_hint: false,
+            click_callback: function (image_anchor, instance_id) {
+                alert('Callback example:\nYou clicked on an image with the anchor: "' + image_anchor + '"\n(in Etalage instance: "' + instance_id + '")');
+            }
+        });
+        // This is for the dropdown list example:
+        $('.dropdownlist').change(function () {
+            etalage_show($(this).find('option:selected').attr('class'));
+        });
+
+        var imgSrcFirst = '@productPhotos.LastOrDefault()';
+
+        $('img').each(function () {
+            if (!this.complete || typeof this.naturalWidth == "undefined" || this.naturalWidth == 0) {
+                // image was broken, replace with your new image
+                //this.src = "/images/product-slide/image1_large.jpeg";
+                this.src = imgSrcFirst;
+            }
+        });
+
+        $("#dropdownSizeId").kendoDropDownList();
+
+        window.kendoAlert = (function () {
+
+            // create modal window on the fly
+            var win = $("<div>").kendoWindow({
+                modal: true,
+                open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                position: {
+                    top: "40%",
+                    left: "45%"
+                }
+            }).getKendoWindow();
+
+            return function (msg) {
+
+                // set the content
+                win.content(msg);
+                // center it and open it
+                win.open();
+            };
+        }());
+
+
+        $("#AddToCartBtnId").on("click", function () {
+
+            var productId = '@TempData["productId"]';
+            var sizeValue = $('#dropdownSizeId').children(":selected").attr("value");
+
+            $.ajax({
+                url: '/Admin/Products/AddProductToCart',
+                dataType: "json",
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({ productId: productId, sizeValue: sizeValue }),
+                success: function (cart) {
+
+                    var countCart = cart.length;
+
+                    if (countCart > 0) {
+
+                        $('#checkoutCartTotalId').show();
+                        $('#checkoutCartId').show();
+                    }
+
+                    //alert that is product added
+                    var win = $("<div>").kendoWindow({
+                        modal: true,
+                        open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                        position: {
+                            top: "40%",
+                            left: "45%"
+                        }
+                    }).getKendoWindow();
+
+                    // set the content
+                    win.content('@OnlineShoeShopAndChat.Resources.Language.MessageProductWasAdded');
+                    // center it and open it
+                    win.open();
+
+
+                    $('#cartCountId').html(cart.length);
+                    $('#cartUserId').html('');
+
+                    $.each(cart, function (index, product) {
+
+                        if (product.ProductInCart.Specials) {
+
+                            $('#cartUserId').append('<div class="imgCart userMen" id="removeProductId' + index + '"><img src="' + product.ProductInCart.Photo + '" class="hover"><div>' +
+                            '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.ColectionTitle: </span>' + product.ProductInCart.CategoryName + '<div>' +
+                            '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.NameTitle: </span>' + product.ProductInCart.Name + '</div><div>' +
+                            '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.SizeTitle: </span>' + product.ProductInCart.SizeOfProduct.Size + '</div>' +
+                            '<div><span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.ProductNumberTitle: </span>' + product.ProductId + '</div>' +
+                            '<div style="text-align: right; color: #ff0000; text-shadow: 5px 5px 5px #888888;"><span class="hover" id="removeFromCartId">@OnlineShoeShopAndChat.Resources.Language.RemoveTitle</span>' +
+                            '</div></div><div style="text-align: right;padding-left: 20px;"><div>' +
+                            '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.PriceTitle: </span>' +
+                            '<span class="product-price-underline"><span class="product-price-red">' + product.ProductInCart.Price + '</span></span>' +
+                            '<span class="product-price-green">' + product.ProductInCart.PromotionPrice + '</span></div><div style="color: #888888">' +
+                            product.ProductInCart.PromotionPercent + '% @OnlineShoeShopAndChat.Resources.Language.OffTitle</div></div></div>');
+                        }
+                        else {
+
+                            $('#cartUserId').append('<div class="imgCart userMen" id="removeProductId' + index + '"><img src="' + product.ProductInCart.Photo + '" class="hover"><div>' +
+                                '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.ColectionTitle: </span>' + product.ProductInCart.CategoryName + '<div>' +
+                                '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.NameTitle: </span>' + product.ProductInCart.Name + '</div><div>' +
+                                '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.SizeTitle: </span>' + product.ProductInCart.SizeOfProduct.Size + '</div>' +
+                                '<div><span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.ProductNumberTitle: </span>' + product.ProductId + '</div>' +
+                                '<div style="text-align: right; color: #ff0000; text-shadow: 5px 5px 5px #888888;"><span class="hover" id="removeFromCartId">@OnlineShoeShopAndChat.Resources.Language.RemoveTitle' +
+                                '</span></div></div><div style="text-align: right;padding-left: 20px;"><div>' +
+                                '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.PriceTitle: </span>' +
+                                '<span class="product-price-green">' + product.ProductInCart.Price + '</span></div></div></div>')
+                        }
+
+                        $('span#removeFromCartId').on('click', function (e) {
+                            e.stopImmediatePropagation();
+
+                            $.ajax({
+                                url: '/Admin/Home/RemoveProductFromCart',
+                                dataType: "json",
+                                type: "POST",
+                                contentType: 'application/json; charset=utf-8',
+                                data: "{ productId:" + JSON.stringify(product.ProductId) + "}",
+                                success: function (total) {
+
+                                    countCart = countCart - 1;
+
+                                    if (countCart > 0) {
+                                        $('#checkoutCartTotalId').html('<div class="checkoutBtnDivSend">' +
+                                         '@OnlineShoeShopAndChat.Resources.Language.MessageTotal: <span class="checkoutTotalSpan" id="cartTotalId">' + total + '@OnlineShoeShopAndChat.Resources.Language.Leva' + '.</span></div>');
+                                        $('#checkoutCartId').show();
+                                    }
+                                    else {
+                                        $('#cartUserId').html('<div class="centerAlign"><h3 style="color: #ff006e;">@OnlineShoeShopAndChat.Resources.Language.NoProducts</h3></div>');
+                                        $('#checkoutCartId').hide();
+                                        $('#checkoutCartTotalId').hide();
+                                    }
+
+                                    $('#cartCountId').html(countCart);
+                                    $('#removeProductId' + index).remove();
+                                },
+                                error: function (e) {
+                                    alert('@OnlineShoeShopAndChat.Resources.Language.MessageRefreshPage');
+                                }
+                            });
+                        });
+
+                    });
+
+                    $('#checkoutCartTotalId').html('<div class="checkoutBtnDivSend">' +
+                               '@OnlineShoeShopAndChat.Resources.Language.MessageTotal: <span class="checkoutTotalSpan" id="cartTotalId">' + cart[cart.length - 1].Total + '@OnlineShoeShopAndChat.Resources.Language.Leva' + '.</span></div>');
+
+                },
+                error: function (e) {
+                    alert('@OnlineShoeShopAndChat.Resources.Language.MessageRefreshPage');
+                }
+            });
+        });
+    });
+
+
+</script>

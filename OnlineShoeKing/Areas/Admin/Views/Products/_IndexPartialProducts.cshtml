@@ -1,0 +1,1394 @@
+﻿
+
+
+<div id="ControlNavigationId">
+    <script type="text/javascript">
+        document.title = 'Products - Shoe King';
+        window.history.pushState(
+            null,
+            null,
+            '/Admin/Products'
+            );
+    </script>
+    <div class="bottom-grids collections">
+        <div class="container">
+            <div class="product-head">
+                <img alt="User Pic" id="imageInitial" src="@TempData["directoryOfProductIco"]" class="img-circle img-responsive">
+                <h2>@OnlineShoeShopAndChat.Resources.Language.Products</h2>
+                <div class="clearfix"> </div>
+            </div>
+            <script type="text/javascript">
+
+                function DropDown(el) {
+                    this.dd = el;
+                    this.initEvents();
+                }
+                DropDown.prototype = {
+                    initEvents: function () {
+                        var obj = this;
+
+                        obj.dd.on('click', function (event) {
+                            $(this).toggleClass('active');
+                            event.stopPropagation();
+                        });
+                    }
+                }
+
+                $(function () {
+
+                    var dd = new DropDown($('#dd'));
+
+                    $(document).click(function () {
+                        // all dropdowns
+                        $('.wrapper-dropdown').removeClass('active');
+                    });
+
+                });
+
+            </script>
+
+            <section style="display: none;" id="sortCollectionProductId">
+                <select class="cs-select cs-skin-underline">
+                    <option value="" disabled selected>@OnlineShoeShopAndChat.Resources.Language.SortByTitle</option>
+                    <option value="1">@OnlineShoeShopAndChat.Resources.Language.AddedTitle</option>
+                    <option value="2">@OnlineShoeShopAndChat.Resources.Language.PriceTitle</option>
+                    <option value="3">@OnlineShoeShopAndChat.Resources.Language.NameTitle</option>
+                </select>
+            </section>
+            <br>
+            <!-- start content_slider -->
+
+            <div id="allProductsId">
+
+            </div>
+           
+        </div>
+        <!-- bottom-grids -->
+    </div>
+</div>
+<script>
+(function () {
+
+    $('div.wrapper-dropdown').on('click', function () {
+        $('div.wrapper-dropdown').addClass("active");
+    });
+
+
+    $.getJSON("/Admin/Products/GetAllProducts", function (products) {
+
+        $('#allProductsId').html('');
+
+        if (products.length > 0) {
+
+            if (products.length > 4) {
+
+                $('#sortCollectionProductId').show();
+            }
+
+            $.each(products, function (index, product) {
+
+                if (product.Specials == false) {
+
+                    $('#allProductsId').append('<div class="item-product col-xs-12 col-sm-6 col-md-4 col-lg-3"><div class="product-grid">' +
+                    '<div class="product-pic"><img src="' + product.PhotoHeader + '" id="goToProductId" title="@OnlineShoeShopAndChat.Resources.Language.SeeDetailsTitle" /></div>' +
+                    '<div class="product-pic-info"><h3><a id="goToProductId" style="cursor:pointer;" title="@OnlineShoeShopAndChat.Resources.Language.SeeDetailsTitle">' + product.Name +
+                    '</a><span class="spanSizeProduct">@OnlineShoeShopAndChat.Resources.Language.SizeTitle:' +
+                    product.SizesOfProduct[0].Size + '</span></h3><div class="product-pic-info-price-cart">' +
+                    '<span class="product-pic-info-price-green">' + product.Price + '@OnlineShoeShopAndChat.Resources.Language.Leva' + '.</span>' +
+                    '<div class="product-info-price-dateAdded"><span class="product-span-info-price-dateAdded">@OnlineShoeShopAndChat.Resources.Language.AddedTitle: ' + product.DateAdded + '</span></div>' +
+                    '<div class="product-pic-info-cart-btn"><a class="p-btn">@OnlineShoeShopAndChat.Resources.Language.BuyNowBtn</a></div><div class="clearfix"></div></div></div></div></div>');
+                }
+                else {
+                    $('#allProductsId').append('<div class="item-product col-xs-12 col-sm-6 col-md-4 col-lg-3"><div class="product-grid"><div class="product-pic">' +
+                    '<img src="' + product.PhotoHeader + '" id="goToProductId" title="@OnlineShoeShopAndChat.Resources.Language.SeeDetailsTitle"/></div><div class="product-pic-info"><h3>' +
+                    '<a id="goToProductId" title="@OnlineShoeShopAndChat.Resources.Language.SeeDetailsTitle">' + product.Name + '</a>' +
+                    '<span class="spanSizeProduct">@OnlineShoeShopAndChat.Resources.Language.SizeTitle:' + product.SizesOfProduct[0].Size + '</span></h3>' +
+                    '<div class="product-pic-info-price-cart"><span class="product-pic-info-price-underline">' +
+                    '<span class="product-info-price-red">' + product.Price + '@OnlineShoeShopAndChat.Resources.Language.Leva' + '.</span></span>' +
+                    '<span class="product-info-price-green">' + product.PromotionPrice + '@OnlineShoeShopAndChat.Resources.Language.Leva' + '.</span>' +
+                    '<span class="product-pic-info-price-prduct">' + product.PromotionPercent + '<span class="percentDiscount">%</span></span>' +
+                    '<div class="product-info-price-dateAdded"><span class="product-span-info-price-dateAdded">@OnlineShoeShopAndChat.Resources.Language.AddedTitle: ' + product.DateAdded + '</span></div>' +
+                    '<div class="product-pic-info-cart-btn"><a class="p-btn">@OnlineShoeShopAndChat.Resources.Language.BuyNowBtn</a></div><div class="clearfix"> </div></div></div></div></div>');
+                }
+
+
+                $('a#goToProductId,img#goToProductId').click(function (e) {
+                    e.stopImmediatePropagation();
+
+                    $('#add-loading').html('<div id="div-loading"></div>');
+                    var dialog = $("#div-loading").kendoWindow({
+                        draggable: false,
+                        resizable: false,
+                        modal: true,
+                        actions: [""],
+                        open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                        position: {
+                            top: "40%",
+                            left: "45%"
+                        }
+                    }).data("kendoWindow").content("@OnlineShoeShopAndChat.Resources.Language.Loading");
+
+                    $.ajax({
+                        url: '@Url.Action("ProductPartialProducts", "Products", new { Area = "Admin" })',
+                        dataType: "html",
+                        type: "POST",
+                        cache: false,
+                        data: { productId: product.ProductId },
+                        success: function (productHtmlPartial) {
+
+                            dialog.close();
+                            $('#ControlNavigationId').html(productHtmlPartial);
+                        },
+                        error: function (error) {
+                            alert('@OnlineShoeShopAndChat.Resources.Language.MessageRefreshPage');
+                        }
+                    });
+                });
+
+                $('#btnCheckoutCartId').on('click', function (e) {
+                    e.stopImmediatePropagation();
+
+                    $.post('/Home/Checkout', function (success) {
+                        $('#windowCart').hide();
+                        $('.k-window').hide();
+                        $('.resizeLogin').hide();
+                        $('.k-window-title').html('')
+                        var winCartOrder = $("#windowCartOrderId").data("kendoWindow").refresh();
+                        $(".k-window-titlebar").show();
+                        $(".k-window-titlebar").css("margin-top", "-38px");
+                        $(".k-upload-sync").removeClass('k-upload-sync');
+                        $(".k-upload").css("background", "none");
+                        $(".k-upload").css("border", "none");
+                        $(".k-upload-files").css("border", "none !important");
+                        $("div.k-window-content").css("max-height", "660px");
+                        $(".k-window div.k-window-content").css("margin-top", "0");
+                        $('.k-upload').addClass('k-upload-remove-border');
+
+                        winCartOrder.open();
+
+                        $('#btnCartOrderId').on('click', function () {
+
+                            var cartOrderCity = $('#cartOrderCityId').val().trim();
+                            var cartOrderAddress = $('#cartOrderAddressId').val().trim();
+                            var cartOrderPostOfiice = $('#cartOrderPostOfiiceId').val().trim();
+                            var cartOrderPhoneNumber = $('#cartOrderPhoneNumberId').val().trim();
+
+                            var validationCartOrderCity = $('#validationCartOrderCityId');
+                            var validationCartOrderAddress = $('#validationCartOrderAddressId');
+                            var validationCartOrderPostOfiice = $('#validationCartOrderPostOfiiceId');
+                            var validationCartOrderPhoneNumber = $('#validationCartOrderPhoneNumberId');
+
+                            if (cartOrderCity == '') {
+                                validationCartOrderCity.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputCity');
+                            }
+                            else {
+                                validationCartOrderCity.html('');
+                            }
+
+                            if (cartOrderAddress == '') {
+                                validationCartOrderAddress.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputAdderess');
+                            }
+                            else {
+                                validationCartOrderAddress.html('');
+                            }
+
+                            if (cartOrderPostOfiice == '') {
+                                validationCartOrderPostOfiice.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputPostOfiice');
+                            }
+                            else {
+                                validationCartOrderPostOfiice.html('');
+                            }
+
+                            if (cartOrderPhoneNumber == '') {
+                                validationCartOrderPhoneNumber.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputPhoneNumber');
+                            }
+                            else {
+                                var phoneNumber = /^\d{10}$/;
+                                if (cartOrderPhoneNumber.match(phoneNumber)) {
+                                    validationCartOrderPhoneNumber.html('');
+                                }
+                                else {
+                                    validationCartOrderPhoneNumber.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputRightPhoneNumber');
+                                }
+                            }
+
+                            var cartFormData = new FormData();
+
+                            if ((validationCartOrderCity.html() == '') && (validationCartOrderAddress.html() == '') &&
+                                (validationCartOrderPostOfiice.html() == '') && (validationCartOrderPhoneNumber.html() == '')) {
+
+                                cartFormData.append("cartOrderCity", cartOrderCity);
+                                cartFormData.append("cartOrderAddress", cartOrderAddress);
+                                cartFormData.append("cartOrderPostOfiice", cartOrderPostOfiice);
+                                cartFormData.append("cartOrderPhoneNumber", cartOrderPhoneNumber);
+
+                                $.ajax({
+                                    url: '/Home/CartOrder',
+                                    type: "POST",
+                                    processData: false,
+                                    contentType: false,
+                                    data: cartFormData,
+                                    success: function (answer) {
+
+                                        winCartOrder.close();
+
+                                        if (answer == 'success') {
+                                            notificationsHub.server.updateOrderMessages();
+                                            CheckoutSuccess();
+                                        }
+                                        else if (answer == 'problem') {
+                                            cartProblem();
+                                        }
+                                        else if (answer == 'login') {
+                                            CheckoutLogin();
+                                        }
+
+                                    }
+                                });
+                            }
+                        });
+                    });
+
+                    //$.ajax({
+                    //    url: '/Home/Checkout',
+                    //    dataType: "json",
+                    //    type: "POST",
+                    //    contentType: 'application/json; charset=utf-8',
+                    //    data: {},
+                    //    success: function (answer) {
+
+                    //        if (answer == 'success') {
+                    //            CheckoutSuccess();
+                    //        }
+                    //        else if (answer == 'problem') {
+                    //            cartProblem();
+                    //        }
+                    //        else if (answer == 'login') {
+                    //            CheckoutLogin();
+                    //        }
+                    //    },
+                    //    error: function (e) {
+                    //        alert('Please, refresh the page.');
+                    //    }
+                    //});
+                });
+
+                $('.p-btn').click(function (e) {
+                    e.stopImmediatePropagation();
+
+                    $.ajax({
+                        url: '/Admin/Products/AddProductToCart',
+                        dataType: "json",
+                        type: "POST",
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify({ productId: product.ProductId, sizeValue: product.SizesOfProduct[0].Size }),
+                        success: function (cart) {
+
+                            var countCart = cart.length;
+
+                            if (countCart > 0) {
+
+                                $('#checkoutCartTotalId').show();
+                                $('#checkoutCartId').show();
+                            }
+
+                            //alert that is product added
+                            var win = $("<div>").kendoWindow({
+                                modal: true,
+                                open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                                position: {
+                                    top: "40%",
+                                    left: "45%"
+                                }
+                            }).getKendoWindow();
+
+                            // set the content
+                            win.content('@OnlineShoeShopAndChat.Resources.Language.MessageProductWasAdded');
+                            // center it and open it
+                            win.open();
+
+                            $('#cartCountId').html(cart.length);
+                            $('#cartUserId').html('');
+
+                            $.each(cart, function (index, product) {
+
+                                if (product.ProductInCart.Specials) {
+
+                                    $('#cartUserId').append('<div class="imgCart userMen" id="removeProductId' + index + '"><img src="' + product.ProductInCart.Photo + '" class="hover"><div>' +
+                                    '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.ColectionTitle: </span>' + product.ProductInCart.CategoryName + '<div>' +
+                                    '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.NameTitle: </span>' + product.ProductInCart.Name + '</div><div>' +
+                                    '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.SizeTitle: </span>' + product.ProductInCart.SizeOfProduct.Size + '</div>' +
+                                    '<div><span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.ProductNumberTitle: </span>' + product.ProductId + '</div>' +
+                                    '<div style="text-align: right; color: #ff0000; text-shadow: 5px 5px 5px #888888;"><span class="hover" id="removeFromCartId">@OnlineShoeShopAndChat.Resources.Language.RemoveTitle</span>' +
+                                    '</div></div><div style="text-align: right;padding-left: 20px;"><div>' +
+                                    '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.PriceTitle: </span>' +
+                                    '<span class="product-price-underline"><span class="product-price-red">' + product.ProductInCart.Price + '</span></span>' +
+                                    '<span class="product-price-green">' + product.ProductInCart.PromotionPrice + '</span></div><div style="color: #888888">' +
+                                    product.ProductInCart.PromotionPercent + '% @OnlineShoeShopAndChat.Resources.Language.OffTitle</div></div></div>');
+                                }
+                                else {
+
+                                    $('#cartUserId').append('<div class="imgCart userMen" id="removeProductId' + index + '"><img src="' + product.ProductInCart.Photo + '" class="hover"><div>' +
+                                        '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.ColectionTitle: </span>' + product.ProductInCart.CategoryName + '<div>' +
+                                        '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.NameTitle: </span>' + product.ProductInCart.Name + '</div><div>' +
+                                        '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.SizeTitle: </span>' + product.ProductInCart.SizeOfProduct.Size + '</div>' +
+                                        '<div><span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.ProductNumberTitle: </span>' + product.ProductId + '</div>' +
+                                        '<div style="text-align: right; color: #ff0000; text-shadow: 5px 5px 5px #888888;"><span class="hover" id="removeFromCartId">@OnlineShoeShopAndChat.Resources.Language.RemoveTitle' +
+                                        '</span></div></div><div style="text-align: right;padding-left: 20px;"><div>' +
+                                        '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.PriceTitle: </span>' +
+                                        '<span class="product-price-green">' + product.ProductInCart.Price + '</span></div></div></div>')
+                                }
+
+                                $('span#removeFromCartId').on('click', function (e) {
+                                    e.stopImmediatePropagation();
+
+                                    $.ajax({
+                                        url: '/Admin/Home/RemoveProductFromCart',
+                                        dataType: "json",
+                                        type: "POST",
+                                        contentType: 'application/json; charset=utf-8',
+                                        data: "{ productId:" + JSON.stringify(product.ProductId) + "}",
+                                        success: function (total) {
+
+                                            countCart = countCart - 1;
+                                            if (countCart > 0) {
+
+                                                $('#checkoutCartTotalId').html('<div class="checkoutBtnDivSend">' +
+                                                 '@OnlineShoeShopAndChat.Resources.Language.MessageTotal: <span class="checkoutTotalSpan" id="cartTotalId">' + total + '@OnlineShoeShopAndChat.Resources.Language.Leva' + '.</span></div>');
+                                                $('#checkoutCartId').show();
+                                            }
+                                            else {
+                                                $('#cartUserId').html('<div class="centerAlign"><h3 style="color: #ff006e;">@OnlineShoeShopAndChat.Resources.Language.NoProducts</h3></div>');
+                                                $('#checkoutCartId').hide();
+                                                $('#checkoutCartTotalId').hide();
+                                            }
+
+                                            $('#cartCountId').html(countCart);
+                                            $('#removeProductId' + index).remove();
+                                        },
+                                        error: function (e) {
+                                            alert('@OnlineShoeShopAndChat.Resources.Language.MessageRefreshPage');
+                                        }
+                                    });
+                                });
+
+                            });
+
+                            $('#checkoutCartTotalId').html('<div class="checkoutBtnDivSend">' +
+                                '@OnlineShoeShopAndChat.Resources.Language.MessageTotal: <span class="checkoutTotalSpan" id="cartTotalId">' + cart[cart.length - 1].Total + '@OnlineShoeShopAndChat.Resources.Language.Leva' + '.</span></div>');
+
+                        },
+                        error: function (error) {
+                            alert('@OnlineShoeShopAndChat.Resources.Language.MessageRefreshPage');
+                        }
+                    });
+                });
+
+            });
+        }
+        else {
+            $('#allProductsId').html('<h2 class="text-center;">@OnlineShoeShopAndChat.Resources.Language.NoProducts</h2>');
+        }
+        $('#allProductsId').append('<div class="clearfix"> </div>');
+    });
+
+
+    [].slice.call(document.querySelectorAll('select.cs-select')).forEach(function (el) {
+        new SelectFx(el);
+    });
+
+
+    var selectedLi = null;
+    var selectedLiCount = 0;
+    $('.cs-options ul li').on('click', function () {
+
+        $('#add-loading').html('<div id="div-loading"></div>');
+        var dialog = $("#div-loading").kendoWindow({
+            draggable: false,
+            resizable: false,
+            modal: true,
+            actions: [""],
+            open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+            position: {
+                top: "40%",
+                left: "45%"
+            }
+        }).data("kendoWindow").content("@OnlineShoeShopAndChat.Resources.Language.Loading");
+
+        var valLi = $('.cs-selected').data('value');
+
+        if (valLi == selectedLi) {
+            selectedLiCount = selectedLiCount + 1;
+            if ((selectedLiCount % 2) == 1) {
+                selectedLi = '-' + selectedLi;
+
+                $.ajax({
+                    url: '/Admin/Products/SortAllProducts',
+                    dataType: "json",
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    data: "{ sortBy:" + JSON.stringify(selectedLi) + "}",
+                    success: function (products) {
+
+                        dialog.close();
+                        $('#allProductsId').html('');
+
+                        if (products.length > 0) {
+                            $.each(products, function (index, product) {
+
+                                if (product.Specials == false) {
+
+                                    $('#allProductsId').append('<div class="item-product col-xs-12 col-sm-6 col-md-4 col-lg-3"><div class="product-grid">' +
+                                    '<div class="product-pic"><img src="' + product.PhotoHeader + '" id="goToProductId" title="@OnlineShoeShopAndChat.Resources.Language.SeeDetailsTitle" /></div>' +
+                                    '<div class="product-pic-info"><h3><a id="goToProductId" style="cursor:pointer;" title="@OnlineShoeShopAndChat.Resources.Language.SeeDetailsTitle">' + product.Name +
+                                    '</a><span class="spanSizeProduct">@OnlineShoeShopAndChat.Resources.Language.SizeTitle:' + product.SizesOfProduct[0].Size + '</span></h3><div class="product-pic-info-price-cart">' +
+                                    '<span class="product-pic-info-price-green">' + product.Price + '@OnlineShoeShopAndChat.Resources.Language.Leva' + '.</span>' +
+                                    '<div class="product-info-price-dateAdded"><span class="product-span-info-price-dateAdded">@OnlineShoeShopAndChat.Resources.Language.AddedTitle: ' + product.DateAdded + '</span></div>' +
+                                    '<div class="product-pic-info-cart-btn"><a class="p-btn">@OnlineShoeShopAndChat.Resources.Language.BuyNowBtn</a></div><div class="clearfix"></div></div></div></div></div>');
+                                }
+                                else {
+                                    $('#allProductsId').append('<div class="item-product col-xs-12 col-sm-6 col-md-4 col-lg-3"><div class="product-grid"><div class="product-pic">' +
+                                    '<img src="' + product.PhotoHeader + '" id="goToProductId" title="@OnlineShoeShopAndChat.Resources.Language.SeeDetailsTitle"/></div><div class="product-pic-info"><h3>' +
+                                    '<a id="goToProductId" title="@OnlineShoeShopAndChat.Resources.Language.SeeDetailsTitle">' + product.Name + '</a>' +
+                                    '<span class="spanSizeProduct">@OnlineShoeShopAndChat.Resources.Language.SizeTitle:' + product.SizesOfProduct[0].Size + '</span></h3>' +
+                                    '<div class="product-pic-info-price-cart"><span class="product-pic-info-price-underline">' +
+                                    '<span class="product-info-price-red">' + product.Price + '@OnlineShoeShopAndChat.Resources.Language.Leva' + '.</span></span>' +
+                                    '<span class="product-info-price-green">' + product.PromotionPrice + '@OnlineShoeShopAndChat.Resources.Language.Leva' + '.</span>' +
+                                    '<span class="product-pic-info-price-prduct">' + product.PromotionPercent + '<span class="percentDiscount">%</span></span>' +
+                                    '<div class="product-info-price-dateAdded"><span class="product-span-info-price-dateAdded">@OnlineShoeShopAndChat.Resources.Language.AddedTitle: ' + product.DateAdded + '</span></div>' +
+                                    '<div class="product-pic-info-cart-btn"><a class="p-btn">@OnlineShoeShopAndChat.Resources.Language.BuyNowBtn</a></div><div class="clearfix"> </div></div></div></div></div>');
+                                }
+
+
+                                $('a#goToProductId,img#goToProductId').click(function (e) {
+                                    e.stopImmediatePropagation();
+
+                                    $('#add-loading').html('<div id="div-loading"></div>');
+                                    var dialog = $("#div-loading").kendoWindow({
+                                        draggable: false,
+                                        resizable: false,
+                                        modal: true,
+                                        actions: [""],
+                                        open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                                        position: {
+                                            top: "40%",
+                                            left: "45%"
+                                        }
+                                    }).data("kendoWindow").content("@OnlineShoeShopAndChat.Resources.Language.Loading");
+
+                                    $.ajax({
+                                        url: '@Url.Action("ProductPartialProducts", "Products", new { Area = "Admin" })',
+                                        dataType: "html",
+                                        type: "POST",
+                                        cache: false,
+                                        data: { productId: product.ProductId },
+                                        success: function (productHtmlPartial) {
+
+                                            dialog.close();
+                                            $('#ControlNavigationId').html(productHtmlPartial);
+                                        },
+                                        error: function (error) {
+                                            alert('@OnlineShoeShopAndChat.Resources.Language.MessageRefreshPage');
+                                        }
+                                    });
+                                });
+
+                                $('#btnCheckoutCartId').on('click', function (e) {
+                                    e.stopImmediatePropagation();
+
+                                    $.post('/Home/Checkout', function (success) {
+                                        $('#windowCart').hide();
+                                        $('.k-window').hide();
+                                        $('.resizeLogin').hide();
+                                        $('.k-window-title').html('')
+                                        var winCartOrder = $("#windowCartOrderId").data("kendoWindow").refresh();
+                                        $(".k-window-titlebar").show();
+                                        $(".k-window-titlebar").css("margin-top", "-38px");
+                                        $(".k-upload-sync").removeClass('k-upload-sync');
+                                        $(".k-upload").css("background", "none");
+                                        $(".k-upload").css("border", "none");
+                                        $(".k-upload-files").css("border", "none !important");
+                                        $("div.k-window-content").css("max-height", "660px");
+                                        $(".k-window div.k-window-content").css("margin-top", "0");
+                                        $('.k-upload').addClass('k-upload-remove-border');
+
+                                        winCartOrder.open();
+
+                                        $('#btnCartOrderId').on('click', function () {
+
+                                            var cartOrderCity = $('#cartOrderCityId').val().trim();
+                                            var cartOrderAddress = $('#cartOrderAddressId').val().trim();
+                                            var cartOrderPostOfiice = $('#cartOrderPostOfiiceId').val().trim();
+                                            var cartOrderPhoneNumber = $('#cartOrderPhoneNumberId').val().trim();
+
+                                            var validationCartOrderCity = $('#validationCartOrderCityId');
+                                            var validationCartOrderAddress = $('#validationCartOrderAddressId');
+                                            var validationCartOrderPostOfiice = $('#validationCartOrderPostOfiiceId');
+                                            var validationCartOrderPhoneNumber = $('#validationCartOrderPhoneNumberId');
+
+                                            if (cartOrderCity == '') {
+                                                validationCartOrderCity.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputCity');
+                                            }
+                                            else {
+                                                validationCartOrderCity.html('');
+                                            }
+
+                                            if (cartOrderAddress == '') {
+                                                validationCartOrderAddress.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputAdderess');
+                                            }
+                                            else {
+                                                validationCartOrderAddress.html('');
+                                            }
+
+                                            if (cartOrderPostOfiice == '') {
+                                                validationCartOrderPostOfiice.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputPostOfiice');
+                                            }
+                                            else {
+                                                validationCartOrderPostOfiice.html('');
+                                            }
+
+                                            if (cartOrderPhoneNumber == '') {
+                                                validationCartOrderPhoneNumber.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputPhoneNumber');
+                                            }
+                                            else {
+                                                var phoneNumber = /^\d{10}$/;
+                                                if (cartOrderPhoneNumber.match(phoneNumber)) {
+                                                    validationCartOrderPhoneNumber.html('');
+                                                }
+                                                else {
+                                                    validationCartOrderPhoneNumber.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputRightPhoneNumber');
+                                                }
+                                            }
+
+                                            var cartFormData = new FormData();
+
+                                            if ((validationCartOrderCity.html() == '') && (validationCartOrderAddress.html() == '') &&
+                                                (validationCartOrderPostOfiice.html() == '') && (validationCartOrderPhoneNumber.html() == '')) {
+
+                                                cartFormData.append("cartOrderCity", cartOrderCity);
+                                                cartFormData.append("cartOrderAddress", cartOrderAddress);
+                                                cartFormData.append("cartOrderPostOfiice", cartOrderPostOfiice);
+                                                cartFormData.append("cartOrderPhoneNumber", cartOrderPhoneNumber);
+
+                                                $.ajax({
+                                                    url: '/Home/CartOrder',
+                                                    type: "POST",
+                                                    processData: false,
+                                                    contentType: false,
+                                                    data: cartFormData,
+                                                    success: function (answer) {
+
+                                                        winCartOrder.close();
+
+                                                        if (answer == 'success') {
+                                                            CheckoutSuccess();
+                                                        }
+                                                        else if (answer == 'problem') {
+                                                            cartProblem();
+                                                        }
+                                                        else if (answer == 'login') {
+                                                            CheckoutLogin();
+                                                        }
+
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    });
+
+                                    //$.ajax({
+                                    //    url: '/Home/Checkout',
+                                    //    dataType: "json",
+                                    //    type: "POST",
+                                    //    contentType: 'application/json; charset=utf-8',
+                                    //    data: {},
+                                    //    success: function (answer) {
+
+                                    //        if (answer == 'success') {
+                                    //            CheckoutSuccess();
+                                    //        }
+                                    //        else if (answer == 'problem') {
+                                    //            cartProblem();
+                                    //        }
+                                    //        else if (answer == 'login') {
+                                    //            CheckoutLogin();
+                                    //        }
+                                    //    },
+                                    //    error: function (e) {
+                                    //        alert('Please, refresh the page.');
+                                    //    }
+                                    //});
+                                });
+
+                                $('.p-btn').click(function (e) {
+                                    e.stopImmediatePropagation();
+
+                                    $.ajax({
+                                        url: '/Admin/Products/AddProductToCart',
+                                        dataType: "json",
+                                        type: "POST",
+                                        contentType: 'application/json; charset=utf-8',
+                                        data: JSON.stringify({ productId: product.ProductId, sizeValue: product.SizesOfProduct[0].Size }),
+                                        success: function (cart) {
+
+                                            var countCart = cart.length;
+
+                                            if (countCart > 0) {
+
+                                                $('#checkoutCartTotalId').show();
+                                                $('#checkoutCartId').show();
+                                            }
+
+                                            //alert that is product added
+                                            var win = $("<div>").kendoWindow({
+                                                modal: true,
+                                                open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                                                position: {
+                                                    top: "40%",
+                                                    left: "45%"
+                                                }
+                                            }).getKendoWindow();
+
+                                            // set the content
+                                            win.content('@OnlineShoeShopAndChat.Resources.Language.MessageProductWasAdded');
+                                            // center it and open it
+                                            win.open();
+
+                                            $('#cartCountId').html(cart.length);
+                                            $('#cartUserId').html('');
+
+                                            $.each(cart, function (index, product) {
+
+                                                if (product.ProductInCart.Specials) {
+
+                                                    $('#cartUserId').append('<div class="imgCart userMen" id="removeProductId' + index + '"><img src="' + product.ProductInCart.Photo + '" class="hover"><div>' +
+                                                    '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.ColectionTitle: </span>' + product.ProductInCart.CategoryName + '<div>' +
+                                                    '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.NameTitle: </span>' + product.ProductInCart.Name + '</div><div>' +
+                                                    '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.SizeTitle: </span>' + product.ProductInCart.SizeOfProduct.Size + '</div>' +
+                                                    '<div><span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.ProductNumberTitle: </span>' + product.ProductId + '</div>' +
+                                                    '<div style="text-align: right; color: #ff0000; text-shadow: 5px 5px 5px #888888;"><span class="hover" id="removeFromCartId">@OnlineShoeShopAndChat.Resources.Language.RemoveTitle</span>' +
+                                                    '</div></div><div style="text-align: right;padding-left: 20px;"><div>' +
+                                                    '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.PriceTitle: </span>' +
+                                                    '<span class="product-price-underline"><span class="product-price-red">' + product.ProductInCart.Price + '</span></span>' +
+                                                    '<span class="product-price-green">' + product.ProductInCart.PromotionPrice + '</span></div><div style="color: #888888">' +
+                                                    product.ProductInCart.PromotionPercent + '% @OnlineShoeShopAndChat.Resources.Language.OffTitle</div></div></div>');
+                                                }
+                                                else {
+
+                                                    $('#cartUserId').append('<div class="imgCart userMen" id="removeProductId' + index + '"><img src="' + product.ProductInCart.Photo + '" class="hover"><div>' +
+                                                        '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.ColectionTitle: </span>' + product.ProductInCart.CategoryName + '<div>' +
+                                                        '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.NameTitle: </span>' + product.ProductInCart.Name + '</div><div>' +
+                                                        '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.SizeTitle: </span>' + product.ProductInCart.SizeOfProduct.Size + '</div>' +
+                                                        '<div><span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.ProductNumberTitle: </span>' + product.ProductId + '</div>' +
+                                                        '<div style="text-align: right; color: #ff0000; text-shadow: 5px 5px 5px #888888;"><span class="hover" id="removeFromCartId">@OnlineShoeShopAndChat.Resources.Language.RemoveTitle' +
+                                                        '</span></div></div><div style="text-align: right;padding-left: 20px;"><div>' +
+                                                        '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.PriceTitle: </span>' +
+                                                        '<span class="product-price-green">' + product.ProductInCart.Price + '</span></div></div></div>')
+                                                }
+
+                                                $('span#removeFromCartId').on('click', function (e) {
+                                                    e.stopImmediatePropagation();
+
+                                                    $.ajax({
+                                                        url: '/Admin/Home/RemoveProductFromCart',
+                                                        dataType: "json",
+                                                        type: "POST",
+                                                        contentType: 'application/json; charset=utf-8',
+                                                        data: "{ productId:" + JSON.stringify(product.ProductId) + "}",
+                                                        success: function (total) {
+
+                                                            countCart = countCart - 1;
+                                                            if (countCart > 0) {
+
+                                                                $('#checkoutCartTotalId').html('<div class="checkoutBtnDivSend">' +
+                                                                 '@OnlineShoeShopAndChat.Resources.Language.MessageTotal: <span class="checkoutTotalSpan" id="cartTotalId">' + total + '@OnlineShoeShopAndChat.Resources.Language.Leva' + '.</span></div>');
+                                                                $('#checkoutCartId').show();
+                                                            }
+                                                            else {
+                                                                $('#cartUserId').html('<div class="centerAlign"><h3 style="color: #ff006e;">@OnlineShoeShopAndChat.Resources.Language.NoProducts</h3></div>');
+                                                                $('#checkoutCartId').hide();
+                                                                $('#checkoutCartTotalId').hide();
+                                                            }
+
+                                                            $('#cartCountId').html(countCart);
+                                                            $('#removeProductId' + index).remove();
+                                                        },
+                                                        error: function (e) {
+                                                            alert('@OnlineShoeShopAndChat.Resources.Language.MessageRefreshPage');
+                                                        }
+                                                    });
+                                                });
+
+                                            });
+
+                                            $('#checkoutCartTotalId').html('<div class="checkoutBtnDivSend">' +
+                                             '@OnlineShoeShopAndChat.Resources.Language.MessageTotal: <span class="checkoutTotalSpan" id="cartTotalId">' + cart[cart.length - 1].Total + '@OnlineShoeShopAndChat.Resources.Language.Leva' + '.</span></div>');
+
+                                        },
+                                        error: function (error) {
+                                            alert('@OnlineShoeShopAndChat.Resources.Language.MessageRefreshPage');
+                                        }
+                                    });
+                                });
+
+                            });
+                        }
+                        else {
+                            $('#allProductsId').html('<h2 class="text-center;">@OnlineShoeShopAndChat.Resources.Language.NoProducts</h2>');
+                        }
+                        $('#allProductsId').append('<div class="clearfix"> </div>');
+                    }
+                });
+            }
+            else {
+
+                $.ajax({
+                    url: '/Admin/Products/SortAllProducts',
+                    dataType: "json",
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    data: "{ sortBy:" + JSON.stringify(valLi) + "}",
+                    success: function (products) {
+
+                        dialog.close();
+                        $('#allProductsId').html('');
+
+                        if (products.length > 0) {
+                            $.each(products, function (index, product) {
+
+                                if (product.Specials == false) {
+
+                                    $('#allProductsId').append('<div class="item-product col-xs-12 col-sm-6 col-md-4 col-lg-3"><div class="product-grid">' +
+                                    '<div class="product-pic"><img src="' + product.PhotoHeader + '" id="goToProductId" title="@OnlineShoeShopAndChat.Resources.Language.SeeDetailsTitle" /></div>' +
+                                    '<div class="product-pic-info"><h3><a id="goToProductId" style="cursor:pointer;" title="@OnlineShoeShopAndChat.Resources.Language.SeeDetailsTitle">' + product.Name +
+                                    '</a><span class="spanSizeProduct">@OnlineShoeShopAndChat.Resources.Language.SizeTitle:' + product.SizesOfProduct[0].Size + '</span></h3><div class="product-pic-info-price-cart">' +
+                                    '<span class="product-pic-info-price-green">' + product.Price + '@OnlineShoeShopAndChat.Resources.Language.Leva' + '.</span> ' +
+                                    '<div class="product-info-price-dateAdded"><span class="product-span-info-price-dateAdded">@OnlineShoeShopAndChat.Resources.Language.AddedTitle: ' + product.DateAdded + '</span></div>' +
+                                    '<div class="product-pic-info-cart-btn"><a class="p-btn">@OnlineShoeShopAndChat.Resources.Language.BuyNowBtn</a></div><div class="clearfix"></div></div></div></div></div>');
+                                }
+                                else {
+                                    $('#allProductsId').append('<div class="item-product col-xs-12 col-sm-6 col-md-4 col-lg-3"><div class="product-grid"><div class="product-pic">' +
+                                    '<img src="' + product.PhotoHeader + '" id="goToProductId" title="@OnlineShoeShopAndChat.Resources.Language.SeeDetailsTitle"/></div><div class="product-pic-info"><h3>' +
+                                    '<a id="goToProductId" title="@OnlineShoeShopAndChat.Resources.Language.SeeDetailsTitle">' + product.Name + '</a>' +
+                                    '<span class="spanSizeProduct">@OnlineShoeShopAndChat.Resources.Language.SizeTitle:' + product.SizesOfProduct[0].Size + '</span></h3>' +
+                                    '<div class="product-pic-info-price-cart"><span class="product-pic-info-price-underline">' +
+                                    '<span class="product-info-price-red">' + product.Price + '@OnlineShoeShopAndChat.Resources.Language.Leva' + '.</span></span>' +
+                                    '<span class="product-info-price-green">' + product.PromotionPrice + '@OnlineShoeShopAndChat.Resources.Language.Leva' + '.</span>' +
+                                    '<span class="product-pic-info-price-prduct">' + product.PromotionPercent + '<span class="percentDiscount">%</span></span>' +
+                                    '<div class="product-info-price-dateAdded"><span class="product-span-info-price-dateAdded">@OnlineShoeShopAndChat.Resources.Language.AddedTitle: ' + product.DateAdded + '</span></div>' +
+                                    '<div class="product-pic-info-cart-btn"><a class="p-btn">@OnlineShoeShopAndChat.Resources.Language.BuyNowBtn</a></div><div class="clearfix"> </div></div></div></div></div>');
+                                }
+
+
+                                $('a#goToProductId,img#goToProductId').click(function (e) {
+                                    e.stopImmediatePropagation();
+
+                                    $('#add-loading').html('<div id="div-loading"></div>');
+                                    var dialog = $("#div-loading").kendoWindow({
+                                        draggable: false,
+                                        resizable: false,
+                                        modal: true,
+                                        actions: [""],
+                                        open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                                        position: {
+                                            top: "40%",
+                                            left: "45%"
+                                        }
+                                    }).data("kendoWindow").content("@OnlineShoeShopAndChat.Resources.Language.Loading");
+
+                                    $.ajax({
+                                        url: '@Url.Action("ProductPartialProducts", "Products", new { Area = "Admin" })',
+                                        dataType: "html",
+                                        type: "POST",
+                                        cache: false,
+                                        data: { productId: product.ProductId },
+                                        success: function (productHtmlPartial) {
+
+                                            dialog.close();
+                                            $('#ControlNavigationId').html(productHtmlPartial);
+                                        },
+                                        error: function (error) {
+                                            alert('@OnlineShoeShopAndChat.Resources.Language.MessageRefreshPage');
+                                        }
+                                    });
+                                });
+
+                                $('#btnCheckoutCartId').on('click', function (e) {
+                                    e.stopImmediatePropagation();
+
+                                    $.post('/Home/Checkout', function (success) {
+                                        $('#windowCart').hide();
+                                        $('.k-window').hide();
+                                        $('.resizeLogin').hide();
+                                        $('.k-window-title').html('')
+                                        var winCartOrder = $("#windowCartOrderId").data("kendoWindow").refresh();
+                                        $(".k-window-titlebar").show();
+                                        $(".k-window-titlebar").css("margin-top", "-38px");
+                                        $(".k-upload-sync").removeClass('k-upload-sync');
+                                        $(".k-upload").css("background", "none");
+                                        $(".k-upload").css("border", "none");
+                                        $(".k-upload-files").css("border", "none !important");
+                                        $("div.k-window-content").css("max-height", "660px");
+                                        $(".k-window div.k-window-content").css("margin-top", "0");
+                                        $('.k-upload').addClass('k-upload-remove-border');
+
+                                        winCartOrder.open();
+
+                                        $('#btnCartOrderId').on('click', function () {
+
+                                            var cartOrderCity = $('#cartOrderCityId').val().trim();
+                                            var cartOrderAddress = $('#cartOrderAddressId').val().trim();
+                                            var cartOrderPostOfiice = $('#cartOrderPostOfiiceId').val().trim();
+                                            var cartOrderPhoneNumber = $('#cartOrderPhoneNumberId').val().trim();
+
+                                            var validationCartOrderCity = $('#validationCartOrderCityId');
+                                            var validationCartOrderAddress = $('#validationCartOrderAddressId');
+                                            var validationCartOrderPostOfiice = $('#validationCartOrderPostOfiiceId');
+                                            var validationCartOrderPhoneNumber = $('#validationCartOrderPhoneNumberId');
+
+                                            if (cartOrderCity == '') {
+                                                validationCartOrderCity.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputCity');
+                                            }
+                                            else {
+                                                validationCartOrderCity.html('');
+                                            }
+
+                                            if (cartOrderAddress == '') {
+                                                validationCartOrderAddress.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputAdderess');
+                                            }
+                                            else {
+                                                validationCartOrderAddress.html('');
+                                            }
+
+                                            if (cartOrderPostOfiice == '') {
+                                                validationCartOrderPostOfiice.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputPostOfiice');
+                                            }
+                                            else {
+                                                validationCartOrderPostOfiice.html('');
+                                            }
+
+                                            if (cartOrderPhoneNumber == '') {
+                                                validationCartOrderPhoneNumber.html('@OnlineShoeShopAndChat.Resources.Language.PhoneNumberTitle');
+                                            }
+                                            else {
+                                                var phoneNumber = /^\d{10}$/;
+                                                if (cartOrderPhoneNumber.match(phoneNumber)) {
+                                                    validationCartOrderPhoneNumber.html('');
+                                                }
+                                                else {
+                                                    validationCartOrderPhoneNumber.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputRightPhoneNumber');
+                                                }
+                                            }
+
+                                            var cartFormData = new FormData();
+
+                                            if ((validationCartOrderCity.html() == '') && (validationCartOrderAddress.html() == '') &&
+                                                (validationCartOrderPostOfiice.html() == '') && (validationCartOrderPhoneNumber.html() == '')) {
+
+                                                cartFormData.append("cartOrderCity", cartOrderCity);
+                                                cartFormData.append("cartOrderAddress", cartOrderAddress);
+                                                cartFormData.append("cartOrderPostOfiice", cartOrderPostOfiice);
+                                                cartFormData.append("cartOrderPhoneNumber", cartOrderPhoneNumber);
+
+                                                $.ajax({
+                                                    url: '/Home/CartOrder',
+                                                    type: "POST",
+                                                    processData: false,
+                                                    contentType: false,
+                                                    data: cartFormData,
+                                                    success: function (answer) {
+
+                                                        winCartOrder.close();
+
+                                                        if (answer == 'success') {
+                                                            CheckoutSuccess();
+                                                        }
+                                                        else if (answer == 'problem') {
+                                                            cartProblem();
+                                                        }
+                                                        else if (answer == 'login') {
+                                                            CheckoutLogin();
+                                                        }
+
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    });
+
+                                    //$.ajax({
+                                    //    url: '/Home/Checkout',
+                                    //    dataType: "json",
+                                    //    type: "POST",
+                                    //    contentType: 'application/json; charset=utf-8',
+                                    //    data: {},
+                                    //    success: function (answer) {
+
+                                    //        if (answer == 'success') {
+                                    //            CheckoutSuccess();
+                                    //        }
+                                    //        else if (answer == 'problem') {
+                                    //            cartProblem();
+                                    //        }
+                                    //        else if (answer == 'login') {
+                                    //            CheckoutLogin();
+                                    //        }
+                                    //    },
+                                    //    error: function (e) {
+                                    //        alert('Please, refresh the page.');
+                                    //    }
+                                    //});
+                                });
+
+                                $('.p-btn').click(function (e) {
+                                    e.stopImmediatePropagation();
+
+                                    $.ajax({
+                                        url: '/Admin/Products/AddProductToCart',
+                                        dataType: "json",
+                                        type: "POST",
+                                        contentType: 'application/json; charset=utf-8',
+                                        data: JSON.stringify({ productId: product.ProductId, sizeValue: product.SizesOfProduct[0].Size }),
+                                        success: function (cart) {
+
+                                            var countCart = cart.length;
+
+                                            if (countCart > 0) {
+
+                                                $('#checkoutCartTotalId').show();
+                                                $('#checkoutCartId').show();
+                                            }
+
+                                            //alert that is product added
+                                            var win = $("<div>").kendoWindow({
+                                                modal: true,
+                                                open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                                                position: {
+                                                    top: "40%",
+                                                    left: "45%"
+                                                }
+                                            }).getKendoWindow();
+
+                                            // set the content
+                                            win.content('@OnlineShoeShopAndChat.Resources.Language.MessageProductWasAdded');
+                                            // center it and open it
+                                            win.open();
+
+                                            $('#cartCountId').html(cart.length);
+                                            $('#cartUserId').html('');
+
+                                            $.each(cart, function (index, product) {
+
+                                                if (product.ProductInCart.Specials) {
+
+                                                    $('#cartUserId').append('<div class="imgCart userMen" id="removeProductId' + index + '"><img src="' + product.ProductInCart.Photo + '" class="hover"><div>' +
+                                                    '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.ColectionTitle: </span>' + product.ProductInCart.CategoryName + '<div>' +
+                                                    '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.NameTitle: </span>' + product.ProductInCart.Name + '</div><div>' +
+                                                    '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.SizeTitle: </span>' + product.ProductInCart.SizeOfProduct.Size + '</div>' +
+                                                    '<div><span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.ProductNumberTitle: </span>' + product.ProductId + '</div>' +
+                                                    '<div style="text-align: right; color: #ff0000; text-shadow: 5px 5px 5px #888888;"><span class="hover" id="removeFromCartId">@OnlineShoeShopAndChat.Resources.Language.RemoveTitle</span>' +
+                                                    '</div></div><div style="text-align: right;padding-left: 20px;"><div>' +
+                                                    '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.PriceTitle: </span>' +
+                                                    '<span class="product-price-underline"><span class="product-price-red">' + product.ProductInCart.Price + '</span></span>' +
+                                                    '<span class="product-price-green">' + product.ProductInCart.PromotionPrice + '</span></div><div style="color: #888888">' +
+                                                    product.ProductInCart.PromotionPercent + '% @OnlineShoeShopAndChat.Resources.Language.OffTitle</div></div></div>');
+                                                }
+                                                else {
+
+                                                    $('#cartUserId').append('<div class="imgCart userMen" id="removeProductId' + index + '"><img src="' + product.ProductInCart.Photo + '" class="hover"><div>' +
+                                                        '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.ColectionTitle: </span>' + product.ProductInCart.CategoryName + '<div>' +
+                                                        '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.NameTitle: </span>' + product.ProductInCart.Name + '</div><div>' +
+                                                        '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.SizeTitle: </span>' + product.ProductInCart.SizeOfProduct.Size + '</div>' +
+                                                        '<div><span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.ProductNumberTitle: </span>' + product.ProductId + '</div>' +
+                                                        '<div style="text-align: right; color: #ff0000; text-shadow: 5px 5px 5px #888888;"><span class="hover" id="removeFromCartId">@OnlineShoeShopAndChat.Resources.Language.RemoveTitle' +
+                                                        '</span></div></div><div style="text-align: right;padding-left: 20px;"><div>' +
+                                                        '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.PriceTitle: </span>' +
+                                                        '<span class="product-price-green">' + product.ProductInCart.Price + '</span></div></div></div>')
+                                                }
+
+                                                $('span#removeFromCartId').on('click', function (e) {
+                                                    e.stopImmediatePropagation();
+
+                                                    $.ajax({
+                                                        url: '/Admin/Home/RemoveProductFromCart',
+                                                        dataType: "json",
+                                                        type: "POST",
+                                                        contentType: 'application/json; charset=utf-8',
+                                                        data: "{ productId:" + JSON.stringify(product.ProductId) + "}",
+                                                        success: function (total) {
+
+                                                            countCart = countCart - 1;
+                                                            if (countCart > 0) {
+
+                                                                $('#checkoutCartTotalId').html('<div class="checkoutBtnDivSend">' +
+                                                                 '@OnlineShoeShopAndChat.Resources.Language.MessageTotal: <span class="checkoutTotalSpan" id="cartTotalId">' + total + '@OnlineShoeShopAndChat.Resources.Language.Leva' + '.</span></div>');
+                                                                $('#checkoutCartId').show();
+                                                            }
+                                                            else {
+                                                                $('#cartUserId').html('<div class="centerAlign"><h3 style="color: #ff006e;">@OnlineShoeShopAndChat.Resources.Language.NoProducts</h3></div>');
+                                                                $('#checkoutCartId').hide();
+                                                                $('#checkoutCartTotalId').hide();
+                                                            }
+
+                                                            $('#cartCountId').html(countCart);
+                                                            $('#removeProductId' + index).remove();
+                                                        },
+                                                        error: function (e) {
+                                                            alert('@OnlineShoeShopAndChat.Resources.Language.MessageRefreshPage');
+                                                        }
+                                                    });
+                                                });
+
+                                            });
+
+                                            $('#checkoutCartTotalId').html('<div class="checkoutBtnDivSend">' +
+                                             '@OnlineShoeShopAndChat.Resources.Language.MessageTotal: <span class="checkoutTotalSpan" id="cartTotalId">' + cart[cart.length - 1].Total + '@OnlineShoeShopAndChat.Resources.Language.Leva' + '.</span></div>');
+
+                                        },
+                                        error: function (error) {
+                                            alert('@OnlineShoeShopAndChat.Resources.Language.MessageRefreshPage');
+                                        }
+                                    });
+                                });
+
+                            });
+                        }
+                        else {
+                            $('#allProductsId').html('<h2 class="text-center;">@OnlineShoeShopAndChat.Resources.Language.NoProducts</h2>');
+                        }
+                        $('#allProductsId').append('<div class="clearfix"> </div>');
+                    }
+                });
+            }
+        }
+        else {
+
+            selectedLiCount = 0;
+
+            $.ajax({
+                url: '/Admin/Products/SortAllProducts',
+                dataType: "json",
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                data: "{ sortBy:" + JSON.stringify(valLi) + "}",
+                success: function (products) {
+
+                    dialog.close();
+                    $('#allProductsId').html('');
+
+                    if (products.length > 0) {
+                        $.each(products, function (index, product) {
+
+                            if (product.Specials == false) {
+
+                                $('#allProductsId').append('<div class="item-product col-xs-12 col-sm-6 col-md-4 col-lg-3"><div class="product-grid">' +
+                                '<div class="product-pic"><img src="' + product.PhotoHeader + '" id="goToProductId" title="@OnlineShoeShopAndChat.Resources.Language.SeeDetailsTitle" /></div>' +
+                                '<div class="product-pic-info"><h3><a id="goToProductId" style="cursor:pointer;" title="@OnlineShoeShopAndChat.Resources.Language.SeeDetailsTitle">' + product.Name +
+                                '</a><span class="spanSizeProduct">@OnlineShoeShopAndChat.Resources.Language.SizeTitle:' + product.SizesOfProduct[0].Size + '</span></h3><div class="product-pic-info-price-cart">' +
+                                '<span class="product-pic-info-price-green">' + product.Price + '@OnlineShoeShopAndChat.Resources.Language.Leva' + '.</span>' +
+                                '<div class="product-info-price-dateAdded"><span class="product-span-info-price-dateAdded">@OnlineShoeShopAndChat.Resources.Language.AddedTitle: ' + product.DateAdded + '</span></div>' +
+                                '<div class="product-pic-info-cart-btn"><a class="p-btn">@OnlineShoeShopAndChat.Resources.Language.BuyNowBtn</a></div><div class="clearfix"></div></div></div></div></div>');
+                            }
+                            else {
+                                $('#allProductsId').append('<div class="item-product col-xs-12 col-sm-6 col-md-4 col-lg-3"><div class="product-grid"><div class="product-pic">' +
+                                '<img src="' + product.PhotoHeader + '" id="goToProductId" title="@OnlineShoeShopAndChat.Resources.Language.SeeDetailsTitle"/></div><div class="product-pic-info"><h3>' +
+                                '<a id="goToProductId" title="@OnlineShoeShopAndChat.Resources.Language.SeeDetailsTitle">' + product.Name + '</a>' +
+                                '<span class="spanSizeProduct">@OnlineShoeShopAndChat.Resources.Language.SizeTitle:' + product.SizesOfProduct[0].Size + '</span></h3>' +
+                                '<div class="product-pic-info-price-cart"><span class="product-pic-info-price-underline">' +
+                                '<span class="product-info-price-red">' + product.Price + '@OnlineShoeShopAndChat.Resources.Language.Leva' + '.</span></span>' +
+                                '<span class="product-info-price-green">' + product.PromotionPrice + '@OnlineShoeShopAndChat.Resources.Language.Leva' + '.</span>' +
+                                '<span class="product-pic-info-price-prduct">' + product.PromotionPercent + '<span class="percentDiscount">%</span></span>' +
+                                '<div class="product-info-price-dateAdded"><span class="product-span-info-price-dateAdded">@OnlineShoeShopAndChat.Resources.Language.AddedTitle: ' + product.DateAdded + '</span></div>' +
+                                '<div class="product-pic-info-cart-btn"><a class="p-btn">@OnlineShoeShopAndChat.Resources.Language.BuyNowBtn</a></div><div class="clearfix"> </div></div></div></div></div>');
+                            }
+
+
+                            $('a#goToProductId,img#goToProductId').click(function (e) {
+                                e.stopImmediatePropagation();
+
+                                $('#add-loading').html('<div id="div-loading"></div>');
+                                var dialog = $("#div-loading").kendoWindow({
+                                    draggable: false,
+                                    resizable: false,
+                                    modal: true,
+                                    actions: [""],
+                                    open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                                    position: {
+                                        top: "40%",
+                                        left: "45%"
+                                    }
+                                }).data("kendoWindow").content("@OnlineShoeShopAndChat.Resources.Language.Loading");
+
+                                $.ajax({
+                                    url: '@Url.Action("ProductPartialProducts", "Products", new { Area = "Admin" })',
+                                    dataType: "html",
+                                    type: "POST",
+                                    cache: false,
+                                    data: { productId: product.ProductId },
+                                    success: function (productHtmlPartial) {
+
+                                        dialog.close();
+                                        $('#ControlNavigationId').html(productHtmlPartial);
+                                    },
+                                    error: function (error) {
+                                        alert('@OnlineShoeShopAndChat.Resources.Language.MessageRefreshPage');
+                                    }
+                                });
+                            });
+
+                            $('#btnCheckoutCartId').on('click', function (e) {
+                                e.stopImmediatePropagation();
+
+                                $.post('/Home/Checkout', function (success) {
+                                    $('#windowCart').hide();
+                                    $('.k-window').hide();
+                                    $('.resizeLogin').hide();
+                                    $('.k-window-title').html('')
+                                    var winCartOrder = $("#windowCartOrderId").data("kendoWindow").refresh();
+                                    $(".k-window-titlebar").show();
+                                    $(".k-window-titlebar").css("margin-top", "-38px");
+                                    $(".k-upload-sync").removeClass('k-upload-sync');
+                                    $(".k-upload").css("background", "none");
+                                    $(".k-upload").css("border", "none");
+                                    $(".k-upload-files").css("border", "none !important");
+                                    $("div.k-window-content").css("max-height", "660px");
+                                    $(".k-window div.k-window-content").css("margin-top", "0");
+                                    $('.k-upload').addClass('k-upload-remove-border');
+
+                                    winCartOrder.open();
+
+                                    $('#btnCartOrderId').on('click', function () {
+
+                                        var cartOrderCity = $('#cartOrderCityId').val().trim();
+                                        var cartOrderAddress = $('#cartOrderAddressId').val().trim();
+                                        var cartOrderPostOfiice = $('#cartOrderPostOfiiceId').val().trim();
+                                        var cartOrderPhoneNumber = $('#cartOrderPhoneNumberId').val().trim();
+
+                                        var validationCartOrderCity = $('#validationCartOrderCityId');
+                                        var validationCartOrderAddress = $('#validationCartOrderAddressId');
+                                        var validationCartOrderPostOfiice = $('#validationCartOrderPostOfiiceId');
+                                        var validationCartOrderPhoneNumber = $('#validationCartOrderPhoneNumberId');
+
+                                        if (cartOrderCity == '') {
+                                            validationCartOrderCity.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputCity');
+                                        }
+                                        else {
+                                            validationCartOrderCity.html('');
+                                        }
+
+                                        if (cartOrderAddress == '') {
+                                            validationCartOrderAddress.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputAdderess');
+                                        }
+                                        else {
+                                            validationCartOrderAddress.html('');
+                                        }
+
+                                        if (cartOrderPostOfiice == '') {
+                                            validationCartOrderPostOfiice.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputPostOfiice');
+                                        }
+                                        else {
+                                            validationCartOrderPostOfiice.html('');
+                                        }
+
+                                        if (cartOrderPhoneNumber == '') {
+                                            validationCartOrderPhoneNumber.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputPhoneNumber');
+                                        }
+                                        else {
+                                            var phoneNumber = /^\d{10}$/;
+                                            if (cartOrderPhoneNumber.match(phoneNumber)) {
+                                                validationCartOrderPhoneNumber.html('');
+                                            }
+                                            else {
+                                                validationCartOrderPhoneNumber.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputRightPhoneNumber');
+                                            }
+                                        }
+
+                                        var cartFormData = new FormData();
+
+                                        if ((validationCartOrderCity.html() == '') && (validationCartOrderAddress.html() == '') &&
+                                            (validationCartOrderPostOfiice.html() == '') && (validationCartOrderPhoneNumber.html() == '')) {
+
+                                            cartFormData.append("cartOrderCity", cartOrderCity);
+                                            cartFormData.append("cartOrderAddress", cartOrderAddress);
+                                            cartFormData.append("cartOrderPostOfiice", cartOrderPostOfiice);
+                                            cartFormData.append("cartOrderPhoneNumber", cartOrderPhoneNumber);
+
+                                            $.ajax({
+                                                url: '/Home/CartOrder',
+                                                type: "POST",
+                                                processData: false,
+                                                contentType: false,
+                                                data: cartFormData,
+                                                success: function (answer) {
+
+                                                    winCartOrder.close();
+
+                                                    if (answer == 'success') {
+                                                        CheckoutSuccess();
+                                                    }
+                                                    else if (answer == 'problem') {
+                                                        cartProblem();
+                                                    }
+                                                    else if (answer == 'login') {
+                                                        CheckoutLogin();
+                                                    }
+
+                                                }
+                                            });
+                                        }
+                                    });
+                                });
+
+                                //$.ajax({
+                                //    url: '/Home/Checkout',
+                                //    dataType: "json",
+                                //    type: "POST",
+                                //    contentType: 'application/json; charset=utf-8',
+                                //    data: {},
+                                //    success: function (answer) {
+
+                                //        if (answer == 'success') {
+                                //            CheckoutSuccess();
+                                //        }
+                                //        else if (answer == 'problem') {
+                                //            cartProblem();
+                                //        }
+                                //        else if (answer == 'login') {
+                                //            CheckoutLogin();
+                                //        }
+                                //    },
+                                //    error: function (e) {
+                                //        alert('Please, refresh the page.');
+                                //    }
+                                //});
+                            });
+
+                            $('.p-btn').click(function (e) {
+                                e.stopImmediatePropagation();
+
+                                $.ajax({
+                                    url: '/Admin/Products/AddProductToCart',
+                                    dataType: "json",
+                                    type: "POST",
+                                    contentType: 'application/json; charset=utf-8',
+                                    data: JSON.stringify({ productId: product.ProductId, sizeValue: product.SizesOfProduct[0].Size }),
+                                    success: function (cart) {
+
+                                        var countCart = cart.length;
+
+                                        if (countCart > 0) {
+
+                                            $('#checkoutCartTotalId').show();
+                                            $('#checkoutCartId').show();
+                                        }
+
+                                        //alert that is product added
+                                        var win = $("<div>").kendoWindow({
+                                            modal: true,
+                                            open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                                            position: {
+                                                top: "40%",
+                                                left: "45%"
+                                            }
+                                        }).getKendoWindow();
+
+                                        // set the content
+                                        win.content('@OnlineShoeShopAndChat.Resources.Language.MessageProductWasAdded');
+                                        // center it and open it
+                                        win.open();
+
+                                        $('#cartCountId').html(cart.length);
+                                        $('#cartUserId').html('');
+
+                                        $.each(cart, function (index, product) {
+
+                                            if (product.ProductInCart.Specials) {
+
+                                                $('#cartUserId').append('<div class="imgCart userMen" id="removeProductId' + index + '"><img src="' + product.ProductInCart.Photo + '" class="hover"><div>' +
+                                                '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.ColectionTitle: </span>' + product.ProductInCart.CategoryName + '<div>' +
+                                                '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.NameTitle: </span>' + product.ProductInCart.Name + '</div><div>' +
+                                                '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.SizeTitle: </span>' + product.ProductInCart.SizeOfProduct.Size + '</div>' +
+                                                '<div><span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.ProductNumberTitle: </span>' + product.ProductId + '</div>' +
+                                                '<div style="text-align: right; color: #ff0000; text-shadow: 5px 5px 5px #888888;"><span class="hover" id="removeFromCartId">@OnlineShoeShopAndChat.Resources.Language.RemoveTitle</span>' +
+                                                '</div></div><div style="text-align: right;padding-left: 20px;"><div>' +
+                                                '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.PriceTitle: </span>' +
+                                                '<span class="product-price-underline"><span class="product-price-red">' + product.ProductInCart.Price + '</span></span>' +
+                                                '<span class="product-price-green">' + product.ProductInCart.PromotionPrice + '</span></div><div style="color: #888888">' +
+                                                product.ProductInCart.PromotionPercent + '% @OnlineShoeShopAndChat.Resources.Language.OffTitle</div></div></div>');
+                                            }
+                                            else {
+
+                                                $('#cartUserId').append('<div class="imgCart userMen" id="removeProductId' + index + '"><img src="' + product.ProductInCart.Photo + '" class="hover"><div>' +
+                                                    '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.ColectionTitle: </span>' + product.ProductInCart.CategoryName + '<div>' +
+                                                    '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.NameTitle: </span>' + product.ProductInCart.Name + '</div><div>' +
+                                                    '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.SizeTitle: </span>' + product.ProductInCart.SizeOfProduct.Size + '</div>' +
+                                                    '<div><span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.ProductNumberTitle: </span>' + product.ProductId + '</div>' +
+                                                    '<div style="text-align: right; color: #ff0000; text-shadow: 5px 5px 5px #888888;"><span class="hover" id="removeFromCartId">@OnlineShoeShopAndChat.Resources.Language.RemoveTitle' +
+                                                    '</span></div></div><div style="text-align: right;padding-left: 20px;"><div>' +
+                                                    '<span style="font-weight: normal; font-size: 12px;">@OnlineShoeShopAndChat.Resources.Language.PriceTitle: </span>' +
+                                                    '<span class="product-price-green">' + product.ProductInCart.Price + '</span></div></div></div>')
+                                            }
+
+                                            $('span#removeFromCartId').on('click', function (e) {
+                                                e.stopImmediatePropagation();
+
+                                                $.ajax({
+                                                    url: '/Admin/Home/RemoveProductFromCart',
+                                                    dataType: "json",
+                                                    type: "POST",
+                                                    contentType: 'application/json; charset=utf-8',
+                                                    data: "{ productId:" + JSON.stringify(product.ProductId) + "}",
+                                                    success: function (total) {
+
+                                                        countCart = countCart - 1;
+                                                        if (countCart > 0) {
+
+                                                            $('#checkoutCartTotalId').html('<div class="checkoutBtnDivSend">' +
+                                                             '@OnlineShoeShopAndChat.Resources.Language.MessageTotal: <span class="checkoutTotalSpan" id="cartTotalId">' + total + '@OnlineShoeShopAndChat.Resources.Language.Leva' + '.</span></div>');
+                                                            $('#checkoutCartId').show();
+                                                        }
+                                                        else {
+                                                            $('#cartUserId').html('<div class="centerAlign"><h3 style="color: #ff006e;">@OnlineShoeShopAndChat.Resources.Language.NoProducts</h3></div>');
+                                                            $('#checkoutCartId').hide();
+                                                            $('#checkoutCartTotalId').hide();
+                                                        }
+
+                                                        $('#cartCountId').html(countCart);
+                                                        $('#removeProductId' + index).remove();
+                                                    },
+                                                    error: function (e) {
+                                                        alert('@OnlineShoeShopAndChat.Resources.Language.MessageRefreshPage');
+                                                    }
+                                                });
+                                            });
+
+                                        });
+
+                                        $('#checkoutCartTotalId').html('<div class="checkoutBtnDivSend">' +
+                                          '@OnlineShoeShopAndChat.Resources.Language.MessageTotal: <span class="checkoutTotalSpan" id="cartTotalId">' + cart[cart.length - 1].Total + '@OnlineShoeShopAndChat.Resources.Language.Leva' + '.</span></div>');
+
+                                    },
+                                    error: function (error) {
+                                        alert('@OnlineShoeShopAndChat.Resources.Language.MessageRefreshPage');
+                                    }
+                                });
+                            });
+
+                        });
+                    }
+                    else {
+                        $('#allProductsId').html('<h2 class="text-center;">@OnlineShoeShopAndChat.Resources.Language.NoProducts</h2>');
+                    }
+                    $('#allProductsId').append('<div class="clearfix"> </div>');
+
+
+                }
+            });
+        }
+
+        selectedLi = $('.cs-selected').data('value');
+
+    });
+
+})();
+</script>

@@ -1,0 +1,324 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WebTest Name="WebTest1" Id="39af5b91-0651-497a-9fc0-297aef85ead9" Owner="" Priority="2147483647" Enabled="True" CssProjectStructure="" CssIteration="" Timeout="0" WorkItemIds="" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010" Description="" CredentialUserName="" CredentialPassword="" PreAuthenticate="True" Proxy="default" StopOnError="False" RecordedResultFile="WebTest1.bb1bb102-1d4f-4050-ba68-9cd976707247.rec.webtestresult" ResultsLocale="">
+  <Items>
+    <Request Method="GET" Guid="e9555c40-0ebd-4690-8744-65794c9da5f1" Version="1.1" Url="http://api.bing.com/qsml.aspx" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="https://api.bing.com/qsml.aspx?query=i&amp;maxwidth=32765&amp;rowheight=20&amp;sectionHeight=160&amp;FORM=IESS4A&amp;market=en-US&amp;pc=EUPP_" ReportingName="" IgnoreHttpStatusCode="False">
+      <QueryStringParameters>
+        <QueryStringParameter Name="query" Value="i" RecordedValue="i" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="maxwidth" Value="32765" RecordedValue="32765" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="rowheight" Value="20" RecordedValue="20" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="sectionHeight" Value="160" RecordedValue="160" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="FORM" Value="IESS4A" RecordedValue="IESS4A" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="market" Value="en-US" RecordedValue="en-US" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="pc" Value="EUPP_" RecordedValue="EUPP_" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="9a096ce9-52d9-4591-8fef-8226db9a31bc" Version="1.1" Url="http://api.bing.com/qsml.aspx" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="https://api.bing.com/qsml.aspx?query=il&amp;maxwidth=32765&amp;rowheight=20&amp;sectionHeight=160&amp;FORM=IESS4A&amp;market=en-US&amp;pc=EUPP_" ReportingName="" IgnoreHttpStatusCode="False">
+      <QueryStringParameters>
+        <QueryStringParameter Name="query" Value="il" RecordedValue="il" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="maxwidth" Value="32765" RecordedValue="32765" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="rowheight" Value="20" RecordedValue="20" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="sectionHeight" Value="160" RecordedValue="160" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="FORM" Value="IESS4A" RecordedValue="IESS4A" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="market" Value="en-US" RecordedValue="en-US" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="pc" Value="EUPP_" RecordedValue="EUPP_" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="6c667aa3-0f09-4b7d-a24e-03881d436c39" Version="1.1" Url="http://api.bing.com/qsml.aspx" ThinkTime="1" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="https://api.bing.com/qsml.aspx?query=ili&amp;maxwidth=32765&amp;rowheight=20&amp;sectionHeight=160&amp;FORM=IESS4A&amp;market=en-US&amp;pc=EUPP_" ReportingName="" IgnoreHttpStatusCode="False">
+      <QueryStringParameters>
+        <QueryStringParameter Name="query" Value="ili" RecordedValue="ili" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="maxwidth" Value="32765" RecordedValue="32765" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="rowheight" Value="20" RecordedValue="20" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="sectionHeight" Value="160" RecordedValue="160" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="FORM" Value="IESS4A" RecordedValue="IESS4A" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="market" Value="en-US" RecordedValue="en-US" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="pc" Value="EUPP_" RecordedValue="EUPP_" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="8895e30a-ba49-430d-8c00-92268bab89cb" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/" ThinkTime="1" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <DependentRequests>
+        <Request Method="GET" Guid="ecbc13f4-f638-4c1e-8dbd-31bc31e0bde0" Version="1.1" Url="http://fonts.gstatic.com/s/lato/v14/S6u8w4BMUTPHh30AXC-s.woff" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+          </Headers>
+        </Request>
+        <Request Method="GET" Guid="ab4b0448-ac02-41ca-8279-0ca57d5b78e9" Version="1.1" Url="http://fonts.gstatic.com/s/lato/v14/S6u9w4BMUTPHh7USSwiPHw.woff" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+          </Headers>
+        </Request>
+        <Request Method="GET" Guid="bffa9451-2882-4e63-8626-5004ed82e352" Version="1.1" Url="http://fonts.gstatic.com/s/lato/v14/S6uyw4BMUTPHjx4wWA.woff" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+          </Headers>
+        </Request>
+        <Request Method="GET" Guid="4dd948c9-0009-49d6-96d3-7c8c2a7df5d6" Version="1.1" Url="http://fonts.gstatic.com/s/lato/v14/S6u9w4BMUTPHh6UVSwiPHw.woff" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+          </Headers>
+        </Request>
+        <Request Method="GET" Guid="3bcb5480-a0ed-427b-8154-7235af5b2e4c" Version="1.1" Url="http://fonts.gstatic.com/s/lato/v14/S6u9w4BMUTPHh50XSwiPHw.woff" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+          </Headers>
+        </Request>
+        <Request Method="GET" Guid="223d156b-ed7c-4913-a8e7-e980f2b371ea" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/fonts/glyphicons-halflings-regular.eot" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+          </Headers>
+          <QueryStringParameters>
+            <QueryStringParameter Name="" Value="" RecordedValue="" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+          </QueryStringParameters>
+        </Request>
+        <Request Method="GET" Guid="11193917-8898-4459-81a9-dc59d9a70fcc" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/Home/GetOrderMessagesCount" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Accept" Value="application/json, text/javascript, */*; q=0.01" />
+            <Header Name="X-Requested-With" Value="XMLHttpRequest" />
+            <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+          </Headers>
+        </Request>
+        <Request Method="GET" Guid="83466600-f7b6-4bf1-b65a-1352090b247a" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/Home/GetCartProducts" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Accept" Value="application/json, text/javascript, */*; q=0.01" />
+            <Header Name="X-Requested-With" Value="XMLHttpRequest" />
+            <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+          </Headers>
+        </Request>
+        <Request Method="GET" Guid="e677659d-9f4c-4be4-b1a8-60157f8128f3" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/Home/GetHomePage" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Accept" Value="application/json, text/javascript, */*; q=0.01" />
+            <Header Name="X-Requested-With" Value="XMLHttpRequest" />
+            <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+          </Headers>
+        </Request>
+        <Request Method="GET" Guid="1af0ea08-a5d5-4995-af00-0dd4a0729b46" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/Home/GetFooter" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Accept" Value="*/*" />
+            <Header Name="X-Requested-With" Value="XMLHttpRequest" />
+            <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+          </Headers>
+        </Request>
+        <Request Method="GET" Guid="bf7717e6-8a23-4d91-b08b-f31c13b70edf" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/Products/GetFavoritesCount" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Accept" Value="*/*" />
+            <Header Name="X-Requested-With" Value="XMLHttpRequest" />
+            <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+          </Headers>
+        </Request>
+        <Request Method="GET" Guid="9fb768ce-4e9f-4ba2-94f8-d5d8328158d6" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/Products/GetFavorites" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Accept" Value="*/*" />
+            <Header Name="X-Requested-With" Value="XMLHttpRequest" />
+            <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+          </Headers>
+        </Request>
+        <Request Method="GET" Guid="1f7a37d8-7b23-46d5-a55f-a181629ca204" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/Home/Language" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Accept" Value="application/json, text/javascript, */*; q=0.01" />
+            <Header Name="X-Requested-With" Value="XMLHttpRequest" />
+            <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+          </Headers>
+        </Request>
+        <Request Method="GET" Guid="afbe547d-b542-4f42-a8b0-47e73637fe2b" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/Home/GetNewArrivals" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Accept" Value="application/json, text/javascript, */*; q=0.01" />
+            <Header Name="X-Requested-With" Value="XMLHttpRequest" />
+            <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+          </Headers>
+        </Request>
+        <Request Method="GET" Guid="907c3c43-c40c-4c3a-9c00-292d1fd95259" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/Home/GetMostBought" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Accept" Value="application/json, text/javascript, */*; q=0.01" />
+            <Header Name="X-Requested-With" Value="XMLHttpRequest" />
+            <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+          </Headers>
+        </Request>
+      </DependentRequests>
+    </Request>
+    <Request Method="GET" Guid="606e0f98-f732-4007-8787-265748e31e27" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/signalr/negotiate" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=UTF-8" />
+        <Header Name="Accept" Value="text/plain, */*; q=0.01" />
+        <Header Name="X-Requested-With" Value="XMLHttpRequest" />
+        <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="clientProtocol" Value="1.5" RecordedValue="1.5" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="connectionData" Value="%5B%5D" RecordedValue="%5B%5D" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="_" Value="1536228640928" RecordedValue="1536228640928" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="9721e79f-cbc3-4d00-883f-759832b93c78" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/signalr/negotiate" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=UTF-8" />
+        <Header Name="Accept" Value="text/plain, */*; q=0.01" />
+        <Header Name="X-Requested-With" Value="XMLHttpRequest" />
+        <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="clientProtocol" Value="1.5" RecordedValue="1.5" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="connectionData" Value="%5B%7B%22name%22%3A%22notifications%22%7D%5D" RecordedValue="%5B%7B%22name%22%3A%22notifications%22%7D%5D" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="_" Value="1536228640929" RecordedValue="1536228640929" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="ac595152-c943-4bea-a24e-86ed7fa8eac4" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/signalr/negotiate" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=UTF-8" />
+        <Header Name="Accept" Value="text/plain, */*; q=0.01" />
+        <Header Name="X-Requested-With" Value="XMLHttpRequest" />
+        <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="clientProtocol" Value="1.5" RecordedValue="1.5" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="connectionData" Value="%5B%7B%22name%22%3A%22notifications%22%7D%5D" RecordedValue="%5B%7B%22name%22%3A%22notifications%22%7D%5D" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="_" Value="1536228640930" RecordedValue="1536228640930" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="a9ffdd5d-f865-4ed8-82df-6f71380db959" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/font/fontawesome-webfont.woff" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="1ce632a2-1663-47ee-bd07-de8f8d24596e" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/font2/fontawesome-webfont.woff" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="eb7f7f31-3bb0-4278-b9f5-edc3759d4a6a" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/fonts/fontLogOutFont/fontawesome-webfont.woff" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="0e1a20b9-0ef9-4a01-bfe3-59c279edc363" Version="1.1" Url="http://fonts.gstatic.com/s/lora/v10/5-AYViExptypIdFoLKAxTA.woff" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="5b22abf1-80ad-43db-bf41-7b1c3f3cce02" Version="1.1" Url="http://fonts.gstatic.com/s/lora/v10/XpaepWHcooQHSRnzoohUng.woff" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="03068a23-4d29-4fab-8d46-84759ddded56" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/font/fontawesome-webfont.ttf" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="a884eaf9-1844-452d-ba6b-738380a423cf" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/font2/fontawesome-webfont.ttf" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="bd911036-3cf2-4ab6-b2a0-738271e79dc1" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/signalr/start" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=UTF-8" />
+        <Header Name="Accept" Value="text/plain, */*; q=0.01" />
+        <Header Name="X-Requested-With" Value="XMLHttpRequest" />
+        <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="transport" Value="webSockets" RecordedValue="webSockets" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="clientProtocol" Value="1.5" RecordedValue="1.5" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="connectionToken" Value="Pju5GN3XaPrE2m42iwOboiFzvlx%2BovlXp5QZSSLBmpFK%2BdZy9rpXToiz5Y08es5WUUenjiW93o128LEYgt2m1IbLi0e41mXlJwfTN0Tqah7fBxXW2BxDs8yLTnbzDSnd" RecordedValue="Pju5GN3XaPrE2m42iwOboiFzvlx%2BovlXp5QZSSLBmpFK%2BdZy9rpXToiz5Y08es5WUUenjiW93o128LEYgt2m1IbLi0e41mXlJwfTN0Tqah7fBxXW2BxDs8yLTnbzDSnd" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="connectionData" Value="%5B%5D" RecordedValue="%5B%5D" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="_" Value="1536228640931" RecordedValue="1536228640931" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="1aea0ed3-5f14-4acf-883d-6750d097b588" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/signalr/start" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=UTF-8" />
+        <Header Name="Accept" Value="text/plain, */*; q=0.01" />
+        <Header Name="X-Requested-With" Value="XMLHttpRequest" />
+        <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="transport" Value="webSockets" RecordedValue="webSockets" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="clientProtocol" Value="1.5" RecordedValue="1.5" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="connectionToken" Value="0EqhpfQa4UHVGBVbT53mbuYlrvTLflXqyIbUvGIETW%2B283b6SGJ9Fcdshc%2BUmnD0VXzb6BNWLCiMbGZeQIM%2BIB%2FnqZukagQOCAeBgPskdGQ0xzrj2QuRuB6%2FSdN7jfK0" RecordedValue="0EqhpfQa4UHVGBVbT53mbuYlrvTLflXqyIbUvGIETW%2B283b6SGJ9Fcdshc%2BUmnD0VXzb6BNWLCiMbGZeQIM%2BIB%2FnqZukagQOCAeBgPskdGQ0xzrj2QuRuB6%2FSdN7jfK0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="connectionData" Value="%5B%7B%22name%22%3A%22notifications%22%7D%5D" RecordedValue="%5B%7B%22name%22%3A%22notifications%22%7D%5D" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="_" Value="1536228640932" RecordedValue="1536228640932" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="1800d05a-8430-4318-99f9-ebb296459b11" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/signalr/start" ThinkTime="5" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Content-Type" Value="application/json; charset=UTF-8" />
+        <Header Name="Accept" Value="text/plain, */*; q=0.01" />
+        <Header Name="X-Requested-With" Value="XMLHttpRequest" />
+        <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="transport" Value="webSockets" RecordedValue="webSockets" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="clientProtocol" Value="1.5" RecordedValue="1.5" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="connectionToken" Value="rEU33yHCF0fhAaOjpugpIivEby1GxvrQR8fLjg0ZXvYl%2BoVvZyKAUFkQ%2BumJisOUE26wEQr7ACWbqjxkAzku%2F84UvO0Yq%2BJSwXv4E9%2F2d8ue1C8cVPeh90B%2BdLLqHBqL" RecordedValue="rEU33yHCF0fhAaOjpugpIivEby1GxvrQR8fLjg0ZXvYl%2BoVvZyKAUFkQ%2BumJisOUE26wEQr7ACWbqjxkAzku%2F84UvO0Yq%2BJSwXv4E9%2F2d8ue1C8cVPeh90B%2BdLLqHBqL" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="connectionData" Value="%5B%7B%22name%22%3A%22notifications%22%7D%5D" RecordedValue="%5B%7B%22name%22%3A%22notifications%22%7D%5D" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="_" Value="1536228640933" RecordedValue="1536228640933" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="6e23e332-ff37-4f8b-81d8-12c0a2c9cc66" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/Content/fonts/glyphs/WebComponentsIcons.eot" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="" Value="gedxeo" RecordedValue="gedxeo" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="549bcb3d-5155-4976-b698-e39ce77eb2b1" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/Products/WomenPartial" ThinkTime="1" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Accept" Value="*/*" />
+        <Header Name="X-Requested-With" Value="XMLHttpRequest" />
+        <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="58055480-45b9-496d-9210-519ac26d594c" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/Products/MenPartial" ThinkTime="2" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Accept" Value="*/*" />
+        <Header Name="X-Requested-With" Value="XMLHttpRequest" />
+        <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/Products/Women" />
+      </Headers>
+      <CorrelationExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam1.productId" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value=" id=&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot; hre" />
+            <RuleParameter Name="Index" Value="3" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+      </CorrelationExtractionRules>
+    </Request>
+    <Request Method="GET" Guid="02211c07-da3a-436b-a0bf-3d59a1a9d881" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/Home/AboutPartial" ThinkTime="2" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Accept" Value="*/*" />
+        <Header Name="X-Requested-With" Value="XMLHttpRequest" />
+        <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/Products/Men" />
+      </Headers>
+    </Request>
+    <Request Method="POST" Guid="0e3a380c-b066-481a-a07f-f0ceb96b83de" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/Products/RemoveProductFavorites" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Accept" Value="*/*" />
+        <Header Name="X-Requested-With" Value="XMLHttpRequest" />
+        <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/Home/About" />
+      </Headers>
+      <FormPostHttpBody>
+        <FormPostParameter Name="productId" Value="7" RecordedValue="7" CorrelationBinding="{{FormPostParam1.productId}}" UrlEncode="True" />
+      </FormPostHttpBody>
+    </Request>
+    <Request Method="GET" Guid="bfc3ae8a-2ba4-487e-ac18-8a8414165579" Version="1.1" Url="http://iliyannbu-001-site1.dtempurl.com/Products/GetFavoritesCount" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Accept" Value="*/*" />
+        <Header Name="X-Requested-With" Value="XMLHttpRequest" />
+        <Header Name="Referer" Value="http://iliyannbu-001-site1.dtempurl.com/Home/About" />
+      </Headers>
+    </Request>
+  </Items>
+  <ValidationRules>
+    <ValidationRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ValidateResponseUrl, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" DisplayName="Response URL" Description="Validates that the response URL after redirects are followed is the same as the recorded response URL.  QueryString parameters are ignored." Level="Low" ExectuionOrder="BeforeDependents" />
+    <ValidationRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ValidationRuleResponseTimeGoal, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" DisplayName="Response Time Goal" Description="Validates that the response time for the request is less than or equal to the response time goal as specified on the request.  Response time goals of zero will be ignored." Level="Low" ExectuionOrder="AfterDependents">
+      <RuleParameters>
+        <RuleParameter Name="Tolerance" Value="0" />
+      </RuleParameters>
+    </ValidationRule>
+  </ValidationRules>
+</WebTest>

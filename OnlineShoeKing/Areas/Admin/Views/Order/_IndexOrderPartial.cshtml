@@ -1,0 +1,521 @@
+﻿@model IEnumerable<OnlineShoeShopAndChat.Models.ViewModels.OrderViewModel>
+
+
+<div id="ControlNavigationId">
+    <script type="text/javascript">
+        document.title = 'Order - Shoe King';
+        window.history.pushState(
+            null,
+            null,
+            '/Admin/Order'
+            );
+    </script>
+    <div class="bottom-grids collections">
+        <div class="container">
+            <div class="product-head">
+                <img alt="Orders pic" id="imageInitial" src="@TempData["directoryOfOrderIco"]" class="img-circle img-responsive">
+                <h2>@OnlineShoeShopAndChat.Resources.Language.OrdersTitle</h2>
+                <div class="clearfix"> </div>
+            </div>
+
+            @(Html.Kendo().Grid(Model)
+                .Name("Grid-orders")
+                .Columns(columns =>
+                {
+                columns.Bound(e => e.OrderId).Width(120).Title(OnlineShoeShopAndChat.Resources.Language.OrderIdTitle);
+                columns.Bound(e => e.Total).Width(140).Title(OnlineShoeShopAndChat.Resources.Language.TotalPriceTitle);
+                columns.Bound(e => e.UserName).Title(OnlineShoeShopAndChat.Resources.Language.UsernameTitle).Width(200);
+                columns.Bound(e => e.PhoneNumber).Width(165).Title(OnlineShoeShopAndChat.Resources.Language.PhoneNoTitle);
+                columns.Bound(e => e.City).Width(140).Title(OnlineShoeShopAndChat.Resources.Language.CityTitle);
+                columns.Bound(e => e.Address).Hidden().Width(145).Title(OnlineShoeShopAndChat.Resources.Language.AddressTitle);
+                columns.Bound(e => e.PostOffice).Width(145).Hidden().Title(OnlineShoeShopAndChat.Resources.Language.PostOfficeTitle);
+                columns.Bound(e => e.Created).Width(200).Hidden().Title(OnlineShoeShopAndChat.Resources.Language.AddedTitle);
+                columns.Bound(e => e.Updated).Width(200).Hidden().Title(OnlineShoeShopAndChat.Resources.Language.LastUpdateTitle);
+                columns.Bound(e => e.AdminName).Width(200).Hidden().Title(OnlineShoeShopAndChat.Resources.Language.AdminNameTitle);
+                columns.Bound(e => e.OrderStatus).Width(150).Hidden().Title(OnlineShoeShopAndChat.Resources.Language.StatusTitle);
+                columns.Template(@<text></text>)
+                    .ClientTemplate("#if(OrderStatus != 'waiting'){#<a class='k-button k-button-icontext' onclick='resendOrderWindow(#=OrderId#);'>" +
+                    "<span class='k-icon k-i-track-changes'></span>" + OnlineShoeShopAndChat.Resources.Language.ResendTitle + "</a>#}" +
+                    "else{#<a class='k-button k-button-icontext' onclick='acceptOrderWindow(#=OrderId#);'>" +
+                    "<span class='k-icon k-i-check'></span>" + OnlineShoeShopAndChat.Resources.Language.AcceptTitle + "</a>" +
+                    "<a class='k-button k-button-icontext' onclick='cancelOrderWindow(#=OrderId#);'>" +
+                    "<span class='k-icon k-i-cancel'></span>" + OnlineShoeShopAndChat.Resources.Language.CancelTitle + "</a>#} #")
+                    .Width(180);
+                columns.Template(@<text></text>)
+                    .ClientTemplate("<a class='k-button k-button-icontext' onclick='deleteOrderWindow(#=OrderId#);'>" +
+                    "<span class='k-icon k-i-close'></span>" + OnlineShoeShopAndChat.Resources.Language.DeleteTitle + "</a>").Hidden()
+                    .Width(140).Title(OnlineShoeShopAndChat.Resources.Language.DeleteBtn);
+                })
+            .Editable(editable => editable.Mode(GridEditMode.PopUp))
+            .Sortable()
+            .Pageable(pageable => pageable
+            .Refresh(true)
+            .PageSizes(new int[] { 5, 10, 20, 50 })
+            .ButtonCount(5)
+            .Messages(m => m
+            .Next(OnlineShoeShopAndChat.Resources.Language.NextPageTitle)
+            .Previous(OnlineShoeShopAndChat.Resources.Language.PreviousPageTitle)
+            .First(OnlineShoeShopAndChat.Resources.Language.FirstPageTitle)
+            .Last(OnlineShoeShopAndChat.Resources.Language.LastPageTitle)
+            .Refresh(OnlineShoeShopAndChat.Resources.Language.RefreshPageTitle)
+            .Display("{1} " + OnlineShoeShopAndChat.Resources.Language.OfTitle + " {2} " + OnlineShoeShopAndChat.Resources.Language.ItemsTitle)
+            .Empty(OnlineShoeShopAndChat.Resources.Language.NoItemsToDisplayTitle)
+            .Page(OnlineShoeShopAndChat.Resources.Language.PageTitle)
+            .Of(OnlineShoeShopAndChat.Resources.Language.OfTitle + " {0}")
+            .ItemsPerPage(OnlineShoeShopAndChat.Resources.Language.OrdersOfPageTitle)))
+            .Scrollable(a => a.Height("auto"))
+            .ClientDetailTemplateId("orderDetailsGrid")
+            .DataSource(dataSource => dataSource
+            .Ajax()
+            .PageSize(5)
+            .Model(model =>
+            {
+                model.Id(p => p.OrderId);
+            })
+            .Read(read => read.Action("GetAllOrders", "Order").Type(HttpVerbs.Post))
+            )
+            .Selectable(selectable => selectable
+            .Mode(GridSelectionMode.Multiple)
+            .Type(GridSelectionType.Cell))
+            .Navigatable()
+            .AllowCopy(true)
+            .Reorderable(reorderable => reorderable.Columns(true))
+            .Resizable(resizable => resizable.Columns(true))
+            .Groupable(g => g.Messages(m => m
+            .Empty(OnlineShoeShopAndChat.Resources.Language.GroupByColumnTitle)))
+            .ColumnMenu(c => c
+            .Messages(m => m
+            .SortAscending(OnlineShoeShopAndChat.Resources.Language.SortAscendingTitle)
+            .SortDescending(OnlineShoeShopAndChat.Resources.Language.SortDescendingTitle)
+            .Lock(OnlineShoeShopAndChat.Resources.Language.LockTitle)
+            .Unlock(OnlineShoeShopAndChat.Resources.Language.UnlockTitle)
+            .ColumnSettings(OnlineShoeShopAndChat.Resources.Language.ColumnSettingsTitle)
+            .Columns(OnlineShoeShopAndChat.Resources.Language.ColumnsTitle)
+            .Filter(OnlineShoeShopAndChat.Resources.Language.FilterTitle)))
+            .Filterable(filterable => filterable
+                .Messages(m => m
+                .Operator(OnlineShoeShopAndChat.Resources.Language.OperatorTitle)
+                .Search(OnlineShoeShopAndChat.Resources.Language.SearchTitleGrid)
+                .Title("")
+                .Value(OnlineShoeShopAndChat.Resources.Language.ValueTitle)
+                .Info(OnlineShoeShopAndChat.Resources.Language.ShowItemWithValueTitle)
+                .Filter(OnlineShoeShopAndChat.Resources.Language.FilterTitleGrid)
+                .Clear(OnlineShoeShopAndChat.Resources.Language.ClearTitle)
+                .Cancel(OnlineShoeShopAndChat.Resources.Language.CancelTitle))
+                .Extra(false)
+                .Operators(operators => operators
+                .ForString(str => str.Clear()
+                .StartsWith(OnlineShoeShopAndChat.Resources.Language.StartsWithTitle)
+                .IsEqualTo(OnlineShoeShopAndChat.Resources.Language.IsEqualToTitle)
+                .Contains(OnlineShoeShopAndChat.Resources.Language.ContainsTitle)
+                )
+                .ForNumber(str => str.Clear()
+                .IsEqualTo(OnlineShoeShopAndChat.Resources.Language.IsEqualToTitle)
+                .IsGreaterThan(OnlineShoeShopAndChat.Resources.Language.IsGreaterThanTitle)
+                .IsGreaterThanOrEqualTo(OnlineShoeShopAndChat.Resources.Language.IsGreaterThanOrEqualToTitle)
+                .IsLessThan(OnlineShoeShopAndChat.Resources.Language.IsLessThanTitle)
+                .IsLessThanOrEqualTo(OnlineShoeShopAndChat.Resources.Language.IsLessThanOrEqualTo)))
+            )
+            )
+
+
+            <script id="orderDetailsGrid" type="text/kendo-tmpl">
+                @(Html.Kendo().TabStrip()
+                .Name("tabStrip_#=OrderId#")
+                .SelectedIndex(0)
+                .Animation(animation => animation.Open(open => open.Fade(FadeDirection.In)))
+                .Items(items =>
+                {
+                    items.Add().Text("Details").Content(@<text>
+                    @(Html.Kendo().Grid<OnlineShoeShopAndChat.Models.ViewModels.OrderDetailViewModel>()
+                            .Name("Grid-OrderDetails-#=OrderId#")
+                           .Columns(columns =>
+                            {
+                                columns.Bound(o => o.OrderDetailsId).Width(120).Title(OnlineShoeShopAndChat.Resources.Language.DetailIdTitle);
+                                columns.Bound(o => o.Price).Width(140).Title(OnlineShoeShopAndChat.Resources.Language.PriceTitle);
+                                columns.Bound(o => o.Quantity).Width(120).Title(OnlineShoeShopAndChat.Resources.Language.QuantityTitle);
+                                columns.Bound(o => o.Specials).Width(140).ClientTemplate("\\#= Specials ? '" + OnlineShoeShopAndChat.Resources.Language.YesTitle + "' : '" + OnlineShoeShopAndChat.Resources.Language.NoTitle + "' \\#").Title(OnlineShoeShopAndChat.Resources.Language.PromotionTitle);
+                                columns.Bound(o => o.ProductId).Width(140).Title(OnlineShoeShopAndChat.Resources.Language.ProductIdTitle);
+                            })
+                            .DataSource(dataSource => dataSource
+                                .Ajax()
+                                .PageSize(5)
+                                .Read(read => read.Action("GetOrderDetailsByOrderId", "Order", new { orderId = "#=OrderId#" }).Type(HttpVerbs.Post))
+                            )
+                            .Pageable(pageable => pageable
+                            .PageSizes(new int[] { 5, 10, 20, 50 })
+                            .ButtonCount(5)
+                            .Messages(m => m
+                            .Next(OnlineShoeShopAndChat.Resources.Language.NextPageTitle)
+                            .Previous(OnlineShoeShopAndChat.Resources.Language.PreviousPageTitle)
+                            .First(OnlineShoeShopAndChat.Resources.Language.FirstPageTitle)
+                            .Last(OnlineShoeShopAndChat.Resources.Language.LastPageTitle)
+                            .Refresh(OnlineShoeShopAndChat.Resources.Language.RefreshPageTitle)
+                            .Display("{1} " + OnlineShoeShopAndChat.Resources.Language.OfTitle + " {2} " + OnlineShoeShopAndChat.Resources.Language.ItemsTitle)
+                            .Empty(OnlineShoeShopAndChat.Resources.Language.NoItemsToDisplayTitle)
+                            .Page(OnlineShoeShopAndChat.Resources.Language.PageTitle)
+                            .Of(OnlineShoeShopAndChat.Resources.Language.OfTitle + " {0}")
+                            .ItemsPerPage(OnlineShoeShopAndChat.Resources.Language.DetailsOfPage)))
+                            .Scrollable(a => a.Height("auto"))
+                            .Pageable()
+                            .Sortable()
+                            .Selectable(selectable => selectable
+                            .Mode(GridSelectionMode.Multiple)
+                            .Type(GridSelectionType.Cell))
+                            .Navigatable()
+                            .Reorderable(reorderable => reorderable.Columns(true))
+                            .Resizable(resizable => resizable.Columns(true))
+                            .Groupable(g => g.Messages(m => m
+                            .Empty(OnlineShoeShopAndChat.Resources.Language.GroupByColumnTitle)))
+                            .ColumnMenu(c => c
+                            .Messages(m => m
+                            .SortAscending(OnlineShoeShopAndChat.Resources.Language.SortAscendingTitle)
+                            .SortDescending(OnlineShoeShopAndChat.Resources.Language.SortDescendingTitle)
+                            .Lock(OnlineShoeShopAndChat.Resources.Language.LockTitle)
+                            .Unlock(OnlineShoeShopAndChat.Resources.Language.UnlockTitle)
+                            .ColumnSettings(OnlineShoeShopAndChat.Resources.Language.ColumnSettingsTitle)
+                            .Columns(OnlineShoeShopAndChat.Resources.Language.ColumnsTitle)
+                            .Filter(OnlineShoeShopAndChat.Resources.Language.FilterTitle)))
+                            .Filterable(filterable => filterable
+                                .Messages(m => m
+                                .Operator(OnlineShoeShopAndChat.Resources.Language.OperatorTitle)
+                                .Search(OnlineShoeShopAndChat.Resources.Language.SearchTitleGrid)
+                                .Title("")
+                                .Value(OnlineShoeShopAndChat.Resources.Language.ValueTitle)
+                                .Info(OnlineShoeShopAndChat.Resources.Language.ShowItemWithValueTitle)
+                                .Filter(OnlineShoeShopAndChat.Resources.Language.FilterTitleGrid)
+                                .Clear(OnlineShoeShopAndChat.Resources.Language.ClearTitle)
+                                .Cancel(OnlineShoeShopAndChat.Resources.Language.CancelTitle))
+                                .Extra(false)
+                                .Operators(operators => operators
+                                .ForString(str => str.Clear()
+                                .StartsWith(OnlineShoeShopAndChat.Resources.Language.StartsWithTitle)
+                                .IsEqualTo(OnlineShoeShopAndChat.Resources.Language.IsEqualToTitle)
+                                .Contains(OnlineShoeShopAndChat.Resources.Language.ContainsTitle)
+                                )
+                                .ForNumber(str => str.Clear()
+                                .IsEqualTo(OnlineShoeShopAndChat.Resources.Language.IsEqualToTitle)
+                                .IsGreaterThan(OnlineShoeShopAndChat.Resources.Language.IsGreaterThanTitle)
+                                .IsGreaterThanOrEqualTo(OnlineShoeShopAndChat.Resources.Language.IsGreaterThanOrEqualToTitle)
+                                .IsLessThan(OnlineShoeShopAndChat.Resources.Language.IsLessThanTitle)
+                                .IsLessThanOrEqualTo(OnlineShoeShopAndChat.Resources.Language.IsLessThanOrEqualTo)))
+                            )
+                            .ToClientTemplate()
+                    )
+                    </text>
+                    );
+
+                    items.Add().Text(OnlineShoeShopAndChat.Resources.Language.Products).Content(@<text>
+                        @(Html.Kendo().Grid<OnlineShoeShopAndChat.Models.ProductViewModel>()
+                            .Name("Grid-OrderDetail-Product-#=OrderId#")
+                            .Columns(columns =>
+                            {
+                                columns.Bound(e => e.ProductId).Width(150).ClientTemplate("<img src='\\#=PhotoHeader\\#' height='62' width='62'/><span>" +
+                               " \\#=ProductId\\#</span>").Title(OnlineShoeShopAndChat.Resources.Language.ProductIdTitle);
+                                columns.Bound(e => e.Name).Width(200).Title(OnlineShoeShopAndChat.Resources.Language.ProductNameTitle);
+                                columns.Bound(e => e.Price).ClientTemplate("\\#=Price\\#$").Width(200).Title(OnlineShoeShopAndChat.Resources.Language.PriceTitle);
+                                columns.Bound(e => e.PromotionPercent).ClientTemplate("\\#=PromotionPercent\\#%").Width(165).Title(OnlineShoeShopAndChat.Resources.Language.PromotionTitle + " %");
+                                columns.Bound(e => e.PromotionPrice).ClientTemplate("\\#=PromotionPrice\\#$").Width(165).Title(OnlineShoeShopAndChat.Resources.Language.PromotionTitle + " $");
+                                columns.Bound(e => e.Status).Width(100).Hidden().ClientTemplate("\\#= Status ? '" + OnlineShoeShopAndChat.Resources.Language.ProductInStockTitle +
+                                "' : '" + OnlineShoeShopAndChat.Resources.Language.ProductIsNotInStockTitle + "' \\#").Title(OnlineShoeShopAndChat.Resources.Language.StockTitle);
+                                columns.Bound(e => e.Deleted).Width(150).Title(OnlineShoeShopAndChat.Resources.Language.DeletedTitle);
+                            })
+                            .DataSource(dataSource => dataSource
+                                .Ajax()
+                                .PageSize(5)
+                                .Read(read => read.Action("GetProductsByOrderId", "Order", new { orderId = "#=OrderId#" }).Type(HttpVerbs.Post))
+                            )
+                            .Pageable(pageable => pageable
+                            .PageSizes(new int[] { 5, 10, 20, 50 })
+                            .ButtonCount(5)
+                            .Messages(m => m
+                            .Next(OnlineShoeShopAndChat.Resources.Language.NextPageTitle)
+                            .Previous(OnlineShoeShopAndChat.Resources.Language.PreviousPageTitle)
+                            .First(OnlineShoeShopAndChat.Resources.Language.FirstPageTitle)
+                            .Last(OnlineShoeShopAndChat.Resources.Language.LastPageTitle)
+                            .Refresh(OnlineShoeShopAndChat.Resources.Language.RefreshPageTitle)
+                            .Display("{1} " + OnlineShoeShopAndChat.Resources.Language.OfTitle + " {2} " + OnlineShoeShopAndChat.Resources.Language.ItemsTitle)
+                            .Empty(OnlineShoeShopAndChat.Resources.Language.NoItemsToDisplayTitle)
+                            .Page(OnlineShoeShopAndChat.Resources.Language.PageTitle)
+                            .Of(OnlineShoeShopAndChat.Resources.Language.OfTitle + " {0}")
+                            .ItemsPerPage(OnlineShoeShopAndChat.Resources.Language.ProductsOfPageTitle)))
+                            .Scrollable(a => a.Height("auto"))
+                            .Pageable()
+                            .Sortable()
+                            .Selectable(selectable => selectable
+                            .Mode(GridSelectionMode.Multiple)
+                            .Type(GridSelectionType.Cell))
+                            .Navigatable()
+                            .Reorderable(reorderable => reorderable.Columns(true))
+                            .Resizable(resizable => resizable.Columns(true))
+                            .Groupable(g => g.Messages(m => m
+                            .Empty(OnlineShoeShopAndChat.Resources.Language.GroupByColumnTitle)))
+                            .ColumnMenu(c => c
+                            .Messages(m => m
+                            .SortAscending(OnlineShoeShopAndChat.Resources.Language.SortAscendingTitle)
+                            .SortDescending(OnlineShoeShopAndChat.Resources.Language.SortDescendingTitle)
+                            .Lock(OnlineShoeShopAndChat.Resources.Language.LockTitle)
+                            .Unlock(OnlineShoeShopAndChat.Resources.Language.UnlockTitle)
+                            .ColumnSettings(OnlineShoeShopAndChat.Resources.Language.ColumnSettingsTitle)
+                            .Columns(OnlineShoeShopAndChat.Resources.Language.ColumnsTitle)
+                            .Filter(OnlineShoeShopAndChat.Resources.Language.FilterTitle)))
+                            .Filterable(filterable => filterable
+                                .Messages(m => m
+                                .Operator(OnlineShoeShopAndChat.Resources.Language.OperatorTitle)
+                                .Search(OnlineShoeShopAndChat.Resources.Language.SearchTitleGrid)
+                                .Title("")
+                                .Value(OnlineShoeShopAndChat.Resources.Language.ValueTitle)
+                                .Info(OnlineShoeShopAndChat.Resources.Language.ShowItemWithValueTitle)
+                                .Filter(OnlineShoeShopAndChat.Resources.Language.FilterTitleGrid)
+                                .Clear(OnlineShoeShopAndChat.Resources.Language.ClearTitle)
+                                .Cancel(OnlineShoeShopAndChat.Resources.Language.CancelTitle))
+                                .Extra(false)
+                                .Operators(operators => operators
+                                .ForString(str => str.Clear()
+                                .StartsWith(OnlineShoeShopAndChat.Resources.Language.StartsWithTitle)
+                                .IsEqualTo(OnlineShoeShopAndChat.Resources.Language.IsEqualToTitle)
+                                .Contains(OnlineShoeShopAndChat.Resources.Language.ContainsTitle)
+                                )
+                                .ForNumber(str => str.Clear()
+                                .IsEqualTo(OnlineShoeShopAndChat.Resources.Language.IsEqualToTitle)
+                                .IsGreaterThan(OnlineShoeShopAndChat.Resources.Language.IsGreaterThanTitle)
+                                .IsGreaterThanOrEqualTo(OnlineShoeShopAndChat.Resources.Language.IsGreaterThanOrEqualToTitle)
+                                .IsLessThan(OnlineShoeShopAndChat.Resources.Language.IsLessThanTitle)
+                                .IsLessThanOrEqualTo(OnlineShoeShopAndChat.Resources.Language.IsLessThanOrEqualTo)))
+                            )
+                            .ToClientTemplate()
+                        )
+                    </text>
+                    );
+                })
+                .ToClientTemplate())
+
+            </script>
+        </div>
+
+        <div id="orderDeletedGridId">
+
+        </div>
+
+
+
+        <div id="windowResendOrderId" style="display:none;">
+            <br />
+            <div class="form-group centerAlign windowProductMargin">
+                <div class="col-md-1"></div>
+                <div class="col-md-7">
+                    <textarea class="form-control" rows="4" id="orderMessage"></textarea>
+                </div>
+                <div class="col-md-1"></div>
+                <br />
+                <div class="centerAlign col-md-12 margin-bottom-20 order-message-validation" id="validation-order-message" style="color:#ff0000;"></div>
+            </div>
+
+            <br />
+            <div class="form-group windowProductMargin margin-bottom-20 header-btns-block">
+                <div class="text-center body-btns-block">
+                    <input type="submit" id="btnOrderSend" class="btn btn-lg btnWindowProductSave" value="@OnlineShoeShopAndChat.Resources.Language.SendBtn" />
+                    <input type="submit" id="btnOrderCancel" class="btn btn-lg btnWindowProductCancel" value="@OnlineShoeShopAndChat.Resources.Language.CancelTitle" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+
+    $('#ulControlNavigationId li').removeClass('active');
+
+
+
+    function resendOrderWindow(orderId) {
+
+        resendWindow();
+
+        $('#btnOrderSend').on('click', function (event) {
+            event.stopImmediatePropagation();
+
+            var orderMessage = $('#orderMessage').val().trim();
+
+            if (orderMessage == '') {
+                $('#validation-order-message').html('@OnlineShoeShopAndChat.Resources.Language.MessageInputText');
+            }
+            else {
+
+                $.ajax({
+                    url: '/Admin/Order/ResendOrderById',
+                    type: 'POST',
+                    dataType: 'Json',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify({ orderId: orderId, message: orderMessage }),
+                    success: function (success) {
+                
+                        var win = $("<div>").kendoWindow({
+                            modal: true,
+                            open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                            position: {
+                                top: "40%",
+                                left: "45%"
+                            }
+                        }).getKendoWindow();
+
+                        notificationsHub.server.updateMessagesCount(orderId);
+                        winResendOrder.close();
+
+                        $('.k-pager-refresh').click();
+
+                        win.content(success);
+                        win.open();
+                    },
+                    error: function (error) {
+                        alert('@OnlineShoeShopAndChat.Resources.Language.MessageRefreshPage');
+                    }
+                })
+            }
+        });
+    }
+
+    function acceptOrderWindow(orderId) {
+
+        $.ajax({
+            url: '/Admin/Order/AcceptOrderById',
+            type: 'POST',
+            dataType: 'Json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({ orderId: orderId }),
+            success: function (success) {
+                
+                var win = $("<div>").kendoWindow({
+                    modal: true,
+                    open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                    position: {
+                        top: "40%",
+                        left: "45%"
+                    }
+                }).getKendoWindow();
+
+                notificationsHub.server.updateMessagesCount(orderId);
+                notificationsHub.server.updateOrderMessages();
+                $('.k-pager-refresh').click();
+
+                win.content(success);
+                win.open();
+            },
+            error: function (error) {
+                alert('@OnlineShoeShopAndChat.Resources.Language.MessageRefreshPage');
+            }
+        })
+    }
+
+    function cancelOrderWindow(orderId) {
+
+        $.ajax({
+            url: '/Admin/Order/CancelOrderById',
+            type: 'POST',
+            dataType: 'Json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({ orderId: orderId }),
+            success: function (success) {
+                
+                var win = $("<div>").kendoWindow({
+                    modal: true,
+                    open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                    position: {
+                        top: "40%",
+                        left: "45%"
+                    }
+                }).getKendoWindow();
+
+                notificationsHub.server.updateMessagesCount(orderId);
+                notificationsHub.server.updateOrderMessages();
+                $('.k-pager-refresh').click();
+
+                win.content(success);
+                win.open();
+            },
+            error: function (error) {
+                alert('@OnlineShoeShopAndChat.Resources.Language.MessageRefreshPage');
+            }
+        })
+    }
+
+    function deleteOrderWindow(orderId) {
+
+        //var r = confirm("Press a button!");
+        if (confirm("@OnlineShoeShopAndChat.Resources.Language.MessageRemoveThisOrder") == true) {
+
+            $.ajax({
+                url: '/Admin/Order/DeleteOrderById',
+                type: 'POST',
+                dataType: 'Json',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({ orderId: orderId }),
+                success: function (success) {
+
+                    var win = $("<div>").kendoWindow({
+                        modal: true,
+                        open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                        position: {
+                            top: "40%",
+                            left: "45%"
+                        }
+                    }).getKendoWindow();
+
+                    $('.k-pager-refresh').click();
+
+                    win.content("@OnlineShoeShopAndChat.Resources.Language.MessageOrderWasRemoved");
+                    win.open();
+                },
+                error: function (error) {
+                    alert('@OnlineShoeShopAndChat.Resources.Language.MessageRefreshPage');
+                }
+            })
+        }
+    }
+
+    var winResendOrder = null;
+
+    function resendWindow() {
+
+        $('.k-window-title').html('@OnlineShoeShopAndChat.Resources.Language.ResendMessageTitle')
+        winResendOrder = $("#windowResendOrderId").data("kendoWindow").refresh();
+        $(".k-window-titlebar").show();
+        $(".k-window-titlebar").css("margin-top", "-38px");
+        $("div.k-window-content").css("max-height", "660px");
+        $(".k-window div.k-window-content").css("margin-top", "0");
+
+        $('#orderMessage').val('');
+        $('#validation-order-message').html('');
+
+        //winProduct.center().open();
+        winResendOrder.open();
+
+        $('#btnOrderCancel').on('click', function () {
+
+            winResendOrder.close();
+        });
+    }
+
+    (function () {
+
+        $("#windowResendOrderId").kendoWindow({
+            visible: false,
+            draggable: false,
+            minheight: "480px",
+            width: "460px",
+            modal: true,
+            pinned: false,
+            open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+            position: {
+                top: "20%",
+                left: "35%"
+            },
+            resizable: false,
+            title: title,
+        }).data("kendoWindow");
+
+        $.post("/Admin/Order/OrderDeletedGrid", function (orderView) {
+            $("#orderDeletedGridId").html(orderView);
+        });
+    })();
+</script>

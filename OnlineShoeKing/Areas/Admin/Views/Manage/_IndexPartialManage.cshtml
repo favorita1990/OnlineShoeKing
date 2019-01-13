@@ -1,0 +1,62 @@
+﻿
+
+<div id="ControlNavigationId">
+    <div class="container">
+        <script type="text/javascript">
+            document.title = 'Manage - Shoe King';
+            window.history.pushState(
+                null,
+                null,
+                '/Founder/Manage'
+                );
+        </script>
+
+
+        <br /><br />
+
+        <h2 class="text-center" style="color:#0026ff">@OnlineShoeShopAndChat.Resources.Language.ChangeAccountSettingsTitle</h2>
+
+
+        <br />
+        <div class="col-md-6 panel panel-default text-center">
+            <div class="panel-body">
+                <br />
+                <div class="text-center">
+                    <p class="text-success">@ViewBag.StatusMessage</p>
+                </div>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>@OnlineShoeShopAndChat.Resources.Language.PasswordTitle:</dt>
+                    <dd>
+                        [ @Ajax.ActionLink(OnlineShoeShopAndChat.Resources.Language.ChangePasswordTitle, "ChangePasswordPartial",
+                new AjaxOptions
+                {
+                    UpdateTargetId = "ControlNavigationId",
+                    InsertionMode = InsertionMode.Replace,
+                    HttpMethod = "Get"
+                }) ]
+                    </dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>@OnlineShoeShopAndChat.Resources.Language.DeleteAccountTitle:</dt>
+                    <dd>
+                        [ @Ajax.ActionLink(OnlineShoeShopAndChat.Resources.Language.RemoveAccountTitle, "DeleteAccountPartial",
+                new AjaxOptions
+                {
+                    UpdateTargetId = "ControlNavigationId",
+                    InsertionMode = InsertionMode.Replace,
+                    HttpMethod = "Get"
+                }) ]
+                    </dd>
+
+                </dl>
+            </div>
+        </div>
+        <br /><br /><br /><br />
+    </div>
+</div>
+
+<script>
+    $('#ulControlNavigationId li').removeClass('active');
+</script>
+

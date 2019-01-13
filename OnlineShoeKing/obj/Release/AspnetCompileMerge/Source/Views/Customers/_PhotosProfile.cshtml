@@ -1,0 +1,176 @@
+﻿@using OnlineShoeKing.Models.ViewModels
+
+@{
+    var breadCrumb = (BreadCrumbVm)TempData["breadCrumb"];
+}
+
+
+<link href="~/Content/photosHoverbox.css" rel="stylesheet" />
+
+<div id="ControlNavigationId">
+
+    <meta name="description" content="Customers Profile of Online Shoe King is about to look a user." />
+    <meta name="keywords" content="Shoe King, Online, Shoe, King, Men, Women, user, Customers Profile, Customers, Profile, Photos" />
+
+    <div class="pag-nav">
+        <ul class="p-list">
+            @if (breadCrumb != null)
+            {
+                if (breadCrumb.Controller != null)
+                {
+                    <li><a href="@breadCrumb.Controller" onclick="breadCrumb('@breadCrumb.ControllerPartial'); return false;">@breadCrumb.ControllerName</a></li>
+                    <li>
+                        &nbsp;/&nbsp;
+                    </li>
+                }
+                if (breadCrumb.ActionName != null)
+                {
+                    <li class="act">@breadCrumb.ActionName</li>
+                }
+            }
+        </ul>
+    </div>
+
+    <div class="profile-panel">
+        <!---start-product-details--->
+        <div class="profile-header">
+          
+            <img align="left" class="image-lg" src="@TempData["profileCover"]" alt="@OnlineShoeKing.Resources.Language.CoverImage" title="@OnlineShoeKing.Resources.Language.CoverImage" />
+
+            <img align="left" class="image-profile thumbnail customer-profile" src="@TempData["profilePhoto"]" alt="@OnlineShoeKing.Resources.Language.ProfileImage" title="@OnlineShoeKing.Resources.Language.ProfileImage" />
+
+            <div class="profile-text">
+                <h1>
+                    @if ((TempData["profileFirstName"] is string) && (TempData["profileLastName"] is string))
+                    {
+                        @TempData["profileFirstName"] <span> </span> @TempData["profileLastName"]
+                    }
+                    else
+                    {
+                        <span>...</span>
+                    }
+                </h1>
+            </div>
+        </div>
+
+        <div>
+            <div class="profile-buttons">
+                <a href="/Founder/Customers/Profile?email=@TempData["profileEmail"]"><input type="submit" class="btn profile-button" value="@OnlineShoeKing.Resources.Language.OverviewTitle" /></a>
+                <a href="/Founder/Customers/Profile?email=@TempData["profileEmail"]"><input type="submit" class="btn profile-photos" value="@OnlineShoeKing.Resources.Language.PhotosTitle" /></a>
+             
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <input type="submit" class="btn profile-chat" value="@OnlineShoeKing.Resources.Language.Chat" />
+                }
+            </div>
+            
+            @if (!(bool)TempData["profileStatus"])
+            {
+                <div class="private-customer-profile">
+                    @OnlineShoeKing.Resources.Language.IsHided
+                </div>
+            }
+            else
+            {
+                <div class="profile-photos-block">
+                    <div class="profilePhotos">
+                        <div class="profilePhotos-headingOverview">
+                            <h4 class="profilePhotosInline">@OnlineShoeKing.Resources.Language.AllPhotosTitle</h4>
+                        
+                            <ul class="hoverbox"></ul>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $(function() {
+
+        $.ajax({
+            url: '/Customers/GetPhotosAlbum',
+            dataType: "json",
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            data: "{ email:" + JSON.stringify('@TempData["profileEmail"]') + "}",
+            success: function(gallery) {
+                if (gallery != null) {
+                    var countPhotos = 0;
+                    $('.hoverbox').html('');
+                    $.each(gallery,
+                        function (index, photo) {
+
+                            countPhotos = countPhotos + 1;
+                            if ((countPhotos % 4) === 0) {
+                                if (gallery.length < 5) {
+                                    $('.hoverbox').append(
+                                        '<li><a href="' + photo.ImageUrl + '" target="_blank"><img src="' + photo.ImageUrl + '" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '" />' +
+                                        '<img src="' + photo.ImageUrl + '" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" class="previewLeft" /></a></li>');
+                                } else {
+                                    if ((gallery.length - 1) === index) {
+                                        $('.hoverbox').append(
+                                            '<li><a href="' + photo.ImageUrl + '" target="_blank"><img src="' + photo.ImageUrl + '" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '" />' +
+                                            '<img src="' + photo.ImageUrl + '" class="previewLeftLast" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '" /></a></li>');
+                                    } else {
+                                        $('.hoverbox').append(
+                                            '<li><a href="' + photo.ImageUrl + '" target="_blank"><img src="' + photo.ImageUrl +
+                                            '" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '" />' + '<img src="' + photo.ImageUrl + '" class="previewLeft" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '" /></a></li>');
+                                    }
+                                }
+                            } else {
+                                if (gallery.length > 4) {
+                                    if (index < 4) {
+
+                                        $('.hoverbox').append(
+                                            '<li><a href="' + photo.ImageUrl + '" target="_blank"><img src="' + photo.ImageUrl +
+                                            '" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '" />' +
+                                            '<img src="' + photo.ImageUrl + '" class="preview" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '" /></a></li>');
+                                    } else {
+
+                                        $('.hoverbox').append(
+                                            '<li><a href="' + photo.ImageUrl + '" target="_blank"><img src="' + photo.ImageUrl + '" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '" />' +
+                                            '<img src="' + photo.ImageUrl + '" class="previewLastTree" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '" /></a></li>');
+                                    }
+                                } else {
+
+                                    $('.hoverbox').append(
+                                        '<li><a href="' + photo.ImageUrl + '" target="_blank"><img src="' + photo.ImageUrl + '" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '"  />' +
+                                        '<img src="' + photo.ImageUrl + '" class="preview" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '" /></a></li>');
+                                }
+                            }
+                        });
+                }
+                else {
+                    $('.hoverbox').html('');
+                }
+            }
+        });
+
+        $('.profile-chat').on('click', function () {
+            notificationsHub.server.sendCustomerChat('@TempData["profileEmail"]');
+        });
+    });
+
+    $('.profile-button').on('click',
+        function (e) {
+            e.preventDefault();
+            $.get('/Customers/IndexProfile', { email: '@TempData["profileEmail"]'},
+                function (data) {
+                    $('#ControlNavigationId').html(data);
+                });
+        });
+
+    $('.profile-photos').on('click',
+        function (e) {
+            e.preventDefault();
+            $.post('/Customers/PhotosProfile', { email: '@TempData["profileEmail"]' },
+                function (data) {
+                    $('#ControlNavigationId').html(data);
+                });
+        });
+
+</script>

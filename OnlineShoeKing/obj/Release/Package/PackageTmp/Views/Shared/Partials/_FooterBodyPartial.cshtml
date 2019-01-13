@@ -1,0 +1,250 @@
+﻿
+
+
+<div class="footer"></div>
+
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="chat_box">
+        <div class="chat_head">( <span id="onlineUsers"></span> ) @OnlineShoeKing.Resources.Language.OnlineUsersTitle <span id="unreadUsersCountHead"> </span> </div>
+        <div class="chat_body">
+
+        </div>
+    </div>
+
+    <div class="msg_box">
+        <div class="msg_head">
+            <div class="close">X</div>
+        </div>
+        <div class="msg_wrap">
+            <div class="msg_body"></div>
+            <div class="msg_footer"></div>
+            <div class="msg_inputButton"></div>
+        </div>
+    </div>
+}
+
+@Scripts.Render("~/bundles/emoticonsFooter")
+@Scripts.Render("~/bundles/signalr")
+<script src="/signalr/hubs"></script>
+<script>
+
+    $.get('/Home/GetFooter', function (data) {
+        $('.footer').html(data);
+    });
+
+    $(document).ready(function () {
+
+        var notificationsHub = $.connection.notifications;
+
+        $.connection.hub.start().done(function () {
+            notificationsHub.server.sendUserMessages();
+        });
+
+        setInterval(function () {
+            notificationsHub.server.clearOnlineUsers();
+        }, 20000);
+
+        notificationsHub.client.clearOnlineUsers = function () {
+            notificationsHub.server.checkOnlineUsers();
+        };
+
+        notificationsHub.client.getUnreadUserMessages = function (messagesCount) {
+            if (messagesCount > 0) {
+
+                var new_title = '';
+                if(messagesCount === 1){
+                    new_title = "@OnlineShoeKing.Resources.Language.NewTitle";
+                }
+                else {
+                    new_title = "@OnlineShoeKing.Resources.Language.NewTitleMoreThenOnce";
+                }
+                $('#unreadUsersCountHead').html(' | <span id="newUnreadUsersCount">' + new_title + '</span> ( <span id="unreadUsersCount"></span> )');
+                $("#unreadUsersCount").css("color", "rgba(235,54,235,1)");
+                $("#unreadUsersCount").text(messagesCount);
+
+                $(".messages-user-count").css('color', '#12bf40');
+                $('.messages-user-count').html(messagesCount);
+            }
+            else {
+                $(".messages-user-count").css('color', '#222222');
+                $('.messages-user-count').html('0');
+                $('#unreadUsersCountHead').html('');
+            }
+        }
+
+        notificationsHub.client.onConnected = function (list) {
+            var chatUsersDiv = $(".chat_body");
+            chatUsersDiv.empty();
+            $.each(list,
+                function (key, item) {
+
+                    if (item.Item4 === false) {
+
+                        if (item.Item5.length > 19) {
+                            chatUsersDiv.append('<div class="user user-chat-block blink"><img src="' + item.Item6 + '" alt="' + item.Item5 + '" title="' + item.Item5 + '"/>' + item.Item5.substring(0, 19) +
+                                "..." + '</div>');
+                        } else {
+                            chatUsersDiv.append('<div class="user user-chat-block blink"><img src="' + item.Item6 + '" alt="' + item.Item5 + '" title="' + item.Item5 + '"/><span>' + item.Item5 + '</span></div>');
+                        }
+
+                        $('.user').click(function (e) {
+                            e.stopImmediatePropagation();
+
+                            notificationsHub.server.sendUserChat(item.Item1);
+                        });
+                    } else {
+
+                        if (item.Item5.length > 19) {
+                            chatUsersDiv.append('<div class="user user-chat-block"><img src="' + item.Item6 + '"alt="' + item.Item5 + '" title="' + item.Item5 + '" />' + item.Item5.substring(0, 19) +
+                                "..." + '</div>');
+                        } else {
+                            chatUsersDiv.append('<div class="user user-chat-block"><img src="' + item.Item6 + '" alt="' + item.Item5 + '" title="' + item.Item5 + '"/><span>' + item.Item5 + '</span></div>');
+                        }
+
+                        $('.user').click(function (e) {
+                            e.stopImmediatePropagation();
+
+                            notificationsHub.server.sendUserChat(item.Item1);
+                        });
+                    }
+                });
+        };
+
+        notificationsHub.client.updateUsersOnlineCount = function (count) {
+            if (count > 0) {
+                $("#onlineUsers").css("color", "#2ecc71");
+                $("#onlineUsers").text(count);
+            }
+            else {
+                $("#onlineUsers").css("color", "#ff0000");
+                $("#onlineUsers").text(count);
+            }
+        };
+
+
+        notificationsHub.client.getUserChat = function (fromUser, toUser, messages) {
+
+            $('.msg_wrap').show("fold");
+            $('.msg_box').show("fold");
+
+            var chatMsg_footer = $(".msg_footer");
+            chatMsg_footer.empty();
+            var chatMsg_inputButton = $(".msg_inputButton");
+            chatMsg_inputButton.empty();
+            $(".msg_body").empty();
+            var fullName = toUser.FirstName + " " + toUser.LastName;
+            var chatMsg_body = $(".msg_body");
+
+            if (fullName.length > 21) {
+                $('.msg_head').html(fullName.substring(0, 20) + "..." + '<div class="close">X</div>');
+            }
+            else {
+                $('.msg_head').html(fullName + '<div class="close">X</div>');
+            }
+
+
+            $.each(messages, function (key, item) {
+                if (item.Item3 !== toUser.Id) {
+
+                    if (fromUser.ImageUrl === null) {
+                        chatMsg_body.append('<div class="msgAFullwidth"><div class="msgAPhoto"><img src="' + fromUser.ImageUrl + '" alt="message" title="message"><div class="msg_a msgAPhoto">' +
+                        $.emoticons.replace(item.Item1) + '</div></div></div>');
+                    }
+                    else {
+                        chatMsg_body.append('<div class="msgAFullwidth"><div class="msgAPhoto"><img src="' + fromUser.ImageUrl + '" alt="message" title="message"><div class="msg_a msgAPhoto">' +
+                        $.emoticons.replace(item.Item1) + '</div></div></div>');
+                    }
+
+                }
+                else {
+                    chatMsg_body.append('<div class="msg_b">' + $.emoticons.replace(item.Item1) + '</div>');
+                }
+            });
+            chatMsg_body.append('<div class="msg_push"></div>');
+
+            chatMsg_body.animate({ scrollTop: chatMsg_body.prop('scrollHeight') }, 1000);
+
+            chatMsg_footer.append('<textarea rows="2" id="textAreaId" class="msg_input" placeholder="@OnlineShoeKing.Resources.Language.MessageInputText"></textarea>');
+
+            chatMsg_inputButton.append('<input id="btnIconsTextarea" class="btn btn-danger" value="@OnlineShoeKing.Resources.Language.EmojiTitle" type="button">' +
+                '<input class="btn btn-primary" id="btnTextarea" type="button" value="@OnlineShoeKing.Resources.Language.SendBtn">');
+
+            $('.close').on('click', function () {
+                $(".msg_box").hide("fold", 1000);
+                notificationsHub.server.closeChat();
+            });
+
+            $('.msg_body').click(function (e) {
+                e.stopImmediatePropagation();
+
+                notificationsHub.server.sendMessageAsRead(toUser.Id);
+            });
+
+            $('#textAreaId').focus(function (e) {
+                e.stopImmediatePropagation();
+
+                notificationsHub.server.sendMessageAsRead(toUser.Id);
+            });
+
+            $('#textAreaId').keypress(function (e) {
+                if ($(this).val().trim() !== '' && e.keyCode === 13) {
+                    e.preventDefault();
+                    var msg = $(this).val();
+                    $(this).val('');
+                    if (msg !== '')
+                        $('<div class="msg_b">' + $.emoticons.replace(msg) + '</div>').insertBefore('.msg_push');
+                    $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
+                    notificationsHub.server.sendChatMessage(toUser.Id, msg);
+                }
+            });
+
+            $('#btnTextarea').on('click', function (e) {
+                e.preventDefault();
+                var message = $('#textAreaId').val();
+                $('#textAreaId').val('');
+                if (message !== '') {
+                    $('<div><div class="msg_b">' + $.emoticons.replace(message) + '</div></div>').insertBefore('.msg_push');
+                    $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
+                    notificationsHub.server.sendChatMessage(toUser.Id, message);
+                }
+            });
+
+            $('#btnIconsTextarea').on('click', function (e) {
+                e.preventDefault();
+                $('#textAreaId').emojiPicker({
+                    width: '320px',
+                    height: '400px',
+                    button: false,
+                    fadeTime: 400,
+                    emojiSet: 'apple'
+                });
+                $('#textAreaId').emojiPicker('toggle');
+            });
+        };
+
+        notificationsHub.client.receiveChatMessage = function (fromUser, message) {
+            if (fromUser.ImageUrl === null) {
+                $('<div class="msgAFullwidth"><div class="msgAPhoto"><img src="' + fromUser.ImageUrl + '" alt="message" title="message"><div class="msg_a msgAPhoto">'
+                + $.emoticons.replace(message) + '</div></div></div>').insertBefore('.msg_push');
+            }
+            else {
+                $('<div class="msgAFullwidth"><div class="msgAPhoto"><img src="' + fromUser.ImageUrl + '" alt="message" title="message"><div class="msg_a msgAPhoto">'
+                + $.emoticons.replace(message) + '</div></div></div>').insertBefore('.msg_push');
+            }
+
+            var scroll_Thumb_Body = $('.msg_body');
+            scroll_Thumb_Body.animate({ scrollTop: scroll_Thumb_Body.prop('scrollHeight') }, 1000);
+        };
+
+        notificationsHub.client.reload = function () {
+            $.post('@Url.Action("LogOff", "Account")', function () {
+                location.reload();
+            });
+        }
+
+        $.connection.hub.start();
+    });
+</script>

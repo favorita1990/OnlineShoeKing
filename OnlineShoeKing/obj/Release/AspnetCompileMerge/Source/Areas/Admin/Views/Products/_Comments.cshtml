@@ -1,0 +1,116 @@
+﻿@model IEnumerable<OnlineShoeKing.Models.CommentVm>
+
+
+
+
+<div class="product-comment-header">
+    <h3>@OnlineShoeKing.Resources.Language.Comments</h3>
+    @if (Model.Any())
+    {
+        <div class="product-comment-body">
+            @foreach (var comment in Model)
+            {
+                <div class="product-comment-block">
+                    <section class="post-heading">
+                        <div class="media">
+                            <div class="media-left">
+                                <a id="@comment.Email" class="user-product-comment" href="/Admin/Customers/Profile?email=@comment.Email">
+                                    <img class="media-object photo-product-user-profile" src="@comment.Photo" width="40" height="40" alt="@comment.FullName" title="@comment.FullName">
+                                </a>
+                            </div>
+                            <div class="media-body-product-comment">
+                                <a id="@comment.Email" href="/Admin/Customers/Profile?email=@comment.Email" class="product-username-comment user-product-comment"><h4 class="media-heading">@comment.FullName</h4></a>
+                                <div class="product-time-comment">@comment.CreatedAt</div>
+                            </div>
+                            @if (comment.OwnComment)
+                            {
+                                <span id="@comment.Id" class="glyphicon glyphicon-remove remove-product-comment"></span>
+                            }
+                        </div>
+                    </section>
+                    <section class="post-body">
+                        <p class="post-body-product-comment">
+                            @comment.Text
+                        </p>
+                    </section>
+                </div>
+            }
+        </div>
+
+    }
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div>
+            <textarea class="form-control text-area-product-comment"></textarea>
+            <input type="submit" class="btn btn-default add-product-comment" value="@OnlineShoeKing.Resources.Language.AddComment" />
+        </div>
+    }
+</div>
+
+
+
+
+<script>
+
+    $('.user-product-comment').on('click',
+        function (e) {
+            e.preventDefault();
+
+            const email = $(this).attr('id');
+
+            $('#add-loading').html('<div id="div-loading"></div>');
+            const dialog = $("#div-loading").kendoWindow({
+                draggable: false,
+                resizable: false,
+                modal: true,
+                actions: [""],
+                open: function (event) { $(this.element).closest(".k-window").css("position", "fixed") },
+                position: {
+                    top: "40%",
+                    left: "46%"
+                }
+            }).data("kendoWindow").content('@OnlineShoeKing.Resources.Language.Loading');
+
+            $('.k-window-actions').remove();
+            $('.k-header').addClass('resize-loading-window');
+            $('.k-header').removeClass('k-header k-window-titlebar');
+            $('.k-widget').removeClass('k-widget k-window');
+
+            $('div.k-window-content').css('padding', '1.2em 1.3em');
+            $('div.k-window-content').css('border-radius', '10px');
+
+            $('body').css('overflow', 'hidden');
+
+            $.get('/Admin/Customers/IndexProfile', { email: email },
+                function (data) {
+                    dialog.close();
+                    $('body').css('overflow', 'auto');
+                    $('#ControlNavigationId').html(data);
+                }).fail(function () {
+                    dialog.close();
+                    $('body').css('overflow', 'auto');
+                });
+        });
+
+    $('.add-product-comment').on('click', function () {
+        const text = $('.text-area-product-comment').val();
+
+        $.ajax({
+            url: '/Admin/Products/AddComment',
+            dataType: 'html',
+            type: 'POST',
+            data: { text: text },
+            success: function (data) {
+                $('#product-comments').html(data);
+            }
+        });
+    });
+
+    $('.remove-product-comment').on('click', function () {
+        const comment_id = $(this).attr('id');
+
+        $.post('/Admin/Products/RemoveComment', { commentId: comment_id }, function (data) {
+            $('#product-comments').html(data);
+        });
+    });
+</script>

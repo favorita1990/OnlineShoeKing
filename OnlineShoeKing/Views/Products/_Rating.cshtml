@@ -1,0 +1,141 @@
+﻿@model OnlineShoeKing.Models.RatingVm
+
+
+<div class="rating-body-product">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="rating-stars-body">
+            <span class="rating-heading">@OnlineShoeKing.Resources.Language.UserRating</span>
+            <div class="rate-product @(Model.OwnRating == 0 ? "rate-product-unchecked" : "")">
+                @if (Model.OwnRating == 5)
+                {
+                    <input type="radio" id="rating5" value="5" checked="checked" /><label for="rating5" title="5 @OnlineShoeKing.Resources.Language.stars"></label>
+                }
+                else
+                {
+                    <input type="radio" id="rating5" value="5" @(Model.OwnRating != 0 ? "disabled" : "") /><label for="rating5" title="5 @OnlineShoeKing.Resources.Language.stars"></label>
+                }
+
+                @if (Model.OwnRating == 4)
+                {
+                    <input type="radio" id="rating4" value="4" checked="checked" /><label for="rating4" title="4 @OnlineShoeKing.Resources.Language.stars"></label>
+                }
+                else
+                {
+                    <input type="radio" id="rating4" value="4" @(Model.OwnRating != 0 ? "disabled" : "") /><label for="rating4" title="4 @OnlineShoeKing.Resources.Language.stars"></label>
+                }
+
+                @if (Model.OwnRating == 3)
+                {
+                    <input type="radio" id="rating3" value="3" checked="checked" /><label for="rating3" title="3 @OnlineShoeKing.Resources.Language.stars"></label>
+                }
+                else
+                {
+                    <input type="radio" id="rating3" value="3" @(Model.OwnRating != 0 ? "disabled" : "") /><label for="rating3" title="3 @OnlineShoeKing.Resources.Language.stars"></label>
+                }
+
+                @if (Model.OwnRating == 2)
+                {
+                    <input type="radio" id="rating2" value="2" checked="checked" /><label for="rating2" title="2 @OnlineShoeKing.Resources.Language.stars"></label>
+                }
+                else
+                {
+                    <input type="radio" id="rating2" value="2" @(Model.OwnRating != 0 ? "disabled" : "") /><label for="rating2" title="2 @OnlineShoeKing.Resources.Language.stars"></label>
+                }
+
+                @if (Model.OwnRating == 1)
+                {
+                    <input type="radio" id="rating1" value="1" checked="checked" /><label for="rating1" title="1 @OnlineShoeKing.Resources.Language.star"></label>
+                }
+                else
+                {
+                    <input type="radio" id="rating1" value="1" @(Model.OwnRating != 0 ? "disabled" : "") /><label for="rating1" title="1 @OnlineShoeKing.Resources.Language.star"></label>
+                }
+            </div>
+        </div>
+    }
+   
+    <p>@Model.Average @OnlineShoeKing.Resources.Language.averageBasedOn @Model.AllReviews @OnlineShoeKing.Resources.Language.reviews.</p>
+    <hr style="border:3px solid #f1f1f1">
+
+    <div class="">
+        <div class="side-rating">
+            <div>5 @OnlineShoeKing.Resources.Language.stars</div>
+        </div>
+        <div class="middle-rating">
+            <div class="bar-container" title="@(Model.Star5Percent == null ? "0%" : Model.Star5Percent + "%")">
+                <div class="bar-5" style="width: @(Model.Star5Percent == null ? "0" : Model.Star5Percent + "%")" ></div>
+            </div>
+        </div>
+        <div class="side-rating right-side-rating">
+            <div>@(Model.Star5People == null ? "0" : Model.Star5People)</div>
+        </div>
+        <div class="side-rating">
+            <div>4 @OnlineShoeKing.Resources.Language.stars</div>
+        </div>
+        <div class="middle-rating">
+            <div class="bar-container" title="@(Model.Star4Percent == null ? "0%" : Model.Star4Percent + "%")">
+                <div class="bar-4" style="width: @(Model.Star4Percent == null ? "0" : Model.Star4Percent + "%")" ></div>
+            </div>
+        </div>
+        <div class="side-rating right-side-rating">
+            <div>@(Model.Star4People == null ? "0" : Model.Star4People)</div>
+        </div>
+        <div class="side-rating">
+            <div>3 @OnlineShoeKing.Resources.Language.stars</div>
+        </div>
+        <div class="middle-rating">
+            <div class="bar-container" title="@(Model.Star3Percent == null ? "0%" : Model.Star3Percent + "%")">
+                <div class="bar-3" style="width: @(Model.Star3Percent == null ? "0" : Model.Star3Percent + "%")" ></div>
+            </div>
+        </div>
+        <div class="side-rating right-side-rating">
+            <div>@(Model.Star3People == null ? "0" : Model.Star3People)</div>
+        </div>
+        <div class="side-rating">
+            <div>2 @OnlineShoeKing.Resources.Language.stars</div>
+        </div>
+        <div class="middle-rating">
+            <div class="bar-container" title="@(Model.Star2Percent == null ? "0%" : Model.Star2Percent + "%")">
+                <div class="bar-2" style="width: @(Model.Star2Percent == null ? "0" : Model.Star2Percent + "%")" ></div>
+            </div>
+        </div>
+        <div class="side-rating right-side-rating">
+            <div>@(Model.Star2People == null ? "0" : Model.Star2People)</div>
+        </div>
+        <div class="side-rating">
+            <div>1 @OnlineShoeKing.Resources.Language.star</div>
+        </div>
+        <div class="middle-rating">
+            <div class="bar-container" title="@(Model.Star1Percent == null ? "0%" : Model.Star1Percent + "%")">
+                <div class="bar-1" style="width: @(Model.Star1Percent == null ? "0" : Model.Star1Percent + "%")" ></div>
+            </div>
+        </div>
+        <div class="side-rating right-side-rating">
+            <div>@(Model.Star1People == null ? "0" : Model.Star1People)</div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    if ('@Model.OwnRating' === '0') {
+        $('.rate-product input').on('click', function () {
+            const rate_number = $(this).val();
+
+            let url = '/Products/AddRating';
+            if ('@User.IsInRole("Founder")' === 'True') {
+                url = '/Founder/Products/AddRating';
+            }
+            else if ('@User.IsInRole("Admin")' === 'True') {
+                url = '/Admin/Products/AddRating';
+            }
+
+            $.post(url, { rateNumber: rate_number }, function (data) {
+                $('#product-ratings').html(data);
+            });
+        });
+    }
+
+</script>

@@ -1,0 +1,322 @@
+﻿
+@using OnlineShoeKing.Models.ViewModels
+
+@{
+    var breadCrumb = (BreadCrumbVm)TempData["breadCrumb"];
+}
+
+<div id="ControlNavigationId">
+    <script type="text/javascript">
+        document.title = 'Profile | Shoe King';
+        window.history.pushState(
+            null,
+            null,
+            '/Profile'
+        );
+    </script>
+
+
+    <div class="pag-nav">
+        <ul class="p-list">
+            @if (breadCrumb != null)
+            {
+                if (breadCrumb.ControllerName != null)
+                {
+                    <li class="act">@breadCrumb.ControllerName</li>
+                }
+            }
+        </ul>
+    </div>
+
+    <!---start-product-details--->
+    <div class="profile-panel">
+        <div class="profile-header">
+            @using (Html.BeginForm("CreateCoverIndex", "Profile", FormMethod.Post, new { id = "formProfileCover", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                if (!(TempData["profileCoverCheck"] is string))
+                {
+                    <div>
+                        <img align="left" class="image-lg image-cover" src="@TempData["profileCover"]" alt="@OnlineShoeKing.Resources.Language.CoverImage" title="@OnlineShoeKing.Resources.Language.CoverImage" />
+                    </div>
+                }
+                else
+                {
+                    <div class="removeProfileCover">
+                        <img align="left" class="image-lg image-cover" src="@TempData["profileCover"]" alt="@OnlineShoeKing.Resources.Language.CoverImage" title="@OnlineShoeKing.Resources.Language.CoverImage"/>
+
+                        <button type="submit" name="removeProfile" class="btn btn-warning btn-sm buttonRemoveCover">@OnlineShoeKing.Resources.Language.RemoveTitle</button>
+                    </div>
+                }
+
+                <input id="cover-image-upload" name="file" class="hidden" type="file" accept="image/x-png, image/gif, image/jpg image/jpeg">
+            }
+
+            @using (Html.BeginForm("CreateIndex", "Profile", FormMethod.Post, new { id = "formProfilePicture", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                if (!(TempData["profilePhotoCheck"] is string))
+                {
+                    <div>
+                        <img align="left" class="image-profile thumbnail" src="@TempData["profilePhoto"]" alt="@OnlineShoeKing.Resources.Language.ProfileImage" title="@OnlineShoeKing.Resources.Language.ProfileImage" />
+                    </div>
+                }
+                else
+                {
+                    <div class="removeProfilePicture">
+                        <img align="left" class="image-profile thumbnail" src="@TempData["profilePhoto"]" alt="@OnlineShoeKing.Resources.Language.ProfileImage" title="@OnlineShoeKing.Resources.Language.ProfileImage" />
+
+                        <button type="submit" name="removeProfile" class="btn btn-warning btn-xs buttonRemoveProfile">@OnlineShoeKing.Resources.Language.RemoveTitle</button>
+                    </div>
+                }
+
+                <input id="profile-image-upload" name="file" class="hidden" type="file" accept="image/x-png, image/gif, image/jpg image/jpeg">
+
+                <div class="profile-text">
+                    <h1>
+                        @if ((TempData["profileFirstName"] is string) && (TempData["profileLastName"] is string))
+                        {
+                            @TempData["profileFirstName"] <span> </span> @TempData["profileLastName"]
+                        }
+                        else
+                        {
+                            <span>...</span>
+                        }
+                    </h1>
+                </div>
+            }
+        </div>
+        
+
+        <div>
+            <div class="text-center">
+                <div class="inline-radio-buttons" >
+                    @if ((bool)TempData["profileStatus"])
+                    {
+                        <input type="radio" name="profile-radio" id="public-profile" class="profile-radio" value="1" checked />
+                    }
+                    else
+                    {
+                        <input type="radio" name="profile-radio" id="public-profile" class="profile-radio" value="1" />
+                    }
+                    <label for="public-profile" class="profile-label" >@OnlineShoeKing.Resources.Language.Public</label>
+                </div>
+
+                <div class="inline-radio-buttons" >
+                    @if ((bool)TempData["profileStatus"])
+                    {
+                        <input type="radio" name="profile-radio" id="private-profile" class="profile-radio" value="0" />
+                    }
+                    else
+                    {
+                        <input type="radio" name="profile-radio" id="private-profile" class="profile-radio" value="0" checked />
+                    }
+                    <label for="private-profile" class="profile-label" >@OnlineShoeKing.Resources.Language.Private</label>
+                </div>
+            </div>
+
+            <div class="profile-buttons" >
+                <a href="/Founder/Profile/Index" ><input type="submit" class="btn profile-button" value="@OnlineShoeKing.Resources.Language.OverviewTitle" /></a>
+                <a href="/Founder/Profile/Photos" ><input type="submit" class="btn profile-photos" value="@OnlineShoeKing.Resources.Language.PhotosTitle" /></a>
+            </div>
+            <div class="profileInfo">
+                <div class="panel-headingOverview">
+                    <h4>@OnlineShoeKing.Resources.Language.BasicInfoTitle</h4>
+                </div>
+                <div class="panel-bodyOverview">
+                    <div class="col-sm-5 col-xs-12">@OnlineShoeKing.Resources.Language.EmailTitle:</div>
+                    <div class="col-sm-7">
+                        @if (TempData["profileEmail"] is string)
+                        {
+                            @TempData["profileEmail"]
+                        }
+                        else
+                        {
+                            <span>...</span>
+                        }
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="bot-border"></div>
+                    <div class="col-sm-5 col-xs-12">
+                        @OnlineShoeKing.Resources.Language.FirstNameTitle:
+                    </div>
+                    <div class="col-sm-7">
+                        @if (TempData["profileFirstName"] is string)
+                        {
+                            @TempData["profileFirstName"]
+                        }
+                        else
+                        {
+                            <span>...</span>
+                        }
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="bot-border"></div>
+                    <div class="col-sm-5 col-xs-12">@OnlineShoeKing.Resources.Language.LastNameTitle:</div>
+                    <div class="col-sm-7">
+                        @if (TempData["profileLastName"] is string)
+                        {
+                            @TempData["profileLastName"]
+                        }
+                        else
+                        {
+                            <span>...</span>
+                        }
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="bot-border"></div>
+                    <div class="col-sm-5 col-xs-12">@OnlineShoeKing.Resources.Language.DateOfJoiningTitle:</div>
+                    <div class="col-sm-7">
+                        @if (TempData["profileCreationDate"] is string)
+                        {
+                            @TempData["profileCreationDate"]
+                        }
+                        else
+                        {
+                            <span>...</span>
+                        }
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="bot-border"></div>
+                    <div class="col-sm-5 col-xs-12">@OnlineShoeKing.Resources.Language.GenderTitle:</div>
+                    <div class="col-sm-7">
+                        @if (TempData["profileGender"] is string)
+                        {
+                            @TempData["profileGender"]
+                        }
+                        else
+                        {
+                            <span>...</span>
+                        }
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="bot-border"></div>
+                    <div class="col-sm-5 col-xs-12">@OnlineShoeKing.Resources.Language.PhotoCountTitle:</div>
+                    <div class="col-sm-7">
+                        @if (TempData["profilePictureCount"] != null)
+                        {
+                            @TempData["profilePictureCount"]
+                        }
+                        else
+                        {
+                            <span>0</span>
+                        }
+                    </div>
+                </div>
+
+                <div id="purchased-products-user"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+        //Profile picture
+        $('.image-profile').on('click', function () {
+            $('#profile-image-upload').click();
+
+            $('#profile-image-upload').on("change", function (e) {
+                e.stopImmediatePropagation();
+                const $file = $("#profile-image-upload");
+                const $filePath = $.trim($file.val());
+                if ($filePath === "") {
+                    alert("Please browse a file to upload");
+                    return;
+                }
+                const $ext = $filePath.split(".").pop().toLowerCase();
+                const $allow = new Array("gif", "png", "jpg", "jpeg");
+                if ($.inArray($ext, $allow) === -1) {
+                    alert("@OnlineShoeKing.Resources.Language.MessageFileFormat");
+                    return;
+                }
+                else {
+                    $("#formProfilePicture").submit();
+                }
+            });
+
+        });
+
+
+        //Profile cover
+        $('.image-cover').on('click', function () {
+            $('#cover-image-upload').click();
+
+            $('#cover-image-upload').on("change", function (e) {
+                e.stopImmediatePropagation();
+                const $file = $("#cover-image-upload");
+                const $filePath = $.trim($file.val());
+                if ($filePath === "") {
+                    alert("Please browse a file to upload");
+                    return;
+                }
+                const $ext = $filePath.split(".").pop().toLowerCase();
+                const $allow = new Array("gif", "png", "jpg", "jpeg");
+                if ($.inArray($ext, $allow) === -1) {
+                    alert("@OnlineShoeKing.Resources.Language.MessageFileFormat");
+                    return;
+                }
+                else {
+                    $("#formProfileCover").submit();
+                }
+            });
+
+        });
+
+        $('.profile-button').on('click',
+            function (e) {
+                e.preventDefault();
+                $.get('/Profile/IndexPartial',
+                    function (data) {
+                        $('#ControlNavigationId').html(data);
+                    });
+            });
+
+        $('.profile-photos').on('click',
+            function (e) {
+                e.preventDefault();
+                $.get('/Profile/PhotosPartial',
+                    function (data) {
+                        $('#ControlNavigationId').html(data);
+                    });
+            });
+
+        $('input[type=radio][name=profile-radio]').on('change', function () {
+            const radio_val = $(this).val();
+            $.ajax({
+                url: '/Profile/ChangeProfileMainStatus',
+                type: 'POST',
+                dataType: 'JSON',
+                data: { radioVal: radio_val },
+                success: function () {
+
+                    const win = $("<div>").kendoWindow({
+                        modal: true,
+                        open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                        position: {
+                            top: "40%",
+                            left: "45%"
+                        }
+                    }).getKendoWindow();
+
+                    $('div.k-widget.k-window').addClass("resizeCart");
+                    $('div.k-widget.k-window').removeClass("resizeLogin");
+
+                    // set the content
+                    win.content('@OnlineShoeKing.Resources.Language.ChangeWasSaved');
+                    // center it and open it
+                    win.open();
+                }
+            });
+        });
+
+        $.post('/Products/UserProducts', function (data) {
+            $('#purchased-products-user').html(data);
+        });
+
+    });
+</script>

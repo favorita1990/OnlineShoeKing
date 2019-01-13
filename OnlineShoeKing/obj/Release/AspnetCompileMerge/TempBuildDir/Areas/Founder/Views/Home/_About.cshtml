@@ -1,0 +1,373 @@
+﻿
+@using OnlineShoeKing.Models.ViewModels
+
+@{
+    var breadCrumb = (BreadCrumbVm)TempData["breadCrumb"];
+}
+
+<div id="ControlNavigationId">
+    <script type="text/javascript">
+        document.title = 'About | Shoe King';
+        window.history.pushState(
+            null,
+            null,
+            '/Founder/Home/About'
+        );
+    </script>
+    <div class="pag-nav">
+        <ul class="p-list">
+            @if (breadCrumb != null)
+            {
+                if (breadCrumb.Controller != null)
+                {
+                    <li><a href="@breadCrumb.Controller" onclick="breadCrumb('@breadCrumb.ControllerPartial'); return false;">@breadCrumb.ControllerName</a></li>
+                    <li>
+                        &nbsp;/&nbsp;
+                    </li>
+                }
+                if (breadCrumb.ActionName != null)
+                {
+                    <li class="act">@breadCrumb.ActionName</li>
+                }
+            }
+        </ul>
+    </div>
+
+    <div class="coats">
+        <h3 class="c-head">@OnlineShoeKing.Resources.Language.AboutUs</h3>
+    </div>
+    <div class="row about-row">
+        <div class="col-md-6 about-col">
+            <div class="add-delete-about-div">
+                <span class="glyphicon glyphicon-upload add-picture-about-first"></span>
+                @if (TempData["firstPic"] as string != "")
+                {
+                    <span class="glyphicon glyphicon-remove delete-picture-about-first"></span>
+                }
+                else
+                {
+                    <span class="glyphicon glyphicon-remove hide delete-picture-about-first"></span>
+                }
+            </div>
+            <input id="picture_about_first" name="file" class="hidden" type="file" accept="image/x-png, image/gif, image/jpg image/jpeg">
+            @if (TempData["firstPic"] as string != "")
+            {
+                <img src="@TempData["firstPic"]" class="img-responsive picture_about_first" alt="@OnlineShoeKing.Resources.Language.firstPic" title="@OnlineShoeKing.Resources.Language.firstPic">
+            }
+            else
+            {
+                <img src="" class="img-responsive picture_about_first" alt="" title="">
+            }
+            
+            @if (TempData["firstPicUpdatedAt"] as string != "")
+            {
+                <div class="edited-by-about edited-by-first-picture">
+                    @OnlineShoeKing.Resources.Language.EditedBy <span>@TempData["firstPicUpdatedby"]</span> @OnlineShoeKing.Resources.Language.on <span>@TempData["firstPicUpdatedAt"]</span>
+                </div>
+            }
+            else
+            {
+                <div class="edited-by-about edited-by-first-picture"></div>
+            }
+            <div>
+                <span class="glyphicon glyphicon-pencil edit-responsible-glyphicon edit-responsible-glyphicon-first"></span>
+            </div>
+            <div class="who">
+                <h3>@(TempData["textFirstHeader"] as string == "" ? "" : TempData["textFirstHeader"])</h3>
+                <p>@(TempData["textFirst"] as string == "" ? "" : TempData["textFirst"])</p>
+            </div>
+            @if (TempData["updatedFirstTextAt"] as string != "")
+            {
+                <div class="edited-by-about edited-by-first-text">
+                    @OnlineShoeKing.Resources.Language.EditedBy <span>@TempData["updatedFirstTextBy"]</span> @OnlineShoeKing.Resources.Language.on <span>@TempData["updatedFirstTextAt"]</span>
+                </div>
+            }
+            else
+            {
+                <div class="edited-by-about edited-by-first-text"></div>
+            }
+        </div>
+        <div class="col-md-6 about-col">
+            <div class="add-delete-about-div">
+                <span class="glyphicon glyphicon-upload add-picture-about-second"></span>
+                @if (TempData["secondPic"] as string != "")
+                {
+                    <span class="glyphicon glyphicon-remove delete-picture-about-second"></span>
+                }
+                else
+                {
+                    <span class="glyphicon glyphicon-remove hide delete-picture-about-second"></span>
+                }
+            </div>
+            <input id="picture_about_second" name="file" class="hidden" type="file" accept="image/x-png, image/gif, image/jpg image/jpeg">
+            @if (TempData["secondPic"] as string != "")
+            {
+                <img src="@TempData["secondPic"]" class="img-responsive picture_about_second" alt="@OnlineShoeKing.Resources.Language.secondPic" title="@OnlineShoeKing.Resources.Language.secondPic">
+            }
+            else
+            {
+                <img src="" class="img-responsive picture_about_second" alt="" title="">
+            }
+
+            @if (TempData["secondPicUpdatedAt"] as string != "")
+            {
+                <div class="edited-by-about edited-by-second-picture">
+                    @OnlineShoeKing.Resources.Language.EditedBy <span>@TempData["secondPicUpdatedby"]</span> @OnlineShoeKing.Resources.Language.on <span>@TempData["secondPicUpdatedAt"]</span>
+                </div>
+            }
+            else
+            {
+                <div class="edited-by-about edited-by-second-picture"></div>
+            }
+            <div>
+                <span class="glyphicon glyphicon-pencil edit-responsible-glyphicon edit-responsible-glyphicon-second"></span>
+            </div>
+            <div class="who">
+                <h3>@(TempData["textSecondHeader"] as string == "" ? "" : TempData["textSecondHeader"])</h3>
+                <p>@(TempData["textSecond"] as string == "" ? "" : TempData["textSecond"])</p>
+            </div>
+            @if (TempData["textSecondUpdatedAt"] as string != "")
+            {
+                <div class="edited-by-about edited-by-second-text">
+                    @OnlineShoeKing.Resources.Language.EditedBy <span>@TempData["textSecondUpdatedBy"]</span> @OnlineShoeKing.Resources.Language.on <span>@TempData["textSecondUpdatedAt"]</span>
+                </div>
+            }
+            else
+            {
+                <div class="edited-by-about edited-by-second-text"></div>
+            }
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+</div>
+
+
+<script src="~/Scripts/easyResponsiveTabs.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        $('#horizontalTab').easyResponsiveTabs({
+            type: 'default', //Types: default, vertical, accordion
+            width: 'auto', //auto or any width like 600px
+            fit: true   // 100% fit in a container
+        });
+
+
+        $('.edit-responsible-glyphicon-first').on('click', function () {
+
+            var about_col = $(this).closest('.about-col');
+
+            const div_who = about_col.find('div.who');
+
+            const div_who_header_old = div_who.find('h3').text();
+            const div_who_body_old = div_who.find('p').text();
+
+            if (about_col.hasClass('change-about')) {
+                const text_header = div_who.find('h3').text();
+                const text_body = div_who.find('p').text();
+
+                $.ajax({
+                    url: '@Url.Action("EditWhoFirst", "Home")',
+                    type: "POST",
+                    dataType: "html",
+                    cache: false,
+                    data: { textHeader: text_header, textBody: text_body },
+                    success: function (data) {
+                        alert('@OnlineShoeKing.Resources.Language.ChangeWasSaved');
+                        $('#ControlNavigationId').html(data);
+                    }
+                });
+            }
+            else {
+
+                about_col.addClass('change-about');
+                div_who.attr('contentEditable', 'true');
+                div_who.addClass('who-content-editable');
+
+                $(this).removeClass('edit-responsible-glyphicon');
+                $(this).removeClass('glyphicon-pencil');
+                $(this).addClass('glyphicon-ok');
+                $(this).addClass('ok-edit-responsible-glyphicon');
+
+                $('<span class="glyphicon glyphicon-remove cancel-edit-responsible-glyphicon"></span>').insertAfter($(this));
+
+                var spanOk = $(this);
+                $('.cancel-edit-responsible-glyphicon').on('click', function () {
+                    div_who.attr('contenteditable', 'false');
+                    div_who.removeClass('who-content-editable');
+                    about_col.removeClass('change-about');
+                    spanOk.addClass('edit-responsible-glyphicon');
+                    spanOk.addClass('glyphicon-pencil');
+                    spanOk.removeClass('glyphicon-ok');
+                    spanOk.removeClass('ok-edit-responsible-glyphicon');
+                    $(this).remove();
+
+                    div_who.find('h3').text(div_who_header_old);
+                    div_who.find('p').text(div_who_body_old);
+                });
+            }
+        });
+
+        //add picture second
+        $('.add-picture-about-first').on('click', function () {
+            $('#picture_about_first').click();
+
+            $('#picture_about_first').on("change", function (e) {
+                e.stopImmediatePropagation();
+
+                const $file = $(this);
+                const $filePath = $.trim($file.val());
+                if ($filePath === "") {
+                    alert("Please browse a file to upload");
+                    return;
+                }
+                const $ext = $filePath.split(".").pop().toLowerCase();
+                const $allow = new Array("gif", "png", "jpg", "jpeg");
+                if ($.inArray($ext, $allow) === -1) {
+                    alert("@OnlineShoeKing.Resources.Language.MessageFileFormat");
+                    return;
+                }
+                else {
+                    const formUpload = new FormData();
+                    formUpload.append("pictureFirst", $('#picture_about_first')[0].files[0]);
+
+                    $.ajax({
+                        async: true,
+                        type: 'POST',
+                        url: '/Founder/Home/EditPictureFirst',
+                        data: formUpload,
+                        success: function (data) {
+                            $('.picture_about_first').attr('src', data[0].Item1);
+                            $('.edited-by-first-picture').html('Edited by <span>' + data[0].Item2 + '</span> на <span>' + data[0].Item3 + '</span>');
+                            $('.delete-picture-about-first').removeClass('hide');
+                        },
+                        cache: false,
+                        contentType: false,
+                        processData: false
+                    });
+                }
+            });
+        });
+
+        $('.delete-picture-about-first').on('click', function() {
+
+            $.post('/Founder/Home/DeletePictureFirst', function(data) {
+                $('.picture_about_first').attr('src', '');
+                $('.picture_about_first').attr('alt', '');
+                $('.edited-by-first-picture').html('Edited by <span>' + data[0].Item2 + '</span> на <span>' + data[0].Item3 + '</span>');
+                $('.delete-picture-about-first').addClass('hide');
+            });
+        });
+     
+
+        $('.edit-responsible-glyphicon-second').on('click', function () {
+
+            var about_col = $(this).closest('.about-col');
+
+            const div_who = about_col.find('div.who');
+
+            const div_who_header_old = div_who.find('h3').text();
+            const div_who_body_old = div_who.find('p').text();
+
+            if (about_col.hasClass('change-about')) {
+                const text_header = div_who.find('h3').text();
+                const text_body = div_who.find('p').text();
+
+                $.ajax({
+                    url: '@Url.Action("EditWhoSecond", "Home")',
+                    type: "POST",
+                    dataType: "html",
+                    cache: false,
+                    data: { textHeader: text_header, textBody: text_body },
+                    success: function (data) {
+                        alert('Промените бяха запазени.');
+                        $('#ControlNavigationId').html(data);
+                    }
+                });
+            }
+            else {
+
+                about_col.addClass('change-about');
+                div_who.attr('contentEditable', 'true');
+                div_who.addClass('who-content-editable');
+
+                $(this).removeClass('edit-responsible-glyphicon');
+                $(this).removeClass('glyphicon-pencil');
+                $(this).addClass('glyphicon-ok');
+                $(this).addClass('ok-edit-responsible-glyphicon');
+
+                $('<span class="glyphicon glyphicon-remove cancel-edit-responsible-glyphicon"></span>').insertAfter($(this));
+
+                var spanOk = $(this);
+                $('.cancel-edit-responsible-glyphicon').on('click', function () {
+                    div_who.attr('contenteditable', 'false');
+                    div_who.removeClass('who-content-editable');
+                    about_col.removeClass('change-about');
+                    spanOk.addClass('edit-responsible-glyphicon');
+                    spanOk.addClass('glyphicon-pencil');
+                    spanOk.removeClass('glyphicon-ok');
+                    spanOk.removeClass('ok-edit-responsible-glyphicon');
+                    $(this).remove();
+
+                    div_who.find('h3').text(div_who_header_old);
+                    div_who.find('p').text(div_who_body_old);
+                });
+            }
+        });
+
+
+        //add picture second
+        $('.add-picture-about-second').on('click', function () {
+            $('#picture_about_second').click();
+
+            $('#picture_about_second').on("change", function (e) {
+                e.stopImmediatePropagation();
+
+                const $file = $(this);
+                const $filePath = $.trim($file.val());
+                if ($filePath === "") {
+                    alert("Please browse a file to upload");
+                    return;
+                }
+                const $ext = $filePath.split(".").pop().toLowerCase();
+                const $allow = new Array("gif", "png", "jpg", "jpeg");
+                if ($.inArray($ext, $allow) === -1) {
+                    alert("@OnlineShoeKing.Resources.Language.MessageFileFormat");
+                    return;
+                }
+                else {
+                    const formUpload = new FormData();
+                    formUpload.append("pictureSecond", $('#picture_about_second')[0].files[0]);
+
+                    $.ajax({
+                        async: true,
+                        type: 'POST',
+                        url: '/Founder/Home/EditPictureSecond',
+                        data: formUpload,
+                        success: function (data) {
+                            $('.picture_about_second').attr('src', data[0].Item1);
+                            $('.edited-by-second-picture').html('Edited by <span>' + data[0].Item2 + '</span> на <span>' + data[0].Item3 + '</span>');
+                            $('.delete-picture-about-second').removeClass('hide');
+                        },
+                        cache: false,
+                        contentType: false,
+                        processData: false
+                    });
+                }
+            });
+        });
+
+        $('.delete-picture-about-second').on('click', function () {
+
+            $.post('/Founder/Home/DeletePictureSecond', function (data) {
+                $('.picture_about_second').attr('src', '');
+                $('.picture_about_second').attr('alt', '');
+                $('.edited-by-second-picture').html('Edited by <span>' + data[0].Item2 + '</span> на <span>' + data[0].Item3 + '</span>');
+                $('.delete-picture-about-second').addClass('hide');
+
+            });
+        });
+    });
+</script>

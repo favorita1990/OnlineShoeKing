@@ -1,0 +1,459 @@
+﻿
+
+@using OnlineShoeKing.Models.ViewModels
+
+@{
+    var breadCrumb = (BreadCrumbVm)TempData["breadCrumb"];
+}
+
+<link href="~/Content/photosHoverbox.css" rel="stylesheet" />
+
+<div id="ControlNavigationId">
+
+    <script type="text/javascript">
+        document.title = 'Photos | Shoe King';
+        window.history.pushState(
+            null,
+            null,
+            '/Profile/Photos'
+            );
+    </script>
+
+
+    <div class="pag-nav">
+        <ul class="p-list">
+            @if (breadCrumb != null)
+            {
+                if (breadCrumb.ControllerName != null)
+                {
+                    <li class="act">@breadCrumb.ControllerName</li>
+                }
+            }
+        </ul>
+    </div>
+
+    <div class="profile-panel">
+        <!---start-product-details--->
+        <div class="profile-header">
+            @using (Html.BeginForm("CreateCoverIndex", "Profile", FormMethod.Post, new { id = "formProfileCover", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                if (!(TempData["profileCoverCheck"] is string))
+                {
+                    <div>
+                        <img align="left" class="image-lg image-cover" src="@TempData["profileCover"]" alt="@OnlineShoeKing.Resources.Language.CoverImage" title="@OnlineShoeKing.Resources.Language.CoverImage" />
+                    </div>
+                }
+                else
+                {
+                    <div class="removeProfileCover">
+                        <img align="left" class="image-lg image-cover" src="@TempData["profileCover"]" alt="@OnlineShoeKing.Resources.Language.CoverImage" title="@OnlineShoeKing.Resources.Language.CoverImage" />
+
+                        <button type="submit" name="removeProfile" class="btn btn-warning btn-sm buttonRemoveCover">@OnlineShoeKing.Resources.Language.RemoveTitle</button>
+                    </div>
+                }
+
+                <input id="cover-image-upload" name="file" class="hidden" type="file" accept="image/x-png, image/gif, image/jpg image/jpeg">
+            }
+
+            @using (Html.BeginForm("CreateIndex", "Profile", FormMethod.Post, new { id = "formProfilePicture", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                if (!(TempData["profilePhotoCheck"] is string))
+                {
+                    <div>
+                        <img align="left" class="image-profile thumbnail" src="@TempData["profilePhoto"]" alt="@OnlineShoeKing.Resources.Language.ProfileImage" title="@OnlineShoeKing.Resources.Language.ProfileImage" />
+                    </div>
+                }
+                else
+                {
+                    <div class="removeProfilePicture">
+                        <img align="left" class="image-profile thumbnail" src="@TempData["profilePhoto"]" alt="@OnlineShoeKing.Resources.Language.ProfileImage" title="@OnlineShoeKing.Resources.Language.ProfileImage" />
+
+                        <button type="submit" name="removeProfile" class="btn btn-warning btn-xs buttonRemoveProfile">@OnlineShoeKing.Resources.Language.RemoveTitle</button>
+                    </div>
+                }
+
+                <input id="profile-image-upload" name="file" class="hidden" type="file" accept="image/x-png, image/gif, image/jpg image/jpeg">
+
+                <div class="profile-text">
+                    <h1>
+                        @if ((TempData["profileFirstName"] is string) && (TempData["profileLastName"] is string))
+                        {
+                            @TempData["profileFirstName"] <span> </span> @TempData["profileLastName"]
+                        }
+                        else
+                        {
+                            <span>...</span>
+                        }
+                    </h1>
+                </div>
+
+            }
+        </div>
+
+        <div>
+            <div class="text-center">
+                <div class="inline-radio-buttons">
+                    @if ((bool)TempData["profileStatus"])
+                    {
+                        <input type="radio" name="profile-radio" id="public-profile" class="profile-radio" value="1" checked />
+                    }
+                    else
+                    {
+                        <input type="radio" name="profile-radio" id="public-profile" class="profile-radio" value="1" />
+                    }
+                    <label for="public-profile" class="profile-label">@OnlineShoeKing.Resources.Language.Public</label>
+                </div>
+
+                <div class="inline-radio-buttons">
+                    @if ((bool)TempData["profileStatus"])
+                    {
+                        <input type="radio" name="profile-radio" id="private-profile" class="profile-radio" value="0" />
+                    }
+                    else
+                    {
+                        <input type="radio" name="profile-radio" id="private-profile" class="profile-radio" value="0" checked />
+                    }
+                    <label for="private-profile" class="profile-label">@OnlineShoeKing.Resources.Language.Private</label>
+                </div>
+            </div>
+
+            <div class="profile-buttons" >
+                <a href="/Founder/Profile/Index" ><input type="submit" class="btn profile-button" value="@OnlineShoeKing.Resources.Language.OverviewTitle" /></a>
+                <a href="/Founder/Profile/Photos" ><input type="submit" class="btn profile-photos" value="@OnlineShoeKing.Resources.Language.PhotosTitle" /></a>
+            </div>
+
+            <div class="profile-photos-block">
+                <div class="profilePhotos">
+                    <div class="profilePhotos-headingOverview">
+                        <h4 class="profilePhotosInline">@OnlineShoeKing.Resources.Language.AllPhotosTitle</h4>
+
+                        @using (Html.BeginForm("PhotoAlbum", "Profile", FormMethod.Post, new { id = "formProfileAlbum", @class = "profilePhotosInlineForm", enctype = "multipart/form-data" }))
+                        {
+
+                            @Html.AntiForgeryToken()
+
+                            <span class="btn btn-primary btn-file">
+                                @OnlineShoeKing.Resources.Language.AddPictureTitle<input multiple name="files" id="files" type="file" accept="image/x-png, image/gif, image/jpg image/jpeg">
+                            </span>
+
+                        }
+
+                        <div class="profilePhotosInlineForm">
+                            <span class="btn btn-warning btn-delete" id="checkBtnId" style="display: none;">
+                                <i class="glyphicon glyphicon-trash" style="display: inline-block;">
+                                    <input title="Delete" type="submit">
+                                </i>
+                            </span>
+
+
+
+                            <input class="deleteAll" id="checkboxId" name="checkboxId" type="checkbox" onclick="DeleteAllCheckBoxes(this)">
+                            <label class="checkbox" for="checkboxId" title="Select all"></label>
+                        </div>
+
+                    </div>
+                    @using (Ajax.BeginForm("DeletePhoto", "Profile", new AjaxOptions { UpdateTargetId = "ControlNavigationId", InsertionMode = InsertionMode.Replace, HttpMethod = "POST" }, new { id = "deletePhotoId" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <ul class="hoverbox"></ul>
+                    }
+                </div>
+
+                <div id="purchased-products-user"></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $(function () {
+
+        $.getJSON("/Profile/GetPhotosAlbum", function (gallery) {
+            if (gallery != null) {
+                var countPhotos = 0;
+                $('.hoverbox').html('');
+                $.each(gallery, function (index, photo) {
+
+                    countPhotos = countPhotos + 1;
+                    if ((countPhotos % 4) === 0) {
+                        if (gallery.length < 5) {
+                            $('.hoverbox').append('<li><div style="text-align:center;"><input class="deleteAll" type="checkbox" id="checkboxId' + photo.Id + '" name="deleteInputs" value="' + photo.Id + '">' +
+                                    '<label class="checkboxGallery" for="checkboxId' + photo.Id + '" title="' + '@OnlineShoeKing.Resources.Language.SelectElement' + '"></label></div><a href="' +
+                                    photo.ImageUrl + '" target="_blank"><img src="' + photo.ImageUrl + '" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '" />' +
+                                    '<img src="' + photo.ImageUrl + '" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '" class="previewLeft" /></a></li>');
+                        }
+                        else {
+                            if ((gallery.length - 1) === index) {
+                                $('.hoverbox').append('<li><div style="text-align:center;"><input class="deleteAll" type="checkbox" id="checkboxId' + photo.Id + '" name="deleteInputs" value="' + photo.Id + '">' +
+                                    '<label class="checkboxGallery" for="checkboxId' + photo.Id + '" title="' + '@OnlineShoeKing.Resources.Language.SelectElement' + '"></label></div><a href="' +
+                                    photo.ImageUrl + '" target="_blank"><img src="' + photo.ImageUrl + '" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '" /><img src="' +
+                                    photo.ImageUrl + '" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '" class="previewLeftLast" /></a></li>');
+                            }
+                            else {
+                                $('.hoverbox').append('<li><div style="text-align:center;"><input class="deleteAll" type="checkbox" id="checkboxId' + photo.Id + '" name="deleteInputs" value="' + photo.Id + '">' +
+                                    '<label class="checkboxGallery" for="checkboxId' + photo.Id + '" title="' + '@OnlineShoeKing.Resources.Language.SelectElement' + '"></label></div><a href="' +
+                                    photo.ImageUrl + '" target="_blank"><img src="' + photo.ImageUrl + '" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '" /><img src="' +
+                                    photo.ImageUrl + '" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '" class="previewLeft" /></a></li>');
+                            }
+                        }
+                    }
+                    else {
+                        if (gallery.length > 4) {
+                            if (index < 4) {
+
+                                $('.hoverbox').append('<li><div style="text-align:center;"><input class="deleteAll" type="checkbox" id="checkboxId' + photo.Id + '" name="deleteInputs" value="' + photo.Id + '">' +
+                                '<label class="checkboxGallery" for="checkboxId' + photo.Id + '" title="' + '@OnlineShoeKing.Resources.Language.SelectElement' + '"></label></div><a href="' +
+                                    photo.ImageUrl + '" target="_blank"><img src="' + photo.ImageUrl + '" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '" />' +
+                                    '<img src="' + photo.ImageUrl + '" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '" class="preview" /></a></li>');
+                            }
+                            else {
+
+                                $('.hoverbox').append('<li><div style="text-align:center;"><input class="deleteAll" type="checkbox" id="checkboxId' + photo.Id + '" name="deleteInputs" value="' + photo.Id + '">' +
+                                '<label class="checkboxGallery" for="checkboxId' + photo.Id + '" title="' + '@OnlineShoeKing.Resources.Language.SelectElement' + '"></label></div><a href="' +
+                                    photo.ImageUrl + '" target="_blank"><img src="' + photo.ImageUrl + '" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '" />' +
+                                    '<img src="' + photo.ImageUrl + '" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '" class="previewLastTree" /></a></li>');
+                            }
+                        }
+                        else {
+
+                            $('.hoverbox').append('<li><div style="text-align:center;"><input class="deleteAll" type="checkbox" id="checkboxId' + photo.Id + '" name="deleteInputs" value="' + photo.Id + '">' +
+                                '<label class="checkboxGallery" for="checkboxId' + photo.Id + '" title="' + '@OnlineShoeKing.Resources.Language.SelectElement' + '"></label></div><a href="' +
+                                photo.ImageUrl + '" target="_blank"><img src="' + photo.ImageUrl + '" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '" />' +
+                                '<img src="' + photo.ImageUrl + '" alt="' + '@OnlineShoeKing.Resources.Language.Image' + '" title="' + '@OnlineShoeKing.Resources.Language.Image' + '" class="preview" /></a></li>');
+                        }
+                    }
+                });
+
+                //Delete Photo from album
+                //Check Boxes
+
+                function DeleteAllCheckBoxes(obj) {
+                    var c = new Array();
+                    c = document.getElementsByClassName('deleteAll');
+                    alert(c.length);
+                    for (var i = 0; i < c.length; i++) {
+                        if (c[i].type === 'checkbox') {
+                            c[i].checked = obj.checked;
+                        }
+                    }
+                }
+
+
+                $.each(gallery, function (index, photo) {
+
+                    $('input[id="checkboxId' + photo.Id + '"]').change(function () {
+
+                        var submitBtn = $('#checkBtnId');
+                        if ($('input[id="checkboxId' + photo.Id + '"]:checked').length > 0) {
+                            submitBtn.show();
+                            return true;
+                        } else {
+
+                            var countChecked = 0;
+                            $.each(gallery, function (indexx, photox) {
+                                if ($('input[id="checkboxId' + photox.Id + '"]:checked').length > 0) {
+                                    countChecked = countChecked + 1;
+                                    submitBtn.show();
+                                }
+                            });
+
+                            if (countChecked === 0) {
+                                submitBtn.hide();
+                            }
+                        }
+                    });
+                });
+            }
+            else {
+                $('.hoverbox').html('');
+            }
+        });
+
+
+
+        //Profile image
+        $('.image-profile').on('click', function () {
+            $('#profile-image-upload').click();
+
+            $('#profile-image-upload').on("change", function () {
+                const $file = $("#profile-image-upload");
+                const $filePath = $.trim($file.val());
+                if ($filePath === "") {
+                    alert("Please browse a file to upload");
+                    return;
+                }
+                const $ext = $filePath.split(".").pop().toLowerCase();
+                const $allow = new Array("gif", "png", "jpg", "jpeg");
+                if ($.inArray($ext, $allow) === -1) {
+                    alert("@OnlineShoeKing.Resources.Language.MessageFileFormat");
+                    return;
+                }
+                else {
+                    $("#formProfilePicture").submit();
+                }
+            });
+        });
+
+
+        //Profile cover
+        $('.image-cover').on('click', function () {
+            $('#cover-image-upload').click();
+
+            $('#cover-image-upload').on("change", function () {
+                const $file = $("#cover-image-upload");
+                const $filePath = $.trim($file.val());
+                if ($filePath === "") {
+                    alert("Please browse a file to upload");
+                    return;
+                }
+                const $ext = $filePath.split(".").pop().toLowerCase();
+                const $allow = new Array("gif", "png", "jpg", "jpeg");
+                if ($.inArray($ext, $allow) === -1) {
+                    alert("@OnlineShoeKing.Resources.Language.MessageFileFormat");
+                    return;
+                }
+                else {
+                    $("#formProfileCover").submit();
+                }
+            });
+
+        });
+
+
+        //Add photos to album
+
+        $('#files').on('click', function () {
+
+            $('#files').on("change", function (e) {
+                e.stopImmediatePropagation();
+                var countFiles = 0;
+                for (let i = 0; i < this.files.length; i++) {
+
+                    const $filePath = $.trim(this.files[i].name);
+                    if ($filePath === "") {
+
+                        countFiles = countFiles + 1;
+
+                        if (this.files.length > 1) {
+                            $('#files').attr('title', 'Files not uploaded. Try again!');
+                        }
+                        else {
+                            $('#files').attr('title', 'File not uploaded. Try again!');
+                        }
+
+                        alert("Please browse a file to upload");
+                        return;
+                    }
+
+
+                    const $ext = $filePath.split(".").pop().toLowerCase();
+                    const $allow = new Array("gif", "png", "jpg", "jpeg");
+                    if ($.inArray($ext, $allow) === -1) {
+
+                        countFiles = countFiles + 1;
+
+                        if (this.files.length > 1) {
+                            $('#files').attr('title', 'Files not uploaded. Try again!');
+                        }
+                        else {
+                            $('#files').attr('title', 'File not uploaded. Try again!');
+                        }
+
+                        alert("@OnlineShoeKing.Resources.Language.MessageFileFormat");
+                        return;
+                    }
+                }
+
+                if (countFiles === 0) {
+                    $("#formProfileAlbum").submit();
+                }
+
+            });
+        });
+
+    });
+
+    $('.profile-button').on('click',
+        function (e) {
+            e.preventDefault();
+            $.get('/Profile/IndexPartial',
+                function (data) {
+                    $('#ControlNavigationId').html(data);
+                });
+        });
+
+    $('.profile-photos').on('click',
+        function (e) {
+            e.preventDefault();
+            $.get('/Profile/PhotosPartial',
+                function (data) {
+                    $('#ControlNavigationId').html(data);
+                });
+        });
+
+    $('#checkBtnId').on('click', function () {
+        $("#deletePhotoId").submit();
+    });
+
+
+    function DeleteAllCheckBoxes(obj) {
+        var c = new Array();
+        c = document.getElementsByClassName('deleteAll');
+        for (let i = 0; i < c.length; i++) {
+            if (c[i].type === 'checkbox') {
+                c[i].checked = obj.checked;
+            }
+        }
+    }
+
+    $('input[id="checkboxId"]').change(function () {
+        const submitBtn = $('#checkBtnId');
+        if ($('input[id="checkboxId"]:checked').length > 0) {
+            submitBtn.show();
+            return true;
+        } else {
+            submitBtn.hide();
+        }
+    });
+
+    $('input[type=radio][name=profile-radio]').on('change', function () {
+        const radio_val = $(this).val();
+        $.ajax({
+            url: '/Profile/ChangeProfilePhotosStatus',
+            type: 'POST',
+            dataType: 'JSON',
+            data: { radioVal: radio_val },
+            success: function () {
+
+                const win = $("<div>").kendoWindow({
+                    modal: true,
+                    open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                    position: {
+                        top: "40%",
+                        left: "45%"
+                    }
+                }).getKendoWindow();
+
+                $('div.k-widget.k-window').addClass("resizeCart");
+                $('div.k-widget.k-window').removeClass("resizeLogin");
+
+                // set the content
+                win.content('@OnlineShoeKing.Resources.Language.ChangeWasSaved');
+                // center it and open it
+                win.open();
+            }
+        });
+    });
+
+    $.post('/Products/UserProducts', function (data) {
+        $('#purchased-products-user').html(data);
+    });
+</script>

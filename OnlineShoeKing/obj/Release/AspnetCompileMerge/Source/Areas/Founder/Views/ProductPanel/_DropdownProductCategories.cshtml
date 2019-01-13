@@ -1,0 +1,135 @@
+﻿@model IEnumerable<OnlineShoeKing.Models.ViewModels.CategoryViewModel>
+
+
+<div class="form-group centerAlign margin-bottom-20">
+    <div class="col-md-2 control-label">@OnlineShoeKing.Resources.Language.CategoryTitle</div>
+    <div class="col-md-2">
+        <select name="productSpecials" id="productCategoriesId" class="form-control">
+            <option value="-1">---</option>
+            <option value="0">@OnlineShoeKing.Resources.Language.NewCategoryTitle</option>
+            @foreach (var category in Model)
+            {
+            <option value="@category.CategoryId">@category.Name</option>
+            }
+        </select>
+    </div>
+    <br />
+</div>
+
+<div class="centerAlign col-md-12 margin-bottom-20" id="windowProductValidationCategoriesId" style="color:#ff0000;"></div>
+
+<div class="form-group centerAlign windowProductMargin"  style="display: none;" id="productCategoryHideShowId">
+    <div class="col-md-2 control-label margin-top-minus-5">@OnlineShoeKing.Resources.Language.NewCategoryTitle</div>
+    <div class="col-md-7">
+        <input type="text" class="form-control" id="productCategoryTextId" name="ProductCategory" />
+    </div>
+    <div class="centerAlign col-md-12 margin-bottom-20" id="windowProductValidationCategoriesTextId" style="color:#ff0000;"></div>
+</div>
+
+<div class="form-group centerAlign windowProductMargin" style="display: none;" id="productCategoryBgHideShowId">
+    <div class="col-md-2 control-label margin-top-minus-5">@OnlineShoeKing.Resources.Language.BgLanguage</div>
+    <div class="col-md-7">
+        <input type="text" class="form-control" id="productCategoryBgTextId" name="ProductCategory" />
+    </div>
+    <div class="centerAlign col-md-12 margin-bottom-20" id="windowProductValidationCategoriesBgTextId" style="color:#ff0000;"></div>
+</div>
+
+<div class="form-group centerAlign margin-bottom-20" id="categoryStatusHideShowId" style="display: none;">
+    <div class="col-md-2 control-label">@OnlineShoeKing.Resources.Language.StatusTitle</div>
+    <div class="col-md-2">
+        <select name="categoryStatus" id="categoryStatusId" class="form-control" title="">
+            <option value="1">@OnlineShoeKing.Resources.Language.ProductInStockTitle</option>
+            <option value="0">@OnlineShoeKing.Resources.Language.ProductIsNotInStockTitle</option>
+        </select>
+    </div>
+    <br />
+    <div class="centerAlign col-md-12 margin-bottom-20" id="windowCategoryValidationStatusId" style="color:#ff0000;"></div>
+</div>
+
+<div class="form-group centerAlign margin-bottom-20" id="categoryGenderHideShowId" style="display: none;">
+    <div class="col-md-2 control-label">@OnlineShoeKing.Resources.Language.StatusTitle</div>
+    <div class="col-md-2">
+        <select name="categoryGender" id="categoryGenderId" class="form-control" title="">
+            <option value="1">@OnlineShoeKing.Resources.Language.Men</option>
+            <option value="0">@OnlineShoeKing.Resources.Language.Women</option>
+        </select>
+    </div>
+    <br />
+    <div class="centerAlign col-md-12 margin-bottom-20" id="windowCategoryValidationGenderId" style="color:#ff0000;"></div>
+</div>
+
+<div class="form-group centerAlign" style="display: none;" id="productCategoryImgHideShowId">
+    <div class="col-md-11 control-label">
+        @OnlineShoeKing.Resources.Language.AddCategoryPhotoTitle
+    </div>
+    <br />
+    <div class="col-md-11">
+        <input name="files" id="imgCategoryProductId" type="file" />
+    </div>
+    <br />
+    <div class="centerAlign col-md-12 margin-bottom-20" id="windowProductValidationImgCategoryId" style="color:#ff0000;"></div>
+</div>
+
+
+<script>
+    //var productCategories = $("#productCategoriesId").kendoDropDownList().data("kendoDropDownList");
+
+    $("#productCategoriesId").val("-1").change();
+    $("#productCategoriesId").kendoDropDownList().data("kendoDropDownList").value('-1');
+    $("#categoryStatusId").val("1").change();
+    $("#categoryStatusId").kendoDropDownList().data("kendoDropDownList").value('1');
+    $("#categoryGenderId").val("1").change();
+    $("#categoryGenderId").kendoDropDownList().data("kendoDropDownList").value('1');
+    $('#productCategoryTextId').val('');
+    $('#windowProductValidationCategoriesId').html('');
+
+    $('#windowCategoryValidationStatusId').html('');
+    $('#windowCategoryValidationGenderId').html('');
+    $('#productCategoriesId').change(function () {
+
+        const value = this.value;
+
+        $('#windowProductValidationCategoriesId').html('');
+
+        if (value === '0') {
+            $('#productCategoryHideShowId').fadeIn("slow");
+            $('#productCategoryBgHideShowId').fadeIn("slow"); 
+            $('#productCategoryImgHideShowId').fadeIn("slow");
+            $('#categoryStatusHideShowId').fadeIn("slow");
+            $('#categoryGenderHideShowId').fadeIn("slow");
+        }
+        else {
+            $('#productCategoryHideShowId').hide(500);
+            $('#productCategoryBgHideShowId').hide(500);
+            $('#productCategoryImgHideShowId').hide(500);
+            $('#categoryStatusHideShowId').hide(500);
+            $('#categoryGenderHideShowId').hide(500);
+        }
+    });
+
+   
+
+    $("#imgCategoryProductId").kendoUpload({
+        multiple: false,
+        async: {
+            saveUrl: "/Founder/ProductPanel/SaveCategoryImgProduct",
+            removeUrl: "/Founder/ProductPanel/RemoveCategoryImgProduct",
+            //batch: true,
+            autoUpload: true
+        },
+        localization: {
+            select: 'Upload'
+            //remove: '',
+            //cancel: ''
+        },
+        validation: {
+            allowedExtensions: [".gif", ".jpg", ".png", ".jpeg"]
+        }
+    });
+
+    $(".k-upload-sync").removeClass('k-upload-sync');
+    $(".k-upload").css("background", "none");
+    $(".k-upload").css("border", "none");
+    $(".k-upload-files").css("border", "none !important");
+    $('.k-upload').addClass('k-upload-remove-border');
+</script>

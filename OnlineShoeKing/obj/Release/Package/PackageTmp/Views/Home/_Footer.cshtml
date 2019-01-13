@@ -1,0 +1,26 @@
+﻿@model OnlineShoeKing.Models.Footer
+
+
+<div class="row footer-row">
+    <div class="col-md-6 footer-col">
+        <h3 class="ft-title">@OnlineShoeKing.Resources.Language.Shop</h3>
+        <ul class="ft-list">
+            <li><a href="/Products/Women">Women (@Model.WomenCount)</a></li>
+            <li><a href="/Products/Women">Men (@Model.MenCount)</a></li>
+            <li><a href="/Customers/Index">Customers (@Model.CustomersCount)</a></li>
+        </ul>
+    </div>
+    @*<div class="col-md-4 footer-col">
+        <h3 class="ft-title">@OnlineShoeKing.Resources.Language.OldVersionTheSite</h3>
+        <ul class="ft-list  list-h">
+            <li><a href="http://onlineshoeking-001-site1.itempurl.com" target="_blank">Online Shoe King</a></li>
+        </ul>
+    </div>*@
+    <div class="col-md-6 footer-col">
+        <h3 class="ft-title">@OnlineShoeKing.Resources.Language.MoreTitle</h3>
+        <ul class="ft-list list-h">
+            <li><a href="/Home/About">@OnlineShoeKing.Resources.Language.AboutUs</a></li>
+        </ul>
+    </div>
+    <div class="clearfix"></div>
+</div>

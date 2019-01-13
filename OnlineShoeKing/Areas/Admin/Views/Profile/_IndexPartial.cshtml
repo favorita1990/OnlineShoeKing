@@ -1,0 +1,271 @@
+﻿
+
+
+<div id="ControlNavigationId">
+    <div class="bottom-grids collections">
+        <div class="container">
+
+            <script type="text/javascript">
+                document.title = 'Profile - Shoe King';
+                window.history.pushState(
+                    null,
+                    null,
+                    '/Admin/Profile'
+                    );
+            </script>
+
+            <!---start-product-details--->
+            <div class="product-details">
+                <div class="container">
+                    <div class="product-head">
+                        @if (TempData["profileGender"] as string == OnlineShoeShopAndChat.Resources.Language.ManTitle)
+                        {
+                        <img alt="User Pic" id="imageInitial" src="@OnlineShoeShopAndChat.Resources.Pictures.PicMen" class="img-circle img-responsive">
+                        }
+                        else
+                        {
+                        <img alt="User Pic" id="imageInitial" src="@OnlineShoeShopAndChat.Resources.Pictures.PicGirl" class="img-circle img-responsive">
+                        }
+                        
+                        <h2>@OnlineShoeShopAndChat.Resources.Language.ProfileTitle</h2>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="profile">
+
+                        @using (Html.BeginForm("CreateCoverIndex", "Profile", FormMethod.Post, new { @id = "formProfileCover", enctype = "multipart/form-data" }))
+                        {
+                        @Html.AntiForgeryToken()
+
+                            if (TempData["profileCover"] as string == null)
+                            {
+                            <div>
+                                <img class="image-lg image-cover" src="@OnlineShoeShopAndChat.Resources.Pictures.ProfileCover" alt="Cover" />
+                            </div>
+                            }
+                            else
+                            {
+                            <div class="removeProfileCover">
+                                <img class="image-lg image-cover" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages@TempData["profileCover"]" alt="Cover" />
+
+                                <button type="submit" name="removeProfile" class="btn btn-warning btn-sm buttonRemoveCover">@OnlineShoeShopAndChat.Resources.Language.RemoveTitle</button>
+
+                            </div>
+                            }
+
+                            <input id="cover-image-upload" name="file" class="hidden" type="file" accept="image/x-png, image/gif, image/jpg image/jpeg">
+                        }
+
+
+                        @using (Html.BeginForm("CreateIndex", "Profile", FormMethod.Post, new { @id = "formProfilePicture", enctype = "multipart/form-data" }))
+                        {
+                        @Html.AntiForgeryToken()
+
+                            if (TempData["profilePhoto"] as string == null)
+                            {
+                                if (TempData["profileGender"] as string == OnlineShoeShopAndChat.Resources.Language.ManTitle)
+                                {
+                                <div>
+                                    <img class="image-profile thumbnail" src="/images/profilePic.jpg" alt="Profile image" />
+                                </div>
+                                }
+                                else
+                                {
+                                <div>
+                                    <img class="image-profile thumbnail" src="/images/profilePicWoman.jpg" alt="Profile image" />
+                                </div>
+                                }
+                            }
+                            else
+                            {
+                            <div class="removeProfilePicture">
+                                <img class="image-profile thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages@TempData["profilePhoto"]" alt="Profile image" />
+
+                                <button type="submit" name="removeProfile" class="btn btn-warning btn-xs buttonRemoveProfile">@OnlineShoeShopAndChat.Resources.Language.RemoveTitle</button>
+
+                            </div>
+                            }
+
+                            <input id="profile-image-upload" name="file" class="hidden" type="file" accept="image/x-png, image/gif, image/jpg image/jpeg">
+                        }
+
+
+                        <div class="profile-text">
+                            <h3>
+                                @if ((TempData["profileFirstName"] as string != null) && (TempData["profileLastName"] as string != null))
+                                {
+                                @TempData["profileFirstName"] <span> </span> @TempData["profileLastName"]
+                                    <span> </span> if(@TempData["profileAdmin"] != null) { <span>(@OnlineShoeShopAndChat.Resources.Language.AdminTitle)</span>}
+                                }
+                                else
+                                {
+                                <span>...</span>
+                                }
+                            </h3>
+                        </div>
+                        <div class="profile-buttons">
+                            <ul>
+                                <li>
+                                    @Ajax.ActionLink(OnlineShoeShopAndChat.Resources.Language.OverviewTitle, "IndexPartial",
+                                    new AjaxOptions
+                                    {
+                                        UpdateTargetId = "ControlNavigationId",
+                                        InsertionMode = InsertionMode.Replace,
+                                        HttpMethod = "Get"
+                                    })
+                                </li>
+                                <li>
+                                    @Ajax.ActionLink(OnlineShoeShopAndChat.Resources.Language.PhotosTitle, "PhotosPartial",
+                                    new AjaxOptions
+                                    {
+                                        UpdateTargetId = "ControlNavigationId",
+                                        InsertionMode = InsertionMode.Replace,
+                                        HttpMethod = "Get"
+                                    })
+                                </li>
+                            </ul>
+                            <div class="clearfix"> </div>
+                        </div>
+                        <div class="profileInfo">
+                            <div class="panel-headingOverview">
+                                <h4>@OnlineShoeShopAndChat.Resources.Language.BasicInfoTitle</h4>
+                            </div>
+                            <div class="panel-bodyOverview">
+                                <div class="col-sm-5 col-xs-6">@OnlineShoeShopAndChat.Resources.Language.EmailTitle:</div><div class="col-sm-7">
+                                    @if (TempData["profileEmail"] as string != null)
+                                    {
+                                    @TempData["profileEmail"]
+                                    }
+                                    else
+                                    {
+                                    <span>...</span>
+                                    }
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+                                <div class="col-sm-5 col-xs-6">@OnlineShoeShopAndChat.Resources.Language.FirstNameTitle:</div><div class="col-sm-7 col-xs-6 ">
+                                    @if (TempData["profileFirstName"] as string != null)
+                                    {
+                                    @TempData["profileFirstName"]
+                                    }
+                                    else
+                                    {
+                                    <span>...</span>
+                                    }
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+                                <div class="col-sm-5 col-xs-6">@OnlineShoeShopAndChat.Resources.Language.LastNameTitle:</div><div class="col-sm-7">
+                                    @if (TempData["profileLastName"] as string != null)
+                                    {
+                                    @TempData["profileLastName"]
+                                    }
+                                    else
+                                    {
+                                    <span>...</span>
+                                    }
+                                </div>
+
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+                                <div class="col-sm-5 col-xs-6">@OnlineShoeShopAndChat.Resources.Language.DateOfJoiningTitle:</div><div class="col-sm-7">
+                                    @if (TempData["profileCreationDate"] as string != null)
+                                    {
+                                    @TempData["profileCreationDate"]
+                                    }
+                                    else
+                                    {
+                                    <span>...</span>
+                                    }
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+                                <div class="col-sm-5 col-xs-6">@OnlineShoeShopAndChat.Resources.Language.GenderTitle:</div><div class="col-sm-7">
+                                    @if (TempData["profileGender"] as string != null)
+                                    {
+                                    @TempData["profileGender"]
+                                    }
+                                    else
+                                    {
+                                    <span>...</span>
+                                    }
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+                                <div class="col-sm-5 col-xs-6">@OnlineShoeShopAndChat.Resources.Language.PhotoCountTitle:</div><div class="col-sm-7">
+                                    @if (TempData["profilePictureCount"] != null)
+                                    {
+                                    @TempData["profilePictureCount"]
+                                    }
+                                    else
+                                    {
+                                    <span>0</span>
+                                    }
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <script>
+                            $(function () {
+
+                                //Profile picture
+                                $('.image-profile').on('click', function () {
+                                    $('#profile-image-upload').click();
+
+                                    $('#profile-image-upload').on("change", function () {
+                                        var $file = $("#profile-image-upload");
+                                        var $filePath = $.trim($file.val());
+                                        if ($filePath == "") {
+                                            alert("Please browse a file to upload");
+                                            return;
+                                        }
+                                        var $ext = $filePath.split(".").pop().toLowerCase();
+                                        var $allow = new Array("gif", "png", "jpg", "jpeg");
+                                        if ($.inArray($ext, $allow) == -1) {
+                                            alert("@OnlineShoeShopAndChat.Resources.Language.MessageFileFormat")[0];
+                                            return;
+                                        }
+                                        else {
+                                            $("#formProfilePicture").submit();
+                                        }
+                                    });
+
+                                });
+
+
+                                //Profile cover
+                                $('.image-cover').on('click', function () {
+                                    $('#cover-image-upload').click();
+
+                                    $('#cover-image-upload').on("change", function () {
+                                        var $file = $("#cover-image-upload");
+                                        var $filePath = $.trim($file.val());
+                                        if ($filePath == "") {
+                                            alert("Please browse a file to upload");
+                                            return;
+                                        }
+                                        var $ext = $filePath.split(".").pop().toLowerCase();
+                                        var $allow = new Array("gif", "png", "jpg", "jpeg");
+                                        if ($.inArray($ext, $allow) == -1) {
+                                            alert("@OnlineShoeShopAndChat.Resources.Language.MessageFileFormat")[0];
+                                            return;
+                                        }
+                                        else {
+                                            $("#formProfileCover").submit();
+                                        }
+                                    });
+
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+                <br><br><br><br>
+            </div>
+            <!---//End-product-details--->
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#ulControlNavigationId li').removeClass('active');
+</script>

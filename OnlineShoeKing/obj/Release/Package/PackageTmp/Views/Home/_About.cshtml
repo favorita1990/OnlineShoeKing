@@ -1,0 +1,79 @@
+﻿@using OnlineShoeKing.Models.ViewModels
+
+@{ 
+    var breadCrumb = (BreadCrumbVm)TempData["breadCrumb"];
+}
+
+<div id="ControlNavigationId">
+    <meta name="description" content="About page of Online Shoe King is about description the side." />
+    <meta name="keywords" content="Shoe King, Online, Shoe, King, Men, Women, description, About page, About, page" />
+    <script type="text/javascript">
+    document.title = 'About | Shoe King';
+    window.history.pushState(
+        null,
+        null,
+        '/Home/About'
+    );
+    </script>
+
+    <div class="pag-nav">
+        <ul class="p-list">
+            @if (breadCrumb != null)
+            {
+                if (breadCrumb.Controller != null)
+                {
+                    <li><a href="@breadCrumb.Controller" onclick="breadCrumb('@breadCrumb.ControllerPartial'); return false;">@breadCrumb.ControllerName</a></li>
+                    <li>
+                        &nbsp;/&nbsp;
+                    </li>
+                }
+                if (breadCrumb.ActionName != null)
+                {
+                    <li class="act">@breadCrumb.ActionName</li>
+                }
+            }
+        </ul>
+    </div>
+
+    <div class="coats">
+        <h3 class="c-head">@OnlineShoeKing.Resources.Language.AboutUs</h3>
+    </div>
+    <div class="row about-row">
+        <div class="col-md-6 about-col" >
+            @if (TempData["firstPic"] as string != "")
+            {
+                <img src="@TempData["firstPic"]" class="img-responsive" alt="@OnlineShoeKing.Resources.Language.firstPic" title="@OnlineShoeKing.Resources.Language.firstPic">
+            }
+            <div class="who" >
+                <h3>@TempData["textFirstHeader"]</h3>
+                <p>@TempData["textFirst"]</p>
+            </div>
+        </div>
+        <div class="col-md-6 about-col" >
+            @if (TempData["secondPic"] as string != "")
+            {
+                <img src="@TempData["secondPic"]" class="img-responsive" alt="@OnlineShoeKing.Resources.Language.secondPic" title="@OnlineShoeKing.Resources.Language.secondPic" >
+            }
+            <div class="who" >
+                <h3>@TempData["textSecondHeader"]</h3>
+                <p>@TempData["textSecond"]</p>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+</div>
+
+   
+<script src="~/Scripts/easyResponsiveTabs.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        $('#horizontalTab').easyResponsiveTabs({
+            type: 'default', //Types: default, vertical, accordion
+            width: 'auto', //auto or any width like 600px
+            fit: true   // 100% fit in a container
+        });
+    });
+</script>

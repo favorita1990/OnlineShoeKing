@@ -1,0 +1,201 @@
+﻿
+
+<div id="ControlNavigationId">
+    <script type="text/javascript">
+        document.title = 'Home Page | Shoe King';
+        window.history.pushState(
+            null,
+            null,
+            '/'
+        );
+    </script>
+
+    <!-- Banner Starts Here --->
+    <div class="home-img-banner">
+        <div class="banner" >
+            <h1></h1>
+            <div>
+                <span class="glyphicon glyphicon-pencil edit-responsible-glyphicon edit-home-text-header"></span>
+            </div>
+            <small></small><span class="glyphicon glyphicon-pencil edit-responsible-glyphicon edit-home-text" ></span>
+            <div class="ban-btn" >
+                <a id="home_change_img_btn"href="#" >@OnlineShoeKing.Resources.Language.ChangeImage</a>
+                <a id="home_delete_img_btn" href="#" >@OnlineShoeKing.Resources.Language.DeleteImage</a>
+                <input id="home_change_img" name="file" class="hidden" type="file" accept="image/x-png, image/gif, image/jpg image/jpeg" >
+            </div>
+        </div>
+    </div>
+    <!-- Banner Ends Here --->
+    
+
+    @Html.Partial("_IndexNewArrivals")
+    
+
+    @Html.Partial("_IndexMostBought")
+
+
+</div>
+
+<script>
+    $.getJSON('/Home/GetHomePage',
+        function(homePage) {
+            $('.edit-home-text-header').show();
+            $('.edit-home-text').show();
+            $('#home_change_img_btn').show();
+
+            if (homePage.ImageUrl !== '') {
+                $('.banner').css('background', 'url(' + homePage.ImageUrl + ')no-repeat');
+                $('#home_delete_img_btn').show();
+            }
+            $('.banner h1').html(homePage.TextHeader);
+            $('.banner small').text(homePage.Text);
+           
+        });
+
+    $('.edit-home-text-header').on('click', function () {
+
+        const banner_h = $('.banner h1');
+
+        const text_header_old = banner_h.text();
+
+        if (banner_h.hasClass('change-about')) {
+            const text_header = $('.banner h1').text();
+
+            $.post('/Home/EditHomeTextHeader', { textHeader: text_header }, function () {
+                banner_h.attr('contenteditable', 'false');
+                banner_h.attr('border', 'none');
+                banner_h.removeClass('change-about');
+                $('.edit-home-text-header').addClass('edit-responsible-glyphicon');
+                $('.edit-home-text-header').addClass('glyphicon-pencil');
+                $('.edit-home-text-header').removeClass('glyphicon-ok');
+                $('.edit-home-text-header').removeClass('ok-edit-text-header');
+                $('.cancel-edit-text-header').remove();
+            });
+        }
+        else {
+
+            banner_h.addClass('change-about');
+            banner_h.attr('contentEditable', 'true');
+            banner_h.attr('border', '1px solid #fff');
+
+            $(this).removeClass('edit-responsible-glyphicon');
+            $(this).removeClass('glyphicon-pencil');
+            $(this).addClass('glyphicon-ok');
+            $(this).addClass('ok-edit-text-header');
+
+            $('<span class="glyphicon glyphicon-remove cancel-edit-text-header"></span>').insertAfter($(this));
+
+            var spanOk = $(this);
+            $('.cancel-edit-text-header').on('click', function () {
+                banner_h.attr('contenteditable', 'false');
+                banner_h.attr('border', 'none');
+                banner_h.removeClass('change-about');
+                spanOk.addClass('edit-responsible-glyphicon');
+                spanOk.addClass('glyphicon-pencil');
+                spanOk.removeClass('glyphicon-ok');
+                spanOk.removeClass('ok-edit-text-header');
+                $(this).remove();
+
+                $('.banner h1').html(text_header_old);
+            });
+        }
+    });
+
+    $('.edit-home-text').on('click', function () {
+
+        const banner_s = $('.banner small');
+
+        const text_old = banner_s.text();
+
+        if (banner_s.hasClass('change-about')) {
+            const text = $('.banner small').text();
+
+            $.post('/Home/EditHomeText', { text: text }, function () {
+
+                banner_s.attr('contenteditable', 'false');
+                banner_s.attr('border', 'none');
+                banner_s.removeClass('change-about');
+                $('.edit-home-text').addClass('edit-responsible-glyphicon');
+                $('.edit-home-text').addClass('glyphicon-pencil');
+                $('.edit-home-text').removeClass('glyphicon-ok');
+                $('.edit-home-text').removeClass('ok-edit-home-text');
+                $('.cancel-edit-home-text').remove();
+            });
+        }
+        else {
+
+            banner_s.addClass('change-about');
+            banner_s.attr('contentEditable', 'true');
+            banner_s.attr('border', '1px solid #fff');
+
+            $(this).removeClass('edit-responsible-glyphicon');
+            $(this).removeClass('glyphicon-pencil');
+            $(this).addClass('glyphicon-ok');
+            $(this).addClass('ok-edit-home-text');
+
+            $('<span class="glyphicon glyphicon-remove cancel-edit-home-text"></span>').insertAfter($(this));
+
+            var spanOk = $(this);
+            $('.cancel-edit-home-text').on('click', function () {
+                banner_s.attr('contenteditable', 'false');
+                banner_s.attr('border', 'none');
+                banner_s.removeClass('change-about');
+                spanOk.addClass('edit-responsible-glyphicon');
+                spanOk.addClass('glyphicon-pencil');
+                spanOk.removeClass('glyphicon-ok');
+                spanOk.removeClass('ok-edit-home-text');
+                $(this).remove();
+
+                $('.banner small').html(text_old);
+            });
+        }
+    });
+
+    $('#home_change_img_btn').on('click', function () {
+
+            $('#home_change_img').click();
+
+            $('#home_change_img').on("change", function (e) {
+                e.stopImmediatePropagation();
+
+                const $file = $(this);
+                const $filePath = $.trim($file.val());
+                if ($filePath === "") {
+                    alert("Please browse a file to upload");
+                    return;
+                }
+                const $ext = $filePath.split(".").pop().toLowerCase();
+                const $allow = new Array("gif", "png", "jpg", "jpeg");
+                if ($.inArray($ext, $allow) === -1) {
+                    alert("@OnlineShoeKing.Resources.Language.MessageFileFormat");
+                    return;
+                }
+                else {
+                    const formUpload = new FormData();
+                    formUpload.append("homeChangeImg", $('#home_change_img')[0].files[0]);
+
+                    $.ajax({
+                        async: true,
+                        type: 'POST',
+                        url: '/Founder/Home/EditHomePagePicture',
+                        data: formUpload,
+                        success: function (imageurl) {
+                            $('.banner').css('background', 'url(' + imageurl + ')no-repeat');
+                            $('#home_delete_img_btn').show();
+                        },
+                        cache: false,
+                        contentType: false,
+                        processData: false
+                    });
+                }
+            });
+    });
+
+    $('#home_delete_img_btn').on('click', function() {
+            $.post('/Home/DeleteHomePageImg', function () {
+                $('.banner').css('background', '#000');
+                $('#home_delete_img_btn').hide();
+            });
+        });
+
+</script>

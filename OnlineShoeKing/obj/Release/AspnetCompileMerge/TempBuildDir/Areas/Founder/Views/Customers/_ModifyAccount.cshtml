@@ -1,0 +1,191 @@
+﻿
+@using OnlineShoeKing.Models.ViewModels
+
+@{
+    var breadCrumb = (BreadCrumbVm)TempData["breadCrumb"];
+}
+
+
+<div id="ControlNavigationId">
+
+    <script type="text/javascript">
+        document.title = 'Customers';
+        window.history.pushState(
+            null,
+            null,
+            '/Founder/Customers/Modify?email=@TempData["modifyCustomerEmail"]'
+            );
+    </script>
+
+    <div class="pag-nav">
+        <ul class="p-list">
+            @if (breadCrumb != null)
+            {
+                if (breadCrumb.Controller != null)
+                {
+                    <li><a href="@breadCrumb.Controller" onclick="breadCrumb('@breadCrumb.ControllerPartial'); return false;">@breadCrumb.ControllerName</a></li>
+                    <li>
+                        &nbsp;/&nbsp;
+                    </li>
+                }
+                if (breadCrumb.Action != null)
+                {
+                    <li><a href="@breadCrumb.Action" onclick="breadCrumb('@breadCrumb.ActionPartial'); return false;">@breadCrumb.ActionName</a></li>
+                    <li>
+                        &nbsp;/&nbsp;
+                    </li>
+                }
+                if (breadCrumb.IdName != null)
+                {
+                    <li class="act">@breadCrumb.IdName</li>
+                }
+            }
+        </ul>
+    </div>
+    
+
+    <div class="center account-body">
+
+        @using (Ajax.BeginForm("ModifyCustomers", "Customers", new { Area = "Founder" }, new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "ControlNavigationId", InsertionMode = InsertionMode.Replace }))
+            {
+            @Html.AntiForgeryToken()
+
+            <h3 class="text-center text-danger">@OnlineShoeKing.Resources.Language.ModifyTitle</h3>
+
+            <div class="account-form">
+                <div class="control-label">@OnlineShoeKing.Resources.Language.EmailTitle*</div>
+                <div class="">
+                    <input type="text" name="email" value="@TempData["modifyCustomerEmail"]" class="form-control" />
+                    <span class="text-center text-danger">@TempData["emailValidation"]</span>
+                    <span class="text-center text-danger">@TempData["email"]</span>
+                </div>
+            </div>
+
+                <div class="account-form">
+                    <div class="control-label">@OnlineShoeKing.Resources.Language.FirstNameTitle*</div>
+                    <div class="">
+                        <input type="text" name="firstName" value="@TempData["modifyCustomerFirstName"]" class="form-control" />
+                        <span class="text-center text-danger">@TempData["firstName"]</span>
+                    </div>
+                </div>
+
+                <div class="account-form">
+                    <div class="control-label">@OnlineShoeKing.Resources.Language.LastNameTitle*</div>
+                    <div class="">
+                        <input type="text" name="lastName" value="@TempData["modifyCustomerLastName"]" class="form-control" />
+                        <span class="text-center text-danger">@TempData["lastName"]</span>
+                    </div>
+                </div>
+
+                <div class="account-form">
+                    <div class="control-label">@OnlineShoeKing.Resources.Language.GenderTitle*</div>
+                    <div class="account-dropdown">
+                        <select name="gender" id="gender" class="form-control">
+                            <option value="0">@OnlineShoeKing.Resources.Language.MrTitle</option>
+                            <option value="1">@OnlineShoeKing.Resources.Language.MsTitle</option>
+                            <option value="2">@OnlineShoeKing.Resources.Language.MrsTitle</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="account-form">
+                    <div class="control-label">@OnlineShoeKing.Resources.Language.RoleTitle*</div>
+                    <div class="account-dropdown">
+                        <select name="role" id="role" class="form-control">
+                            <option value="0">@OnlineShoeKing.Resources.Language.UserTitle</option>
+                            <option value="1">@OnlineShoeKing.Resources.Language.AdminTitle</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="account-form">
+                    <div class="control-label">@OnlineShoeKing.Resources.Language.PasswordTitle*</div>
+                    <div class="">
+                        <input type="text" name="password" value="@TempData["modifyCustomerPassword"]" class="form-control" />
+                        <span class="text-center text-danger">
+                            @TempData["password"]
+                            @TempData["invalidRegisterConfirmPassword"]
+                            @TempData["invalidRegisterPasswordLength"]
+                        </span>
+                    </div>
+                </div>
+
+                <div class="account-form">
+                    <div class="control-label">@OnlineShoeKing.Resources.Language.ConfirmPasswordTitle*</div>
+                    <div class="">
+                        <input type="text" name="confirmPassword" value="@TempData["modifyCustomerConfirmPassword"]" class="form-control" />
+                        <span class="text-center text-danger">
+                            @TempData["confirmPassword"]
+                            @TempData["invalidRegisterConfirmPassword"]
+                            @TempData["invalidRegisterConfirmPasswordLength"]
+                        </span>
+                    </div>
+                </div>
+
+                <div class="inlineButtonsModify">
+
+                    <input type="submit" value="Modify" class="btn btn-success btn-lg" />
+
+                    <a href="/Founder/Customers/Profile?email=@TempData["modifyCustomerEmail"]" class="btn btn-warning btn-lg account-form-btn-back">@OnlineShoeKing.Resources.Language.BackTitle</a>
+
+                </div>
+        }
+    </div>
+</div>
+
+
+<script>
+
+    $("#gender > option").each(function () {
+        if (this.value === '@TempData["modifyCustomerGenter"]') {
+            $(this).attr('selected', true);
+        }
+    });
+
+    if (('@TempData["modifyCustomerRole"]' != null) || ('@TempData["modifyCustomerRole"]' !== '')) {
+        $("#role > option").each(function () {
+            if (this.value === '@TempData["modifyCustomerRole"]') {
+                $(this).attr('selected', true);
+            }
+        });
+    }
+
+    $('.account-form-btn-back').on('click',
+        function (e) {
+            e.preventDefault();
+
+            $('#add-loading').html('<div id="div-loading"></div>');
+            const dialog = $("#div-loading").kendoWindow({
+                draggable: false,
+                resizable: false,
+                modal: true,
+                actions: [""],
+                open: function (event) { $(this.element).closest(".k-window").css("position", "fixed") },
+                position: {
+                    top: "40%",
+                    left: "46%"
+                }
+            }).data("kendoWindow").content('@OnlineShoeKing.Resources.Language.Loading');
+
+            $('.k-window-actions').remove();
+            $('.k-header').addClass('resize-loading-window');
+            $('.k-header').removeClass('k-header k-window-titlebar');
+            $('.k-widget').removeClass('k-widget k-window');
+
+            $('div.k-window-content').css('padding', '1.2em 1.3em');
+            $('div.k-window-content').css('border-radius', '10px');
+
+            $('body').css('overflow', 'hidden');
+
+            $.get('/Founder/Customers/IndexProfile', { email: '@TempData["modifyCustomerEmail"]' },
+                function (data) {
+                    dialog.close();
+                    $('body').css('overflow', 'auto');
+                    $('#ControlNavigationId').html(data);
+                }).fail(function () {
+                    dialog.close();
+                    $('body').css('overflow', 'auto');
+                });
+        });
+</script>

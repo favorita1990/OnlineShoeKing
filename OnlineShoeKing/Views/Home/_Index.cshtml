@@ -1,0 +1,47 @@
+﻿
+
+<div id="ControlNavigationId">
+    <meta name="description" content="Home page of Online Shoe King is about to make an impression of user ." />
+    <meta name="keywords" content="Shoe King, Online, Shoe, King, Men, Women, Category, Product, Home page, home, page" />
+    <script type="text/javascript">
+        document.title = 'Home Page | Shoe King';
+        window.history.pushState(
+            null,
+            null,
+            '/'
+        );
+    </script>
+
+    <!-- Banner Starts Here --->
+    <div class="home-img-banner">
+        <div class="banner">
+            <h1></h1>
+            <small></small>
+        </div>
+    </div>
+    <!-- Banner Ends Here --->
+
+
+    @Html.Partial("_IndexNewArrivals")
+
+
+    @Html.Partial("_IndexMostBought")
+
+</div>
+
+<script>
+    $.getJSON('/Home/GetHomePage',
+        function(homePage) {
+            $('.edit-home-text-header').show();
+            $('.edit-home-text').show();
+            $('#home_change_img_btn').show();
+
+            if (homePage.ImageUrl !== '') {
+                $('.banner').css('background', 'url(' + homePage.ImageUrl + ')no-repeat');
+                $('#home_delete_img_btn').show();
+            }
+            $('.banner h1').html(homePage.TextHeader);
+            $('.banner small').text(homePage.Text);
+
+        });
+</script>

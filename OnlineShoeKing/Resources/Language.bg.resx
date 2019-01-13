@@ -1,0 +1,1152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutUs" xml:space="preserve">
+    <value>За нас</value>
+  </data>
+  <data name="AddedTitle" xml:space="preserve">
+    <value>Добавен</value>
+  </data>
+  <data name="AddressTitle" xml:space="preserve">
+    <value>Адрес</value>
+  </data>
+  <data name="AllCollections" xml:space="preserve">
+    <value>Всички колекции</value>
+  </data>
+  <data name="AllFieldsAreRequiredTitle" xml:space="preserve">
+    <value>Всички полета са задължителни.</value>
+  </data>
+  <data name="BackTitle" xml:space="preserve">
+    <value>Назад</value>
+  </data>
+  <data name="BeautifulDurableTitle" xml:space="preserve">
+    <value>Красиви и издръжливи</value>
+  </data>
+  <data name="Beginnings21thCenturyTitle" xml:space="preserve">
+    <value>С началото на края на 21-ия век сайтът Shoe King се превръща в един от най-успешните производители на кожени изделия от висок клас.</value>
+  </data>
+  <data name="BG" xml:space="preserve">
+    <value>БГ</value>
+  </data>
+  <data name="Bulgarian" xml:space="preserve">
+    <value>Български</value>
+  </data>
+  <data name="BuyNowBtn" xml:space="preserve">
+    <value>Купи сега</value>
+  </data>
+  <data name="CartTitle" xml:space="preserve">
+    <value>Количка</value>
+  </data>
+  <data name="ChangeAccountSettingsTitle" xml:space="preserve">
+    <value>Променете настройките на профила си</value>
+  </data>
+  <data name="ChangePasswordTitle" xml:space="preserve">
+    <value>Променете паролата си</value>
+  </data>
+  <data name="CheckOut" xml:space="preserve">
+    <value>Продължи</value>
+  </data>
+  <data name="CityTitle" xml:space="preserve">
+    <value>Град</value>
+  </data>
+  <data name="ClassicallyBeautifullyTitle" xml:space="preserve">
+    <value>Класически прости и красиво елегантни Трудно облечени кожени обувки и ръчно изработени със сърце.</value>
+  </data>
+  <data name="ColectionTitle" xml:space="preserve">
+    <value>Колекция</value>
+  </data>
+  <data name="Collections" xml:space="preserve">
+    <value>Колекции</value>
+  </data>
+  <data name="ConfirmPasswordTitle" xml:space="preserve">
+    <value>Потвърди парола</value>
+  </data>
+  <data name="ContactInfoWordTitle" xml:space="preserve">
+    <value>Контакт инфо</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Свържи се с нас</value>
+  </data>
+  <data name="CreateANewAccountTitle" xml:space="preserve">
+    <value>Създаване на нов акаунт</value>
+  </data>
+  <data name="CreatedAccountTitle" xml:space="preserve">
+    <value>Създаден профил</value>
+  </data>
+  <data name="Customers" xml:space="preserve">
+    <value>Потребители</value>
+  </data>
+  <data name="DeleteAccountTitle" xml:space="preserve">
+    <value>Изтриване на профил</value>
+  </data>
+  <data name="DeleteBtn" xml:space="preserve">
+    <value>Изтрий</value>
+  </data>
+  <data name="DeleteThisAccountRight" xml:space="preserve">
+    <value>Наистина ли искате да изтриете този акаунт?</value>
+  </data>
+  <data name="Discounts" xml:space="preserve">
+    <value>Намаления</value>
+  </data>
+  <data name="EmailTitle" xml:space="preserve">
+    <value>И-мейл</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>Английски</value>
+  </data>
+  <data name="ExtrasTitle" xml:space="preserve">
+    <value>Екстри</value>
+  </data>
+  <data name="FirstNameTitle" xml:space="preserve">
+    <value>Първо име</value>
+  </data>
+  <data name="FooterAboutUs" xml:space="preserve">
+    <value>Влиятелен, иновативен и прогресивен, сайтът Shoe King преоткрива съвсем модерен подход към модата. Съгласно новата визия на творческия директор Илиян Коджаманов, Сайтът е предефинирал лукса за 21-ви век, като допълнително укрепва позицията си като един от най-желаните модни сайтове в света.  Еклектични, съвременни, продуктите от романтичен сайт на Shoe King представляват върха на най-елегантната майсторска изработка и са ненадминати заради качеството и вниманието им към детайлите.</value>
+  </data>
+  <data name="GenderTitle" xml:space="preserve">
+    <value>Пол</value>
+  </data>
+  <data name="HeaderMessageShoes" xml:space="preserve">
+    <value>Най-добрата естествена кожа се среща с гениални занаятчийски обувки</value>
+  </data>
+  <data name="HistoryWordTitle" xml:space="preserve">
+    <value>Изтория</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Начална страница</value>
+  </data>
+  <data name="InfluentialInnovativWordsTitle" xml:space="preserve">
+    <value>Влиятелен, иновативен и прогресивен, сайтът Shoe King преоткрива съвсем модерен подход към модата.Съгласно новата визия на творческия директор Илиян Коджаманов, Сайтът е предефинирал лукса за 21-ви век, като допълнително укрепва позицията си като един от най-желаните модни сайтове в света. Еклектични, съвременни, Продуктите от романтичен сайт на Shoe King представляват върха на най-елегантната майсторска изработка и са ненадминати заради качеството и вниманието им към детайлите.</value>
+  </data>
+  <data name="LanguageTitle" xml:space="preserve">
+    <value>Език</value>
+  </data>
+  <data name="LastNameTitle" xml:space="preserve">
+    <value>Фамилия</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Зарежда се...</value>
+  </data>
+  <data name="LogIn" xml:space="preserve">
+    <value>Влизане</value>
+  </data>
+  <data name="LogInBtn" xml:space="preserve">
+    <value>Влез</value>
+  </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>Излез</value>
+  </data>
+  <data name="MessageAccountIsTaken" xml:space="preserve">
+    <value>Профилът е взет. Променете имейла!</value>
+  </data>
+  <data name="MessageBackToHome" xml:space="preserve">
+    <value>Обратно до основната страница</value>
+  </data>
+  <data name="MessageEnterConfirmPassword" xml:space="preserve">
+    <value>Въведете потвърди парола.</value>
+  </data>
+  <data name="MessageEnterFirstName" xml:space="preserve">
+    <value>Въведете първо име.</value>
+  </data>
+  <data name="MessageEnterLastName" xml:space="preserve">
+    <value>Въведете фамилия.</value>
+  </data>
+  <data name="MessageHaveAProblem" xml:space="preserve">
+    <value>Имаме проблем!</value>
+  </data>
+  <data name="MessageInputAdderess" xml:space="preserve">
+    <value>Въведете адреси!</value>
+  </data>
+  <data name="MessageInputCity" xml:space="preserve">
+    <value>Въведете град!</value>
+  </data>
+  <data name="MessageInputEmail" xml:space="preserve">
+    <value>Въведете И-майл.</value>
+  </data>
+  <data name="MessageInputPassword" xml:space="preserve">
+    <value>Въведете парола.</value>
+  </data>
+  <data name="MessageInputPhoneNumber" xml:space="preserve">
+    <value>Въведете телефонен номер!</value>
+  </data>
+  <data name="MessageInputPostOfiice" xml:space="preserve">
+    <value>Въведете пощенски код!</value>
+  </data>
+  <data name="MessageInputRightPhoneNumber" xml:space="preserve">
+    <value>Въведете валиден телефонен номер!</value>
+  </data>
+  <data name="MessageInputText" xml:space="preserve">
+    <value>Въведи текст...</value>
+  </data>
+  <data name="MessageInputValidEmail" xml:space="preserve">
+    <value>Въведете валиден И-мейл.</value>
+  </data>
+  <data name="MessageInvalidLoginAttempt" xml:space="preserve">
+    <value>Невалиден опит за влизане.</value>
+  </data>
+  <data name="MessageMinimumLengthConfirmPassword" xml:space="preserve">
+    <value>Потвърждаващата парола трябва да има повече от 2 символа.</value>
+  </data>
+  <data name="MessageMinimumLengthPassword" xml:space="preserve">
+    <value>Паролата трябва да има повече от 2 символа.</value>
+  </data>
+  <data name="MessageNotFoundProduct" xml:space="preserve">
+    <value>Продукта не е намерен.</value>
+  </data>
+  <data name="MessageNotFoundUser" xml:space="preserve">
+    <value>Не е намерен потребител.</value>
+  </data>
+  <data name="MessageNotValidEmail" xml:space="preserve">
+    <value>Невалиден И-майл.</value>
+  </data>
+  <data name="MessageOrderWasSent" xml:space="preserve">
+    <value>Поръчката беше изпратена.</value>
+  </data>
+  <data name="MessagePasswordAndConfirmPassword" xml:space="preserve">
+    <value>Паролата и потвърждаващата парола не съвпадът.</value>
+  </data>
+  <data name="MessagePasswordHasBeenChanged" xml:space="preserve">
+    <value>Паролата ви е променена.</value>
+  </data>
+  <data name="MessageProductIsNotAvailable" xml:space="preserve">
+    <value>Продукта не е в наличност. Моля, премахнете го от количката.</value>
+  </data>
+  <data name="MessageProductsAreNotAvailable" xml:space="preserve">
+    <value>Продуктите не са в наличност. Моля, премахнете ги от количката.</value>
+  </data>
+  <data name="MessageProductWasAdded" xml:space="preserve">
+    <value>Продукта беше добавен.</value>
+  </data>
+  <data name="MessageRefreshPage" xml:space="preserve">
+    <value>Моля, презареди страницата.</value>
+  </data>
+  <data name="MessageStillNoNewArrivals" xml:space="preserve">
+    <value>Все още няма новопристигнали</value>
+  </data>
+  <data name="MessagesTitle" xml:space="preserve">
+    <value>Съобщения</value>
+  </data>
+  <data name="MessageTitle" xml:space="preserve">
+    <value>Съобщение</value>
+  </data>
+  <data name="MessageTotal" xml:space="preserve">
+    <value>Обща сума</value>
+  </data>
+  <data name="MessageUnfilledFields" xml:space="preserve">
+    <value>Непопълнени полета.</value>
+  </data>
+  <data name="MessageUnread" xml:space="preserve">
+    <value>Непрочетен</value>
+  </data>
+  <data name="MessageUserWasRemoved" xml:space="preserve">
+    <value>Акаунта беше изтрит.</value>
+  </data>
+  <data name="MessageWasSentTitle" xml:space="preserve">
+    <value>Съобщението беше изпратено!</value>
+  </data>
+  <data name="MoreTitle" xml:space="preserve">
+    <value>Още</value>
+  </data>
+  <data name="MrsTitle" xml:space="preserve">
+    <value>Г-жа.</value>
+  </data>
+  <data name="MrTitle" xml:space="preserve">
+    <value>Г-н.</value>
+  </data>
+  <data name="MsTitle" xml:space="preserve">
+    <value>Г-ца.</value>
+  </data>
+  <data name="NameTitle" xml:space="preserve">
+    <value>Име</value>
+  </data>
+  <data name="NewArrivalsTitle" xml:space="preserve">
+    <value>Новопристигнали</value>
+  </data>
+  <data name="NewPasswordTitle" xml:space="preserve">
+    <value>Нова парола</value>
+  </data>
+  <data name="NewTitle" xml:space="preserve">
+    <value>Ново</value>
+  </data>
+  <data name="NoCollections" xml:space="preserve">
+    <value>Няма колекции</value>
+  </data>
+  <data name="NoDiscountsTitle" xml:space="preserve">
+    <value>Няма намаления</value>
+  </data>
+  <data name="NoProblems" xml:space="preserve">
+    <value>Без проблемно</value>
+  </data>
+  <data name="NoProducts" xml:space="preserve">
+    <value>Няма продукти</value>
+  </data>
+  <data name="NowDaysWordsTitle" xml:space="preserve">
+    <value>Сегашни дни</value>
+  </data>
+  <data name="OfficeIsLocatedWordsTitle" xml:space="preserve">
+    <value>Нашият офис се намира в близост до Националната спортна академия в Студентски град (София). Ще разберете кога стигнете до мястото. Вижте картата.</value>
+  </data>
+  <data name="OffTitle" xml:space="preserve">
+    <value>изключено</value>
+  </data>
+  <data name="OldPasswordTitle" xml:space="preserve">
+    <value>Стара парола</value>
+  </data>
+  <data name="OnlineUsersTitle" xml:space="preserve">
+    <value>Онлайн Потребители</value>
+  </data>
+  <data name="OrderBtn" xml:space="preserve">
+    <value>Поръчай</value>
+  </data>
+  <data name="OrdersTitle" xml:space="preserve">
+    <value>Поръчки</value>
+  </data>
+  <data name="PartnershipsWordTitle" xml:space="preserve">
+    <value>Партньорства</value>
+  </data>
+  <data name="PartnershipWithUNICEFWordsTitle" xml:space="preserve">
+    <value>Коджаманов има партньорство с УНИЦЕФ от 2005 година. Коджамандов магазин в световен мащаб дарява част от продажбите за специални колекции, направени специално за УНИЦЕФ, за да отиде към Детския фонд на ООН. Ежегодната кампания "Коджаманов" в полза на УНИЦЕФ подкрепя програмите за образование, здравеопазване, защита и чиста вода за сираци и деца, засегнати от ХИВ / СПИН в Африка на юг от Сахара. За кампанията през 2009 г. Майкъл Робъртс популяризира детска книга "Снежен човек в Африка", като приходите отиват в УНИЦЕФ. След пет години Коджаманов дари над 7 милиона долара на УНИЦЕФ. Коджаманов е най-големият корпоративен донор на "Училищата за Африка" на УНИЦЕФ, създаден през 2004 г. от УНИЦЕФ, Фондация Нелсън Мандела и от дружеството в Хамбург. Целта му е да се увеличи достъпът до основно образование за всички, със специален акцент върху децата, които са сираци от ХИВ / СПИН и децата, живеещи в крайна бедност.</value>
+  </data>
+  <data name="PasswordTitle" xml:space="preserve">
+    <value>Парола</value>
+  </data>
+  <data name="PhoneNumberTitle" xml:space="preserve">
+    <value>Телефонен номер</value>
+  </data>
+  <data name="PhotosTitle" xml:space="preserve">
+    <value>Снимки</value>
+  </data>
+  <data name="PostOfficeTitle" xml:space="preserve">
+    <value>Пощенски код</value>
+  </data>
+  <data name="PriceTitle" xml:space="preserve">
+    <value>Цена</value>
+  </data>
+  <data name="ProblemTitle" xml:space="preserve">
+    <value>Проблем</value>
+  </data>
+  <data name="ProductNumberTitle" xml:space="preserve">
+    <value>Номер на продукта</value>
+  </data>
+  <data name="Products" xml:space="preserve">
+    <value>Продукти</value>
+  </data>
+  <data name="ProductsTitle" xml:space="preserve">
+    <value>Продукти</value>
+  </data>
+  <data name="QuantityTitle" xml:space="preserve">
+    <value>Количество</value>
+  </data>
+  <data name="ReachOurOnlineWordsTitle" xml:space="preserve">
+    <value>За да се свържете с нашите онлайн асистенти за клиенти по имейл, кликнете върху "Изпратете ни имейл", за да предоставите подробности и информацията за контакт.</value>
+  </data>
+  <data name="RecommendCollectionsTitle" xml:space="preserve">
+    <value>Предпочитани колекции</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
+  <data name="RegisterBtn" xml:space="preserve">
+    <value>Регистрирай се</value>
+  </data>
+  <data name="RemoveAccountTitle" xml:space="preserve">
+    <value>Премахване на профила</value>
+  </data>
+  <data name="RemoveTitle" xml:space="preserve">
+    <value>Премахни</value>
+  </data>
+  <data name="SaveBtn" xml:space="preserve">
+    <value>Запази</value>
+  </data>
+  <data name="SearchPlaceholder" xml:space="preserve">
+    <value>Търси</value>
+  </data>
+  <data name="SearchTitle" xml:space="preserve">
+    <value>Търси</value>
+  </data>
+  <data name="SeeAllTitle" xml:space="preserve">
+    <value>Виж всички</value>
+  </data>
+  <data name="SeeDetailsTitle" xml:space="preserve">
+    <value>Виж детайлите</value>
+  </data>
+  <data name="SendBtn" xml:space="preserve">
+    <value>Изпрати</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="SizeTitle" xml:space="preserve">
+    <value>Размер</value>
+  </data>
+  <data name="SortByTitle" xml:space="preserve">
+    <value>Сортирай по...</value>
+  </data>
+  <data name="SubjectTitle" xml:space="preserve">
+    <value>Тема</value>
+  </data>
+  <data name="US" xml:space="preserve">
+    <value>САЩ</value>
+  </data>
+  <data name="UseALocalAccount" xml:space="preserve">
+    <value>Използвайте локален профил, за да влезете</value>
+  </data>
+  <data name="YourCart" xml:space="preserve">
+    <value>Твойта количка</value>
+  </data>
+  <data name="YourEmailhereTitle" xml:space="preserve">
+    <value>Попълнете вашият И-майл тук</value>
+  </data>
+  <data name="YourGenderTitle" xml:space="preserve">
+    <value>Какъв е твоят пол?</value>
+  </data>
+  <data name="YourNameHereTitle" xml:space="preserve">
+    <value>Попълнете вашето име тук</value>
+  </data>
+  <data name="YourSubjectHereTitle" xml:space="preserve">
+    <value>Попълнете вашата тема тук</value>
+  </data>
+  <data name="DiscountTitle" xml:space="preserve">
+    <value>Намаление</value>
+  </data>
+  <data name="JoinedTitle" xml:space="preserve">
+    <value>Присъединил се</value>
+  </data>
+  <data name="NextTitle" xml:space="preserve">
+    <value>Следващ</value>
+  </data>
+  <data name="OfflineTitle" xml:space="preserve">
+    <value>Извън линия</value>
+  </data>
+  <data name="OnlineOfflineTitle" xml:space="preserve">
+    <value>На линия/Извън линия</value>
+  </data>
+  <data name="OnlineTitle" xml:space="preserve">
+    <value>На линия</value>
+  </data>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Страница</value>
+  </data>
+  <data name="PreviousTitle" xml:space="preserve">
+    <value>Назад</value>
+  </data>
+  <data name="ProductInStockTitle" xml:space="preserve">
+    <value>В наличност</value>
+  </data>
+  <data name="ProductNameTitle" xml:space="preserve">
+    <value>Име на продукта</value>
+  </data>
+  <data name="ProductTitle" xml:space="preserve">
+    <value>Продукт</value>
+  </data>
+  <data name="StillNoCustomersTitle" xml:space="preserve">
+    <value>Все още няма потребители</value>
+  </data>
+  <data name="AdminTitle" xml:space="preserve">
+    <value>Админ</value>
+  </data>
+  <data name="AllPhotosTitle" xml:space="preserve">
+    <value>Всички снимки</value>
+  </data>
+  <data name="BasicInfoTitle" xml:space="preserve">
+    <value>Основна информация</value>
+  </data>
+  <data name="DateOfJoiningTitle" xml:space="preserve">
+    <value>Дата на присъединяване</value>
+  </data>
+  <data name="FounderTitle" xml:space="preserve">
+    <value>Основател</value>
+  </data>
+  <data name="ManTitle" xml:space="preserve">
+    <value>Мъж</value>
+  </data>
+  <data name="OverviewTitle" xml:space="preserve">
+    <value>Преглед</value>
+  </data>
+  <data name="PhotoCountTitle" xml:space="preserve">
+    <value>Брой на снимките</value>
+  </data>
+  <data name="ProfileTitle" xml:space="preserve">
+    <value>Профил</value>
+  </data>
+  <data name="WomanTitle" xml:space="preserve">
+    <value>Жена</value>
+  </data>
+  <data name="AcceptChangesTitle" xml:space="preserve">
+    <value>Приеми промените</value>
+  </data>
+  <data name="AddEmployeeTitle" xml:space="preserve">
+    <value>Добавете служител</value>
+  </data>
+  <data name="AddPictureTitle" xml:space="preserve">
+    <value>Добави снимка</value>
+  </data>
+  <data name="AddSlideTitle" xml:space="preserve">
+    <value>Добави слайд</value>
+  </data>
+  <data name="ChangeSlidesTitle" xml:space="preserve">
+    <value>Промени слайдовете</value>
+  </data>
+  <data name="MessageEmailTaken" xml:space="preserve">
+    <value>И-мейла е зает.</value>
+  </data>
+  <data name="MessageFileFormat" xml:space="preserve">
+    <value>Снимката трябва да бъде във формат --&gt; { gif, png, jpg, jpeg } &lt;--!</value>
+  </data>
+  <data name="ModifyTitle" xml:space="preserve">
+    <value>Промени</value>
+  </data>
+  <data name="RoleTitle" xml:space="preserve">
+    <value>Роля</value>
+  </data>
+  <data name="RotateTitle" xml:space="preserve">
+    <value>Обърни</value>
+  </data>
+  <data name="UserTitle" xml:space="preserve">
+    <value>Потребител</value>
+  </data>
+  <data name="UKTitle" xml:space="preserve">
+    <value>Анг</value>
+  </data>
+  <data name="EmojiTitle" xml:space="preserve">
+    <value>емотикони</value>
+  </data>
+  <data name="AcceptTitle" xml:space="preserve">
+    <value>Приеми</value>
+  </data>
+  <data name="AdminNameTitle" xml:space="preserve">
+    <value>Админ</value>
+  </data>
+  <data name="CancelTitle" xml:space="preserve">
+    <value>Отмени</value>
+  </data>
+  <data name="ContainsTitle" xml:space="preserve">
+    <value>Съдържание</value>
+  </data>
+  <data name="DateAddedTitle" xml:space="preserve">
+    <value>Добавено</value>
+  </data>
+  <data name="DeletedTitle" xml:space="preserve">
+    <value>Изтрито</value>
+  </data>
+  <data name="DeleteTitle" xml:space="preserve">
+    <value>Изтрий</value>
+  </data>
+  <data name="DetailIdTitle" xml:space="preserve">
+    <value>Детайл N</value>
+  </data>
+  <data name="DetailsTitle" xml:space="preserve">
+    <value>Детайли</value>
+  </data>
+  <data name="IsEqualToTitle" xml:space="preserve">
+    <value>Е равно на</value>
+  </data>
+  <data name="IsGreaterThanOrEqualToTitle" xml:space="preserve">
+    <value>Е по-голямо от или е равно на</value>
+  </data>
+  <data name="IsGreaterThanTitle" xml:space="preserve">
+    <value>Е по-голямо от</value>
+  </data>
+  <data name="IsLessThanOrEqualTo" xml:space="preserve">
+    <value>Е по-малко от или е равно на</value>
+  </data>
+  <data name="IsLessThanTitle" xml:space="preserve">
+    <value>Е по-малко от </value>
+  </data>
+  <data name="LastUpdateTitle" xml:space="preserve">
+    <value>Последна промяна</value>
+  </data>
+  <data name="MessageOrderWasRemoved" xml:space="preserve">
+    <value>Поръчката беше изтрита.</value>
+  </data>
+  <data name="MessageRemoveThisOrder" xml:space="preserve">
+    <value>Наистина ли искаш да изтриеш тази поръчка?</value>
+  </data>
+  <data name="NoTitle" xml:space="preserve">
+    <value>не</value>
+  </data>
+  <data name="OrderIdTitle" xml:space="preserve">
+    <value>Поръчка N#</value>
+  </data>
+  <data name="OrdersOfPageTitle" xml:space="preserve">
+    <value>Поръчки на страница</value>
+  </data>
+  <data name="PhoneNoTitle" xml:space="preserve">
+    <value>Телефонен N#</value>
+  </data>
+  <data name="ProductIdTitle" xml:space="preserve">
+    <value>Продукт N</value>
+  </data>
+  <data name="PromotionTitle" xml:space="preserve">
+    <value>Промоция</value>
+  </data>
+  <data name="ResendMessageTitle" xml:space="preserve">
+    <value>Изпрати съобщение</value>
+  </data>
+  <data name="ResendTitle" xml:space="preserve">
+    <value>Препрати</value>
+  </data>
+  <data name="StartsWithTitle" xml:space="preserve">
+    <value>Започва с</value>
+  </data>
+  <data name="StatusTitle" xml:space="preserve">
+    <value>Статус</value>
+  </data>
+  <data name="StockTitle" xml:space="preserve">
+    <value>Наличност</value>
+  </data>
+  <data name="TotalPriceTitle" xml:space="preserve">
+    <value>Обща сума</value>
+  </data>
+  <data name="UsernameTitle" xml:space="preserve">
+    <value>Потребител</value>
+  </data>
+  <data name="YesTitle" xml:space="preserve">
+    <value>да</value>
+  </data>
+  <data name="DetailsOfPage" xml:space="preserve">
+    <value>Детайли на страница</value>
+  </data>
+  <data name="ItemsTitle" xml:space="preserve">
+    <value>елементи</value>
+  </data>
+  <data name="NoItemsToDisplayTitle" xml:space="preserve">
+    <value>Няма елементи, които да се показват</value>
+  </data>
+  <data name="OfTitle" xml:space="preserve">
+    <value>от</value>
+  </data>
+  <data name="AddCategoryPhotoTitle" xml:space="preserve">
+    <value>Добави снимка на категорията</value>
+  </data>
+  <data name="AddingNewCategoryTitle" xml:space="preserve">
+    <value>Добавяне на нова категория</value>
+  </data>
+  <data name="AddMainPhotoTitle" xml:space="preserve">
+    <value>Довави главна снимка</value>
+  </data>
+  <data name="AddNewCategoryTitle" xml:space="preserve">
+    <value>Добави нова категория</value>
+  </data>
+  <data name="AddNewProductTitle" xml:space="preserve">
+    <value>Добави продукт</value>
+  </data>
+  <data name="AddSlidePhotosTitle" xml:space="preserve">
+    <value>Добавяне слайд на снимките</value>
+  </data>
+  <data name="CategoriesOfPageTitle" xml:space="preserve">
+    <value>Категоии на страница</value>
+  </data>
+  <data name="CategoryIdTitle" xml:space="preserve">
+    <value>Категория N</value>
+  </data>
+  <data name="CategoryNameTitle" xml:space="preserve">
+    <value>Име на категорията</value>
+  </data>
+  <data name="CategoryStatusTitle" xml:space="preserve">
+    <value>Статус на категорията</value>
+  </data>
+  <data name="CategoryTitle" xml:space="preserve">
+    <value>Категория</value>
+  </data>
+  <data name="CreatedByTitle" xml:space="preserve">
+    <value>Направено от</value>
+  </data>
+  <data name="DescriptionTitle" xml:space="preserve">
+    <value>Описание</value>
+  </data>
+  <data name="EditCategoryTitle" xml:space="preserve">
+    <value>Редактиране на категория</value>
+  </data>
+  <data name="EditProductTitle" xml:space="preserve">
+    <value>Редактирай продукт</value>
+  </data>
+  <data name="EditTitle" xml:space="preserve">
+    <value>Редактиране</value>
+  </data>
+  <data name="ExampleSizeQuantityTitle" xml:space="preserve">
+    <value>Пример - размер- количество (45-2) раздели с ( , )</value>
+  </data>
+  <data name="GroupByColumnTitle" xml:space="preserve">
+    <value>Групирай по колона</value>
+  </data>
+  <data name="MessageCategoryWasRemoved" xml:space="preserve">
+    <value>Категорията беше изтрита.</value>
+  </data>
+  <data name="MessageChoiceOneField" xml:space="preserve">
+    <value>Избери едно!</value>
+  </data>
+  <data name="MessageIncorrectPrice" xml:space="preserve">
+    <value>Неправилна цена</value>
+  </data>
+  <data name="MessageIncorrectPromotionPercent" xml:space="preserve">
+    <value>Неправилна промоция за %</value>
+  </data>
+  <data name="MessageIncorrectQuantity" xml:space="preserve">
+    <value>Неправилно въведен количество!</value>
+  </data>
+  <data name="MessageIncorrectSize" xml:space="preserve">
+    <value>Неправилно въведен размер!</value>
+  </data>
+  <data name="MessageIncorrectSizeAndQuantity" xml:space="preserve">
+    <value>Неправилно въведен размер и количество!</value>
+  </data>
+  <data name="MessageInputCategory" xml:space="preserve">
+    <value>Въведи категория</value>
+  </data>
+  <data name="MessageInputCategoryName" xml:space="preserve">
+    <value>Въведи име на категорията!</value>
+  </data>
+  <data name="MessageInputDescription" xml:space="preserve">
+    <value>Въведи описание!</value>
+  </data>
+  <data name="MessageInputName" xml:space="preserve">
+    <value>Въведи име!</value>
+  </data>
+  <data name="MessageInputPrice" xml:space="preserve">
+    <value>Въведи цена</value>
+  </data>
+  <data name="MessageInputPromotionPercent" xml:space="preserve">
+    <value>Въведи промоция за %</value>
+  </data>
+  <data name="MessageInputQuantity" xml:space="preserve">
+    <value>Въведи количество!</value>
+  </data>
+  <data name="MessageInputSize" xml:space="preserve">
+    <value>Въведи размер!</value>
+  </data>
+  <data name="MessageInputSizeAndQuantity" xml:space="preserve">
+    <value>Въведи размер и количество!</value>
+  </data>
+  <data name="MessageProductWasRemoved" xml:space="preserve">
+    <value>Продукта беше изтрит.</value>
+  </data>
+  <data name="MessagePromotionPercentMustBe" xml:space="preserve">
+    <value>промоцията за % трябва да бъде м/у 0 - 100!</value>
+  </data>
+  <data name="MessageQuantityMustBe" xml:space="preserve">
+    <value>Количеството трябва да бъде м/у 0 - 1000!</value>
+  </data>
+  <data name="MessageRemoveThisCategory" xml:space="preserve">
+    <value>Наистина ли искаш да изтриеш тази категория?</value>
+  </data>
+  <data name="MessageRemoveThisProduct" xml:space="preserve">
+    <value>Наистина ли искаш ли да изтриеш този продукт?</value>
+  </data>
+  <data name="MessageSizeAndQuantityMustBe" xml:space="preserve">
+    <value>Размера и количеството трябва да бъдат м/у 0 - 100!</value>
+  </data>
+  <data name="MessageSizeMustBe" xml:space="preserve">
+    <value>Размера трябва да бъде м/у 10 - 55!</value>
+  </data>
+  <data name="MessageThereAreEqualNumberSize" xml:space="preserve">
+    <value>Има равни номера на размерите!</value>
+  </data>
+  <data name="MessageUploadMainCategoryImage" xml:space="preserve">
+    <value>Качи за категорията снимка!</value>
+  </data>
+  <data name="MessageUploadMainProductImage" xml:space="preserve">
+    <value>Качи основна снимка на продукта!</value>
+  </data>
+  <data name="MessageUploadSlideProductImage" xml:space="preserve">
+    <value>Качи слайд на снимките!</value>
+  </data>
+  <data name="NewCategoryTitle" xml:space="preserve">
+    <value>Нова категория</value>
+  </data>
+  <data name="PhotosOfProductTitle" xml:space="preserve">
+    <value>Снимки на продукта</value>
+  </data>
+  <data name="ProductIsNotInStockTitle" xml:space="preserve">
+    <value>Не е в наличност</value>
+  </data>
+  <data name="ProductsOfPageTitle" xml:space="preserve">
+    <value>Продукти на страница</value>
+  </data>
+  <data name="SizeIdTitle" xml:space="preserve">
+    <value>Размер N</value>
+  </data>
+  <data name="SizeQuantityTitle" xml:space="preserve">
+    <value>Размер(и) Количество </value>
+  </data>
+  <data name="SizesOfProductTitle" xml:space="preserve">
+    <value>Размери на продукта</value>
+  </data>
+  <data name="UpdatedByTitle" xml:space="preserve">
+    <value>Актуализиран от</value>
+  </data>
+  <data name="MessageOrderBeenDeleted" xml:space="preserve">
+    <value>Поръчката беше изтрита.&lt;br/&gt;Не може да се променя.</value>
+  </data>
+  <data name="MessageOrderMessageWasSent" xml:space="preserve">
+    <value>Съобщението на поръчката беше изпратено.</value>
+  </data>
+  <data name="MessageOrderNo" xml:space="preserve">
+    <value>Поръчка No-{0} на {1}. {2}</value>
+  </data>
+  <data name="MessageOrderWasAccepted" xml:space="preserve">
+    <value>Поръчката беше приета.</value>
+  </data>
+  <data name="MessageOrderWasAcceptedAt" xml:space="preserve">
+    <value>Поръчката № {0} бе приета на {1} от {3} {4}. Всички продукти струват {2} $.</value>
+  </data>
+  <data name="MessageOrderWasCanceled" xml:space="preserve">
+    <value>Поръчката беше отказана.</value>
+  </data>
+  <data name="MessageOrderWasCanceledAt" xml:space="preserve">
+    <value>Съжаляваме, но поръчка No- {0} бе анулирана на {1} от {2} {3}.</value>
+  </data>
+  <data name="MessageProductBeenDeleted" xml:space="preserve">
+    <value>Продуктът беше изтрит.&lt;br/&gt;Не може да се променя.</value>
+  </data>
+  <data name="MessageProductWasChanged" xml:space="preserve">
+    <value>Продукта беше променен.</value>
+  </data>
+  <data name="MessageProductWasCreated" xml:space="preserve">
+    <value>Продукта беше създаден.</value>
+  </data>
+  <data name="PhotoIdTitle" xml:space="preserve">
+    <value>Снимки N</value>
+  </data>
+  <data name="ClearTitle" xml:space="preserve">
+    <value>Изчисти</value>
+  </data>
+  <data name="ColumnSettingsTitle" xml:space="preserve">
+    <value>Настойки на колоните</value>
+  </data>
+  <data name="ColumnsTitle" xml:space="preserve">
+    <value>Колони</value>
+  </data>
+  <data name="FilterTitle" xml:space="preserve">
+    <value>Филтър</value>
+  </data>
+  <data name="FilterTitleGrid" xml:space="preserve">
+    <value>Филтър</value>
+  </data>
+  <data name="FirstPageTitle" xml:space="preserve">
+    <value>Отиди на първа страница</value>
+  </data>
+  <data name="LastPageTitle" xml:space="preserve">
+    <value>Отиди на последна страница</value>
+  </data>
+  <data name="LockTitle" xml:space="preserve">
+    <value>Заключи</value>
+  </data>
+  <data name="NextPageTitle" xml:space="preserve">
+    <value>Отиди на следваща страница</value>
+  </data>
+  <data name="OperatorTitle" xml:space="preserve">
+    <value>Търси</value>
+  </data>
+  <data name="PreviousPageTitle" xml:space="preserve">
+    <value>Отиди на предишна страница</value>
+  </data>
+  <data name="RefreshPageTitle" xml:space="preserve">
+    <value>Презареди</value>
+  </data>
+  <data name="SearchTitleGrid" xml:space="preserve">
+    <value>Търси</value>
+  </data>
+  <data name="ShowItemWithValueTitle" xml:space="preserve">
+    <value>Покажи елементите със стойност, която</value>
+  </data>
+  <data name="SortAscendingTitle" xml:space="preserve">
+    <value>Сортирай в нарастващ</value>
+  </data>
+  <data name="SortDescendingTitle" xml:space="preserve">
+    <value>Сортирай в намаляващ</value>
+  </data>
+  <data name="UnlockTitle" xml:space="preserve">
+    <value>Отлючи</value>
+  </data>
+  <data name="ValueTitle" xml:space="preserve">
+    <value>Въведи</value>
+  </data>
+  <data name="Leva" xml:space="preserve">
+    <value>Лв</value>
+  </data>
+  <data name="HomePageHeaderText" xml:space="preserve">
+    <value>Добре дошли в рая</value>
+  </data>
+  <data name="HomePageText" xml:space="preserve">
+    <value>Това е най-добрият сайт, който някога ще видиш.</value>
+  </data>
+  <data name="Basket" xml:space="preserve">
+    <value>Кошница</value>
+  </data>
+  <data name="EnterAtLeastOneFeeld" xml:space="preserve">
+    <value>Въведе поне едно поле</value>
+  </data>
+  <data name="Favorites" xml:space="preserve">
+    <value>Любими</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>От</value>
+  </data>
+  <data name="Men" xml:space="preserve">
+    <value>Мъже</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>Поръчай</value>
+  </data>
+  <data name="SearchByPrice" xml:space="preserve">
+    <value>Търси по цена</value>
+  </data>
+  <data name="ShoppingCart" xml:space="preserve">
+    <value>Карта за пазаруване</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>До</value>
+  </data>
+  <data name="Women" xml:space="preserve">
+    <value>Жени</value>
+  </data>
+  <data name="AccountWasDeleted" xml:space="preserve">
+    <value>Профилът беше изтрит.</value>
+  </data>
+  <data name="AddToBascket" xml:space="preserve">
+    <value>Добави в кошницата</value>
+  </data>
+  <data name="AddToFavorites" xml:space="preserve">
+    <value>Добави в любими</value>
+  </data>
+  <data name="IsHided" xml:space="preserve">
+    <value>Профилът е скрит</value>
+  </data>
+  <data name="averageBasedOn" xml:space="preserve">
+    <value>средно на базата</value>
+  </data>
+  <data name="ChangeWasSaved" xml:space="preserve">
+    <value>Промените бяха запазени.</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>Чат</value>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>Коментари</value>
+  </data>
+  <data name="CoverImage" xml:space="preserve">
+    <value>Втора снимка</value>
+  </data>
+  <data name="CreationDate" xml:space="preserve">
+    <value>Дата на създаване</value>
+  </data>
+  <data name="DoYouWantToDeleteThisAccount" xml:space="preserve">
+    <value>Наистина ли искате да изтриете това?</value>
+  </data>
+  <data name="firstPic" xml:space="preserve">
+    <value>първа снимка</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>Снимка</value>
+  </data>
+  <data name="MostPurchasedProducts" xml:space="preserve">
+    <value>Най-поръчвани продукти</value>
+  </data>
+  <data name="OldVersionTheSite" xml:space="preserve">
+    <value>Стара версия на сайта</value>
+  </data>
+  <data name="Private" xml:space="preserve">
+    <value>Лично</value>
+  </data>
+  <data name="ProfileImage" xml:space="preserve">
+    <value>Профилна снимка</value>
+  </data>
+  <data name="Public" xml:space="preserve">
+    <value>Публично</value>
+  </data>
+  <data name="PurchasedAt" xml:space="preserve">
+    <value>Поръчано на</value>
+  </data>
+  <data name="PurchasedBy" xml:space="preserve">
+    <value>Поръчано от</value>
+  </data>
+  <data name="PurchasedProducts" xml:space="preserve">
+    <value>Поръчани продукти</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Количество</value>
+  </data>
+  <data name="QuantityOfPurchasedProduct" xml:space="preserve">
+    <value>Количество на закупения продукт</value>
+  </data>
+  <data name="Result" xml:space="preserve">
+    <value>Резултат</value>
+  </data>
+  <data name="reviews" xml:space="preserve">
+    <value>отзива</value>
+  </data>
+  <data name="secondPic" xml:space="preserve">
+    <value>втора снимка</value>
+  </data>
+  <data name="SelectElement" xml:space="preserve">
+    <value>Избери елемент</value>
+  </data>
+  <data name="Shop" xml:space="preserve">
+    <value>Магазин</value>
+  </data>
+  <data name="ShowAll" xml:space="preserve">
+    <value>Покажи всички</value>
+  </data>
+  <data name="star" xml:space="preserve">
+    <value>звезда</value>
+  </data>
+  <data name="stars" xml:space="preserve">
+    <value>звезди</value>
+  </data>
+  <data name="UserRating" xml:space="preserve">
+    <value>Оценка на потребителя</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Преглед</value>
+  </data>
+  <data name="YouAlsoMayLike" xml:space="preserve">
+    <value>Може също да разгледате</value>
+  </data>
+  <data name="YourFavorites" xml:space="preserve">
+    <value>Твоите любими</value>
+  </data>
+  <data name="AddComment" xml:space="preserve">
+    <value>Добави коментар</value>
+  </data>
+  <data name="BgDescription" xml:space="preserve">
+    <value>Бг описание</value>
+  </data>
+  <data name="BgLanguage" xml:space="preserve">
+    <value>Бг език</value>
+  </data>
+  <data name="ChangeImage" xml:space="preserve">
+    <value>Промени снимката</value>
+  </data>
+  <data name="DeleteImage" xml:space="preserve">
+    <value>Изтрий снимката</value>
+  </data>
+  <data name="EditedBy" xml:space="preserve">
+    <value>Редактирано от</value>
+  </data>
+  <data name="on" xml:space="preserve">
+    <value>на</value>
+  </data>
+  <data name="NewTitleMoreThenOnce" xml:space="preserve">
+    <value>Нови</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Промяна на парола</value>
+  </data>
+</root>

@@ -1,0 +1,101 @@
+﻿@model IEnumerable<OnlineShoeKing.Models.ProductViewModel>
+
+
+
+<div class="centerAlign"><h3 class="favorites-user-header">@OnlineShoeKing.Resources.Language.YourFavorites</h3></div>
+
+@if (!Model.Any())
+{
+    <div class="favorites-no-products">
+        <div class="centerAlign">
+            <h3 style="color: #f68236;">
+                @OnlineShoeKing.Resources.Language.NoProducts
+            </h3>
+        </div>
+    </div>
+}
+else
+{
+    <div class="favorites-user-window">
+        @foreach (var product in Model)
+        {
+            <div class="favorites-user-column">
+                <div class="favorites-user-card">
+                    <a id="@product.ProductId" class="favorites-user-img" href="/Founder/Products/Product/@product.ProductId">
+                        <img src="@product.PhotoHeader" alt="@product.Name" title="@product.Name">
+                    </a>
+                    <div class="product-user-container">
+                        <div class="center favorites-product-headear">@OnlineShoeKing.Resources.Language.ProductNameTitle:</div>
+                        <div class="centerAlign"><a id="@product.ProductId" class="favorites-product-name" href="/Founder/Products/Product/@product.ProductId">@product.Name</a></div>
+                        <div class="center favorites-product-header">@OnlineShoeKing.Resources.Language.ProductNumberTitle </div>
+                        <div class="centerAlign">@product.ProductId</div>
+                        <div class="center favorites-product-headear">@OnlineShoeKing.Resources.Language.PriceTitle </div>
+                        <div class="centerAlign favorites-product-headear-bottom">
+                            @if ((bool)product.Specials)
+                            {
+                                <span class="product-price-underline"><span class="product-price-red">@product.Price</span></span>
+                                <span class="product-price-green">@product.PromotionPrice @OnlineShoeKing.Resources.Language.Leva</span>
+                            }
+                            else
+                            {
+                                <span>@product.Price @OnlineShoeKing.Resources.Language.Leva</span>
+                            }
+                        </div>
+                        <p class="flex"><a id="@product.ProductId" class="favorites-user-btn" href="#">@OnlineShoeKing.Resources.Language.RemoveTitle</a></p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+
+<script>
+
+    $('.favorites-user-img, .favorites-product-name').on('click', function (e) {
+        e.preventDefault();
+
+        const product_id = $(this).attr('id');
+
+        $.ajax({
+            url: '@Url.Action("ProductPartial", "Products", new { Area = "Founder" })',
+            dataType: "html",
+            type: "POST",
+            cache: false,
+            data: { productId: product_id },
+            success: function (productHtmlPartial) {
+
+                $(".k-window-action").click();
+                $('body').css('overflow', 'auto');
+                $('#ControlNavigationId').html(productHtmlPartial);
+            },
+            error: function (error) {
+                $('body').css('overflow', 'auto');
+            }
+        });
+    });
+
+    $('a.favorites-user-btn').on('click', function (e) {
+        e.preventDefault();
+
+        const product_id = $(this).attr('id');
+
+        $.post('/Founder/Products/RemoveProductFavorites', { productId: product_id }, function (data) {
+
+            $.get('/Products/GetFavoritesCount', function (count) {
+                if (count > 0) {
+                    $('.favorites-count').html(count);
+                    $('.favorites-count').css('color', '#12bf40');
+                }
+                else {
+                    $('.favorites-count').html('0');
+                    $('.favorites-count').css('color', '#222222');
+                }
+            });
+
+            $('#window_favorites').html(data);
+            checkProductFavorites(product_id);
+        });
+    });
+
+</script>

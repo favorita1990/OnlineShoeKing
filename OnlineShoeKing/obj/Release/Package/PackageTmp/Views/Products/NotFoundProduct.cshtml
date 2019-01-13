@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Error";
+}
+
+
+@Scripts.Render("~/bundles/jqueryunob")
+
+<div id="ControlNavigationId">
+    <meta name="description" content="Women of Online Shoe King is about to no page found." />
+    <meta name="keywords" content="Shoe King, Online, Shoe, King, Men, Women, Category, Product" />
+    <div class="bottom-grids error-page">
+        <div class="container">
+            <div class="col-md-12 bottom-grids-left">
+                <div class="error-404 text-center">
+                    <h1>404</h1>
+                    <p>this link dead link</p>
+                    @Ajax.ActionLink(OnlineShoeKing.Resources.Language.MessageBackToHome, "IndexPartial", "Home", new { Area = "" },
+                     new AjaxOptions
+                     {
+                         HttpMethod = "GET",
+                         InsertionMode = InsertionMode.Replace,
+                         UpdateTargetId = "ControlNavigationId"
+                     }, new { @class = "b-home" })
+                </div>
+            </div>
+
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,77 @@
+﻿
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title id="titleHeadPageId">@ViewBag.Title | Shoe King</title>
+<link href="~/Content/pic/crown.ico" rel="icon" type="image/x-icon" />
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+@Scripts.Render("~/bundles/modernizr")
+@Scripts.Render("~/bundles/jquery")
+<!-- Custom Theme files -->
+@*@Styles.Render("~/Content/css")*@
+@Styles.Render("~/Content/kendoStyles")
+@Scripts.Render("~/bundles/jqueryKendo")
+@Scripts.Render("~/bundles/kendo")
+<link href="~/Content/glyphicons.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+@Styles.Render("~/Content/emoticonsCSS")
+@Scripts.Render("~/bundles/emoticonsHead")
+<link href="~/Content/jquery.emojipicker.css" rel="stylesheet" />
+<link href="~/Content/jquery.emojipicker.tw.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.emojis.js"></script>
+<script src="~/Scripts/jquery.emojipicker.js"></script>
+
+<link href="~/Content/iconsLanguages.css" rel="stylesheet" />
+<!-- Custom Theme files -->
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- Google Fonts -->
+<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
+
+<link href="~/Content/bootstrap-select.css" rel="stylesheet" />
+
+
+<script>
+    $(function() {
+
+        // grab the initial top offset of the navigation
+        var sticky_navigation_offset_top = $('#sticky_navigation').offset().top;
+
+        // our function that decides weather the navigation bar should have "fixed" css position or not.
+        var sticky_navigation = function() {
+            const scroll_top = $(window).scrollTop(); // our current vertical position from the top
+
+            // if we've scrolled more than the navigation, change its position to fixed to stick to top, otherwise change it back to relative
+            if (scroll_top > sticky_navigation_offset_top) {
+                $('#sticky_navigation').css({ 'position': 'fixed', 'top':0, 'left':0 });
+            } else {
+                $('#sticky_navigation').css({ 'position': 'relative' });
+            }
+        };
+
+        // run our function on load
+        sticky_navigation();
+
+        // and run it again every time you scroll
+        $(window).scroll(function() {
+            sticky_navigation();
+        });
+
+        // disable all links that point to "#"
+        $('a[href="#"]').click(function(event){
+            event.preventDefault();
+        });
+
+    });
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110462857-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-110462857-2');
+</script>

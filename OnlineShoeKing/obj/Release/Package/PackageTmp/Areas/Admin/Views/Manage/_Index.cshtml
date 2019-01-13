@@ -1,0 +1,51 @@
+﻿
+@using OnlineShoeKing.Models.ViewModels
+
+@{
+    var breadCrumb = (BreadCrumbVm)TempData["breadCrumb"];
+}
+
+
+<div id="ControlNavigationId">
+    <script type="text/javascript">
+        document.title = 'Manage | Shoe King';
+        window.history.pushState(
+            null,
+            null,
+            '/Admin/Manage'
+        );
+    </script>
+
+    <div class="pag-nav">
+        <ul class="p-list">
+            @if (breadCrumb != null)
+            {
+                if (breadCrumb.ControllerName != null)
+                {
+                    <li class="act">@breadCrumb.ControllerName</li>
+                }
+            }
+        </ul>
+    </div>
+
+
+    <div class="manage-setings-body" >
+        <div class="settings-block">
+            <h2 class="text-center" style="color: #0026ff" >@OnlineShoeKing.Resources.Language.ChangeAccountSettingsTitle</h2>
+
+            <div class="center" >
+                <div class="text-center" >
+                    <p class="text-success" >@ViewBag.StatusMessage</p>
+                </div>
+
+                <dl class="dl-horizontal" >
+                    <dt>@OnlineShoeKing.Resources.Language.PasswordTitle:</dt>
+                    <dd>
+                        [ @Ajax.ActionLink(OnlineShoeKing.Resources.Language.ChangePasswordTitle, "ChangePasswordPartial", new AjaxOptions { UpdateTargetId = "ControlNavigationId", InsertionMode = InsertionMode.Replace, HttpMethod = "Get" }) ]
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+</div>

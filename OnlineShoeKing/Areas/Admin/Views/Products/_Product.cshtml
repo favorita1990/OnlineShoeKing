@@ -1,0 +1,340 @@
+﻿@model OnlineShoeKing.Models.ProductViewModel
+@using OnlineShoeKing.Models.ViewModels
+
+@{
+    var breadCrumb = (BreadCrumbVm)TempData["breadCrumb"];
+}
+<link href="~/Content/xzoom.css" rel="stylesheet" />
+
+<div id="ControlNavigationId">
+    <script type="text/javascript">
+        document.title = 'Products | Shoe King';
+        window.history.pushState(
+            null,
+            null,
+            '/Admin/Products/Product/' + '@Model.ProductId'
+        );
+    </script>
+
+
+    <div class="pag-nav">
+        <ul class="p-list">
+            @if (breadCrumb != null)
+            {
+                if (breadCrumb.Controller != null)
+                {
+                    <li><a href="@breadCrumb.Controller" onclick="breadCrumb('@breadCrumb.ControllerPartial'); return false;">@breadCrumb.ControllerName</a></li>
+                    <li>
+                        &nbsp;/&nbsp;
+                    </li>
+                }
+                if (breadCrumb.Action != null)
+                {
+                    <li><a href="@breadCrumb.Action" onclick="breadCrumbCategoryAdmin('@breadCrumb.ActionPartial', '@breadCrumb.ActionId'); return false;">@breadCrumb.ActionName</a></li>
+                    <li>
+                        &nbsp;/&nbsp;
+                    </li>
+                }
+                if (breadCrumb.IdName != null)
+                {
+                    <li class="act">@breadCrumb.IdName</li>
+                }
+            }
+        </ul>
+    </div>
+
+    <div class="main-zoom-img-product">
+        <img class="xzoom" src="@Model.PhotoHeader" xoriginal="@Model.PhotoHeader" alt="@Model.Name" title="@Model.Name" />
+    </div>
+    <div class="xzoom-thumbs">
+        <a href="@Model.PhotoHeader">
+            <img class="xzoom-gallery" width="80" src="@Model.PhotoHeader" alt="@Model.Name" title="@Model.Name">
+        </a>
+
+        @foreach (var photo in Model.PhotosOfProduct)
+        {
+            <a href="@photo">
+                <img class="xzoom-gallery" width="80" src="@photo" alt="@OnlineShoeKing.Resources.Language.Image" title="@OnlineShoeKing.Resources.Language.Image">
+            </a>
+        }
+
+    </div>
+    <div class="coats sing-c">
+        <h3 class="c-head">@Model.Name</h3>
+        <p class="article">@OnlineShoeKing.Resources.Language.ProductNumberTitle: @Model.ProductId</p>
+        <p class="article">@OnlineShoeKing.Resources.Language.QuantityOfPurchasedProduct: @Model.PurchasedProductsCount</p>
+        <p>
+            @if ((bool)Model.Specials)
+            {
+                <span class="product-price-underline"><span class="product-price-red">@Model.Price</span></span> <span class="product-price-green">@Model.PromotionPrice @OnlineShoeKing.Resources.Language.Leva</span>
+            }
+            else
+            {
+                <small>@Model.PromotionPrice @OnlineShoeKing.Resources.Language.Leva</small>
+            }
+        </p>
+        <p class="art">@Model.Description</p>
+        @if (Model.SizesOfProduct.Count > 0)
+        {
+            <div class="size display-none">
+                <small>Size</small>
+                <select class="size-list">
+                    @foreach (var size in Model.SizesOfProduct)
+                {
+                        <option value="@size.SizeId">@size.Size</option>
+                    }
+                </select>
+            </div>
+        }
+
+        <div>
+            <input type="submit" class="btn btn-default add-to-bascket-btn" value="@OnlineShoeKing.Resources.Language.AddToBascket" />
+        </div>
+    </div>
+
+    <div id="product-ratings"></div>
+
+    <div id="product-comments"></div>
+    
+    <div id="users-product"></div>
+
+    @Html.Partial("_MayLikeProducts")
+
+</div>
+
+
+<script src="/Scripts/xzoom.min.js"></script>
+<script>
+    $(".xzoom").xzoom({ tint: '#222', Xoffset: 15 });
+
+    $('.xzoom-thumbs a').on('click',
+        function (e) {
+            e.preventDefault();
+            const current_img = $(this).find('img').attr('src');
+            $('.xzoom').attr('src', current_img);
+            $('.xzoom').attr('xoriginal', current_img);
+        });
+
+    $(".size-list").kendoDropDownList();
+    $(function () {
+        $('.display-none').show();
+    });
+
+    $('.add-to-bascket-btn').on('click', function () {
+
+        const size_id = $('.size-list option:selected').val();
+
+        $.ajax({
+            url: '/Home/AddProductToCart',
+            dataType: "json",
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({ productId: '@Model.ProductId', sizeId: size_id }),
+            success: function (cart) {
+
+                var countCart = cart.length;
+
+                //alert that is product added
+                const win = $("<div>").kendoWindow({
+                    modal: true,
+                    open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                    position: {
+                        top: "40%",
+                        left: "45%"
+                    }
+                }).getKendoWindow();
+
+                $('div.k-widget.k-window').addClass("resizeCart");
+                $('div.k-widget.k-window').removeClass("resizeLogin");
+
+                // set the content
+                win.content('@OnlineShoeKing.Resources.Language.MessageProductWasAdded');
+                // center it and open it
+                win.open();
+
+                $('.shopping-cart-count').text(cart.length);
+                $('.shopping-cart-count').css('color', '#12bf40');
+                $('#cartUserId').html('');
+                $('#checkoutCartId').show();
+                $('.shopping-cart-window').html('');
+                $('.shopping-cart-window').show();
+                $('.shopping-cart-no-products').hide();
+
+                $.each(cart, function (index, product) {
+
+                    if (product.ProductInCart.Specials) {
+
+                        $('.shopping-cart-window').append('<div class="favorites-user-column" id="removeProductId' + index + '"><div class="favorites-user-card">' +
+                            '<a class="favorites-user-img" href="/Admin/Products/Product/' + product.ProductId + '"><img src="' + product.ProductInCart.Photo + '" alt="' + product.ProductInCart.Name + '" title="' + product.ProductInCart.Name + '" ></a><div class="product-user-container">' +
+                            '<div class="center favorites-product-headear">' + '@OnlineShoeKing.Resources.Language.NameTitle' + '</div><div class="centerAlign">' +
+                            '<a class="favorites-product-name" href="/Admin/Products/Product/' + product.ProductId + '">' + product.ProductInCart.Name + '</a></div>' +
+                            '<div class="center favorites-product-header">' + '@OnlineShoeKing.Resources.Language.ProductNumberTitle' + '</div>' +
+                            '<div class="centerAlign">' + product.ProductId + '</div><div class="center favorites-product-headear">' + '@OnlineShoeKing.Resources.Language.PriceTitle' + ' </div><div class="centerAlign favorites-product-headear-bottom">' +
+                            '<span class="product-price-underline"><span class="product-price-red">' + product.ProductInCart.Price + '</span></span><span class="product-price-green">' +
+                            product.ProductInCart.PromotionPrice + '@OnlineShoeKing.Resources.Language.Leva' + '</span></div>' +
+                            '<p class="flex"><a href="#" class="remove-product-cart-btn">' + '@OnlineShoeKing.Resources.Language.RemoveTitle' + '</a></p></div></div></div>');
+                    }
+                    else {
+
+                        $('.shopping-cart-window').append('<div class="favorites-user-column" id="removeProductId' + index + '"><div class="favorites-user-card">' +
+                            '<a class="favorites-user-img" href="/Admin/Products/Product/' + product.ProductId + '"><img src="' + product.ProductInCart.Photo + '" alt="' + product.ProductInCart.Name + '" title="' + product.ProductInCart.Name + '"></a><div class="product-user-container">' +
+                            '<div class="center favorites-product-headear">' + '@OnlineShoeKing.Resources.Language.NameTitle' + '</div><div class="centerAlign">' +
+                            '<a class="favorites-product-name" href="/Admin/Products/Product/' + product.ProductId + '">' + product.ProductInCart.Name + '</a></div>' +
+                            '<div class="center favorites-product-header">' + '@OnlineShoeKing.Resources.Language.ProductNumberTitle' + ' </div>' +
+                            '<div class="centerAlign">' + product.ProductId + '</div><div class="center favorites-product-headear">' + '@OnlineShoeKing.Resources.Language.PriceTitle' +
+                            ' </div><div class="centerAlign favorites-product-headear-bottom"><span>' + product.ProductInCart.Price + '@OnlineShoeKing.Resources.Language.Leva' + '</span></div>' +
+                            '<p class="flex"><a href="#" class="remove-product-cart-btn">' + '@OnlineShoeKing.Resources.Language.RemoveTitle' + '</a></p></div></div></div>');
+                    }
+
+                    $('a.favorites-user-img, a.favorites-product-name').click(function (e) {
+                        e.stopImmediatePropagation();
+                        e.preventDefault();
+
+                        $.ajax({
+                            url: '@Url.Action("ProductPartial", "Products", new { Area = "Admin" })',
+                            dataType: "html",
+                            type: "POST",
+                            cache: false,
+                            data: { productId: product.ProductId },
+                            success: function (productHtmlPartial) {
+
+                                $(".k-window-action").click();
+                                $('body').css('overflow', 'auto');
+                                $('#ControlNavigationId').html(productHtmlPartial);
+                            },
+                            error: function (error) {
+                                $('body').css('overflow', 'auto');
+                            }
+                        });
+                    });
+
+                    $('a.remove-product-cart-btn').on('click', function (e) {
+                        e.stopImmediatePropagation();
+                        e.preventDefault();
+
+                        $.ajax({
+                            url: '/Home/RemoveProductFromCart',
+                            dataType: "json",
+                            type: "POST",
+                            contentType: 'application/json; charset=utf-8',
+                            data: "{ productId:" + JSON.stringify(product.ProductId) + "}",
+                            success: function (total) {
+
+                                countCart = countCart - 1;
+
+                                if (countCart > 0) {
+                                    $('#cartTotalId').text(total + '@OnlineShoeKing.Resources.Language.Leva');
+                                    $('.checkoutCartId').show();
+                                }
+                                else {
+                                    $('.shopping-cart-no-products').show();
+                                    $('.shopping-cart-no-products').html('<div class="centerAlign"><h3 style="color: #f68236;">' + '@OnlineShoeKing.Resources.Language.NoProducts' + '</h3></div');
+                                    $('#checkoutCartId').hide();
+                                    $('.shopping-cart-window').hide();
+                                }
+
+                                if (countCart !== 0) {
+                                    $('.shopping-cart-count').html(countCart);
+                                    $('.shopping-cart-count').css('color', '#12bf40');
+
+                                } else {
+                                    $('.shopping-cart-count').html(countCart);
+                                    $('.shopping-cart-count').css('color', '#222222');
+                                }
+                                $('div#removeProductId' + index).remove();
+                            },
+                            error: function (error) {
+                                alert('@OnlineShoeKing.Resources.Language.MessageRefreshPage');
+                            }
+                        });
+                    });
+                });
+
+                $('#cartTotalId').text(cart[cart.length - 1].Total + '@OnlineShoeKing.Resources.Language.Leva');
+
+            },
+            error: function (error) {
+                alert('@OnlineShoeKing.Resources.Language.MessageRefreshPage');
+            }
+        });
+    });
+
+
+    function checkProductFavorites(product_id) {
+        $.post('/Products/CheckProductFavorites', { productId: product_id }, function (productFavorites) {
+
+            if (productFavorites == false) {
+
+                $('.add-to-bascket-btn').after('<input type="submit" class="btn btn-default add-to-favorites-btn" value="' + '@OnlineShoeKing.Resources.Language.AddToFavorites' + '" />');
+
+                $('.add-to-favorites-btn').on('click', function () {
+
+                    let url_favorites = '/Products/AddToFavorites';
+                    if ('@User.IsInRole("Founder")' === 'True') {
+                        url_favorites = '/Founder//Products/AddToFavorites';
+                    }
+                    else if ('@User.IsInRole("Admin")' === 'True') {
+                        url_favorites = '/Admin//Products/AddToFavorites';
+                    }
+
+                    $.ajax({
+                        url: url_favorites,
+                        type: 'POST',
+                        dataType: 'html',
+                        data: { productId: '@Model.ProductId' },
+                        success: function (data) {
+
+                            $('.add-to-favorites-btn').remove();
+
+                            const win = $("<div>").kendoWindow({
+                                modal: true,
+                                open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                                position: {
+                                    top: "40%",
+                                    left: "45%"
+                                }
+                            }).getKendoWindow();
+
+                            $('div.k-widget.k-window').addClass("resizeCart");
+                            $('div.k-widget.k-window').removeClass("resizeLogin");
+
+                            // set the content
+                            win.content('@OnlineShoeKing.Resources.Language.MessageProductWasAdded');
+                            // center it and open it
+                            win.open();
+
+
+                            $.get('/Products/GetFavoritesCount', function (count) {
+                                if (count > 0) {
+                                    $('.favorites-count').html(count);
+                                    $('.favorites-count').css('color', '#12bf40');
+                                }
+                                else {
+                                    $('.favorites-count').html('0');
+                                    $('.favorites-count').css('color', '#222222');
+                                }
+                            });
+
+                            $('#window_favorites').html(data);
+                        }
+                    });
+                });
+            }
+        });
+    }
+
+    checkProductFavorites('@Model.ProductId');
+
+    $.post('/Admin/Products/GetRatings', { productId: '@Model.ProductId' }, function (data) {
+        $('#product-ratings').html(data);
+    });
+
+    $.post('/Admin/Products/GetComments', { productId: '@Model.ProductId' }, function (data) {
+        $('#product-comments').html(data);
+    });
+
+    $.post('/Admin/Products/Users', function (data) {
+        $('#users-product').html(data);
+    });
+
+</script>

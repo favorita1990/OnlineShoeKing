@@ -1,0 +1,18 @@
+
+.cd-dropdown span[class^="icon-"]:before,
+.cd-dropdown span[class*=" icon-"]:before {
+	position: absolute;
+	margin-top: 0.3em;
+	left: 15px;
+}
+
+.icon-bg:before {
+	content: url(../images/bg.png);
+}
+
+.icon-eng:before {
+	content: url(../images/eng.png);
+}
+.icon-us:before {
+	content: url(../images/us.gif);
+}

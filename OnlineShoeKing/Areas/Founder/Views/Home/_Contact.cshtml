@@ -1,0 +1,104 @@
+﻿
+
+<div id="ControlNavigationId">
+    <script type="text/javascript">
+    document.title = 'Contact | Shoe King';
+    window.history.pushState(
+        null,
+        null,
+        '/Founder/Home/Contact'
+    );
+    </script>
+
+    <div class="pag-nav">
+        <ul class="p-list">
+            <li><a href="index.html">Home</a></li>
+            &nbsp;&nbsp;/&nbsp;
+
+            <li class="act">&nbsp;Contact</li>
+        </ul>
+    </div>
+    <div class="coats">
+        <h3 class="c-head">Contact</h3>
+        <p>Lorem ipsum dolor sit amet enim. Etiam ullamcorp uspendisse a pellentesque.</p>
+    </div>
+    <div class="contact-box">
+        <div class="form">
+            <small>Topic</small>
+            <div class="text">
+                <Select>
+                    <option>Lorem Ipsum</option>
+                    <option>Lorem Ipsum</option>
+                    <option>Lorem Ipsum</option>
+                    <option>Lorem Ipsum</option>
+                </Select>
+            </div>
+        </div>
+        <div class="form-t">
+            <small>Name</small>
+            <div class="text">
+                <input type="text" />
+            </div>
+        </div>
+        <div class="form-y">
+            <small>Email</small>
+            <div class="text">
+                <input type="text" />
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="form">
+            <small>Message</small>
+            <div class="text">
+                <textarea></textarea>
+            </div>
+        </div>
+        <div class="text">
+            <input type="submit" value="send" />
+        </div>
+    </div>
+    <div class="look">
+        <h3>You May Also Like</h3>
+    </div>
+    <!-- Partners Starts Here --->
+    <div class="partner">
+        <ul id="flexiselDemo3">
+            <li><img src="/images/ss1.jpg" class="img-responsive" alt="" /></li>
+            <li><img src="/images/ss2.jpg" class="img-responsive" alt="" /></li>
+            <li><img src="/images/ss3.jpg" class="img-responsive" alt="" /></li>
+            <li><img src="/images/ss4.jpg" class="img-responsive" alt="" /></li>
+            <li><img src="/images/ss5.png" class="img-responsive" alt="" /></li>
+        </ul>
+
+    </div>
+</div>
+
+<script src="/Scripts/jquery.flexisel.js"></script>
+
+<script>
+    $(function () {
+
+        $("#flexiselDemo3").flexisel({
+            visibleItems: 5,
+            animationSpeed: 1000,
+            autoPlay: true,
+            autoPlaySpeed: 3000,
+            pauseOnHover: true,
+            enableResponsiveBreakpoints: true,
+            responsiveBreakpoints: {
+                portrait: {
+                    changePoint: 480,
+                    visibleItems: 1
+                },
+                landscape: {
+                    changePoint: 640,
+                    visibleItems: 2
+                },
+                tablet: {
+                    changePoint: 768,
+                    visibleItems: 3
+                }
+            }
+        });
+    });
+</script>

@@ -1,0 +1,169 @@
+﻿@using OnlineShoeKing.Models.ViewModels
+@model IEnumerable<OnlineShoeKing.Models.UserViewModel>
+
+@{
+    var breadCrumb = (BreadCrumbVm)TempData["breadCrumb"];
+}
+
+<div id="ControlNavigationId">
+    <script type="text/javascript">
+        document.title = 'Customers | Shoe King';
+        window.history.pushState(
+            null,
+            null,
+            '/Admin/Customers'
+            );
+    </script>
+
+    <div class="pag-nav">
+        <ul class="p-list">
+            @if (breadCrumb != null)
+            {
+                if (breadCrumb.ControllerName != null)
+                {
+                    <li class="act">@breadCrumb.ControllerName</li>
+                }
+            }
+        </ul>
+    </div>
+
+    <div class="sort-body">
+        <select class="selectpicker select-sort-item">
+            @if (string.IsNullOrEmpty((string)TempData["sortBy"]))
+            {
+                <option value="" disabled selected>@OnlineShoeKing.Resources.Language.SortByTitle</option>
+            }
+            else
+            {
+                if ((string)TempData["sortBy"] == "1")
+                {
+                    <option value="" disabled selected>@OnlineShoeKing.Resources.Language.FirstNameTitle</option>
+                }
+                else if ((string)TempData["sortBy"] == "2")
+                {
+                    <option value="" disabled selected>@OnlineShoeKing.Resources.Language.LastNameTitle</option>
+                }
+                else if ((string)TempData["sortBy"] == "3")
+                {
+                    <option value="" disabled selected>@OnlineShoeKing.Resources.Language.CreationDate</option>
+                }
+                else if ((string)TempData["sortBy"] == "4")
+                {
+                    <option value="" disabled selected>@OnlineShoeKing.Resources.Language.GenderTitle</option>
+                }
+            }
+
+            <option value="1">@OnlineShoeKing.Resources.Language.FirstNameTitle</option>
+
+            <option value="2">@OnlineShoeKing.Resources.Language.LastNameTitle</option>
+
+            <option value="3">@OnlineShoeKing.Resources.Language.CreationDate</option>
+
+            <option value="4">@OnlineShoeKing.Resources.Language.GenderTitle</option>
+
+        </select>
+    </div>
+
+    <div class="center">
+        <div class="search-customers">
+            <input type="text" id="searchCustomer" class="form-control" placeholder="@OnlineShoeKing.Resources.Language.SearchPlaceholder">
+        </div>
+    </div>
+
+    <div class="customers-container">
+        <div class="row customers-user-row">
+
+            @foreach (var user in Model)
+            {
+                <div class="customers-user-column">
+                    <div class="customers-user-card">
+                        <img src="@user.ImageUrl" alt="@user.FirstName" title="@user.FirstName">
+                        <div class="customers-user-container">
+                            <h3 class="centerAlign">@user.FullName</h3>
+                            <p><a id="@user.Email" class="customers-user-btn" href="/Admin/Customers/Profile?email=@user.Email">@OnlineShoeKing.Resources.Language.View</a></p>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/bootstrap-select.js"></script>
+
+<script>
+
+
+    (function () {
+
+        var $rows = $('div.customers-user-column');
+        $('#searchCustomer').keyup(function () {
+            var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+
+            $rows.show().filter(function () {
+                const text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+                return !~text.indexOf(val);
+            }).hide();
+        });
+
+        $('.select-sort-item').val('');
+        $('.select-sort-item').on('change',
+            function () {
+                const sort_val = $('.select-sort-item option:selected').val();
+
+                $.ajax({
+                    url: '@Url.Action("SortAllCustomers", "Customers", new { Area = "Admin" })',
+                    data: { sortBy: sort_val },
+                    type: 'POST',
+                    dataType: 'html',
+                    success: function (data) {
+                        $('#ControlNavigationId').html(data);
+                    }
+                });
+            });
+
+        $('.select-sort-item').selectpicker('refresh');
+
+        $('.customers-user-btn').on('click',
+            function (e) {
+                e.preventDefault();
+
+                const email = $(this).attr('id');
+
+                $('#add-loading').html('<div id="div-loading"></div>');
+                const dialog = $("#div-loading").kendoWindow({
+                    draggable: false,
+                    resizable: false,
+                    modal: true,
+                    actions: [""],
+                    open: function (event) { $(this.element).closest(".k-window").css("position", "fixed") },
+                    position: {
+                        top: "40%",
+                        left: "46%"
+                    }
+                }).data("kendoWindow").content('@OnlineShoeKing.Resources.Language.Loading');
+
+                $('.k-window-actions').remove();
+                $('.k-header').addClass('resize-loading-window');
+                $('.k-header').removeClass('k-header k-window-titlebar');
+                $('.k-widget').removeClass('k-widget k-window');
+
+                $('div.k-window-content').css('padding', '1.2em 1.3em');
+                $('div.k-window-content').css('border-radius', '10px');
+
+                $('body').css('overflow', 'hidden');
+
+                $.get('/Admin/Customers/IndexProfile', { email: email },
+                    function (data) {
+                        dialog.close();
+                        $('body').css('overflow', 'auto');
+                        $('#ControlNavigationId').html(data);
+                    }).fail(function () {
+                        dialog.close();
+                        $('body').css('overflow', 'auto');
+                    });
+            });
+
+    })();
+</script>

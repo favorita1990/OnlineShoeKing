@@ -1,0 +1,1152 @@
+﻿
+
+
+
+
+<div id="ControlNavigationId">
+    <script type="text/javascript">
+        document.title = 'Customers - Shoe King';
+        window.history.pushState(
+            null,
+            null,
+            '/Admin/Customers'
+            );
+    </script>
+
+    <div class="bottom-grids collections">
+        <!---start-product-details--->
+        <div class="product-details">
+
+            @*<div class="header-section">
+                    <div class="container">
+                        <h1>There are no customers yet.</h1>
+                    </div>
+                </div>*@
+
+
+            <div class="container">
+                <div class="product-head">
+                    <img alt="User Pic" id="imageInitial" src="@OnlineShoeShopAndChat.Resources.Pictures.PicPeople" class="img-circle img-responsive">
+                    <h2>@OnlineShoeShopAndChat.Resources.Language.Customers</h2>
+                    <div class="clearfix"> </div>
+                </div>
+                <script type="text/javascript">
+                    function DropDown(el) {
+                        this.dd = el;
+                        this.initEvents();
+                    }
+                    DropDown.prototype = {
+                        initEvents: function () {
+                            var obj = this;
+                            obj.dd.on('click', function (event) {
+                                $(this).toggleClass('active');
+                                event.stopPropagation();
+                            });
+                        }
+                    }
+                    $(function () {
+                        var dd = new DropDown($('#dd'));
+                        $(document).click(function () {
+                            // all dropdowns
+                            $('.wrapper-dropdown').removeClass('active');
+                        });
+                    });
+                </script>
+
+                <section>
+                    <select id="sectionCustomersId" class="cs-select cs-skin-underline">
+                        <option value="" disabled selected>@OnlineShoeShopAndChat.Resources.Language.SortByTitle</option>
+                        <option value="1">@OnlineShoeShopAndChat.Resources.Language.FirstNameTitle</option>
+                        <option value="2">@OnlineShoeShopAndChat.Resources.Language.LastNameTitle</option>
+                        <option value="3">@OnlineShoeShopAndChat.Resources.Language.JoinedTitle</option>
+                        <option value="4">@OnlineShoeShopAndChat.Resources.Language.EmailTitle</option>
+                        <option value="5">@OnlineShoeShopAndChat.Resources.Language.GenderTitle</option>
+                        <option value="6">@OnlineShoeShopAndChat.Resources.Language.OnlineOfflineTitle</option>
+                    </select>
+                </section>
+
+                @*<div id="listingTable"></div>
+                    <a href="javascript:prevPage()" id="btn_prev">Prev</a>
+                    <a href="javascript:nextPage()" id="btn_next">Next</a>
+                    page: <span id="page"></span>*@
+                <div id="addCustomersId">
+                    @*<div class="customers customersMen">
+                            <a href="profile.html">
+                                <img class="customersImage thumbnail" src="/images/profilePic.jpg" alt="Profile image" />
+                                Iliyan Kodzhemanov
+                            </a>
+                            <ul>
+                                <li><a href="#">Photos</a></li>
+                                <li><a href="#">Online</a></li>
+                                <li style="margin: 0 auto;"></li>
+                                <li style="margin: 0 auto;"></li>
+                            </ul>
+                            <div class="clearfix"> </div>
+                        </div>
+                        <div class="customers customersGirls">
+                            <a href="#">
+                                <img class="customersImage thumbnail" src="/images/profilePic.jpg" alt="Profile image" />
+                                Maria Ivanova
+                            </a>
+                            <ul>
+                                <li><a href="#">Photos</a></li>
+                                <li><a href="#">Online</a></li>
+                                <li style="margin: 0 auto;"></li>
+                                <li style="margin: 0 auto;"></li>
+                            </ul>
+                            <div class="clearfix"> </div>
+                        </div>
+                        <div class="customers customersMen">
+                            <a href="#">
+                                <img class="customersImage thumbnail" src="/images/profilePic.jpg" alt="Profile image" />
+                                Ivan Cirkov
+                            </a>
+                            <ul>
+                                <li><a href="#">Photos</a></li>
+                                <li style="margin: 0 auto;"></li>
+                                <li><span>Offline</span></li>
+                                <li><a href="#">Message</a></li>
+                            </ul>
+                            <div class="clearfix"> </div>
+                        </div>
+                        <div class="customers customersMen">
+                            <a href="#">
+                                <img class="customersImage thumbnail" src="/images/profilePic.jpg" alt="Profile image" />
+                                Angel Krumov
+                            </a>
+                            <ul>
+                                <li><a href="#">Photos</a></li>
+                                <li><a href="#">Online</a></li>
+                                <li style="margin: 0 auto;"></li>
+                                <li style="margin: 0 auto;"></li>
+                            </ul>
+                            <div class="clearfix"> </div>
+                        </div>
+                        <div class="customers customersGirls">
+                            <a href="#">
+                                <img class="customersImage thumbnail" src="/images/profilePic.jpg" alt="Profile image" />
+                                Iva Semerdzhieva
+                            </a>
+                            <ul>
+                                <li><a href="#">Photos</a></li>
+                                <li><a href="#">Online</a></li>
+                                <li style="margin: 0 auto;"></li>
+                                <li style="margin: 0 auto;"></li>
+                            </ul>
+                            <div class="clearfix"> </div>
+                        </div>
+                        <div class="customers customersMen">
+                            <a href="#">
+                                <img class="customersImage thumbnail" src="/images/profilePic.jpg" alt="Profile image" />
+                                Lubo Hrisimov
+                            </a>
+                            <ul>
+                                <li><a href="#">Photos</a></li>
+                                <li style="margin: 0 auto;"></li>
+                                <li><span>Offline</span></li>
+                                <li><a href="#">Message</a></li>
+                            </ul>
+                            <div class="clearfix"> </div>
+                        </div>
+                        <div class="customers customersMen">
+                            <a href="#">
+                                <img class="customersImage thumbnail" src="/images/profilePic.jpg" alt="Profile image" />
+                                Dimitar Ivanov
+                            </a>
+                            <ul>
+                                <li><a href="#">Photos</a></li>
+                                <li style="margin: 0 auto;"></li>
+                                <li><span style="cursor: not-allowed;">Offline</span></li>
+                                <li><a href="#">Message</a></li>
+                            </ul>
+                            <div class="clearfix"> </div>
+                        </div>*@
+
+                </div>
+                <div id="addCustomersAfterId">
+
+                </div>
+                <br><br><br><br><br><br>
+
+            </div>
+            <!---//End-product-details--->
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $('div.wrapper-dropdown').on('click', function () {
+        $('div.wrapper-dropdown').addClass("active");
+    });
+
+    var userAuthorized = @Request.IsAuthenticated.ToString().ToLower();
+    var notificationsHub = $.connection.notifications;
+    var currentUser = '@User.Identity.Name';
+    var users = [];
+    var current_page = 1;
+    var records_per_page = 5;
+
+    $.getJSON("/Admin/Customers/GetAllUsersInRole", function (customers) {
+        if (customers != null) {
+            users = customers;
+
+            if(customers.length > 4){
+
+                $('#sectionCustomersId').show();
+            }
+        }
+        else{
+
+            $('#sectionCustomersId').html('<div class="header-section"><h1>@OnlineShoeShopAndChat.Resources.Language.StillNoCustomersTitle</h1></div>');
+        }
+    });
+
+    function prevPage() {
+        if (current_page > 1) {
+            current_page--;
+            changePage(current_page);
+        }
+    }
+
+    function nextPage() {
+        if (current_page < numPages()) {
+            current_page++;
+            changePage(current_page);
+        }
+    }
+
+
+
+    function changePage(page) {
+        var btn_next = document.getElementById("btn_next");
+        var btn_prev = document.getElementById("btn_prev");
+        var listing_table = document.getElementById("addCustomersId");
+        var listing_tableAfter = document.getElementById("addCustomersAfterId");
+        var page_span = document.getElementById("page");
+        // Validate page
+        if (page < 1) page = 1;
+        if (page > numPages()) page = numPages();
+
+        listing_table.innerHTML = "";
+
+
+        var arrayJquery = new Array();
+        for (var i = (page - 1) * records_per_page; i < (page * records_per_page) && i < users.length; i++) {
+            arrayJquery.push(users[i]);
+
+        }
+
+        $.each(arrayJquery, function (index, customer) {
+
+
+            if(userAuthorized == 'true')
+            {
+                if (customer.ImageUrl == null)
+                {
+                    if(customer.OnlineOrOffline == true)
+                    {
+                        $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                        '<a id="customerProfileId" style="cursor:pointer;">' +
+                        '<img class="customersImage thumbnail" src="' + (customer.Gender == 0 ? "@OnlineShoeShopAndChat.Resources.Pictures.ProfilePic" : "@OnlineShoeShopAndChat.Resources.Pictures.ProfileWoman") + '" alt="Profile image" /> ' +
+                        customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li><li style="margin: 0 auto;">' +
+                        '<a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.OnlineTitle</a></li><li></li><li></li></ul><div class="clearfix"></div></div>');
+                    }
+                    else
+                    {
+                        $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                        '<a id="customerProfileId" style="cursor:pointer;">' +
+                        '<img class="customersImage thumbnail" src="' + (customer.Gender == 0 ? "@OnlineShoeShopAndChat.Resources.Pictures.ProfilePic" : "@OnlineShoeShopAndChat.Resources.Pictures.ProfileWoman") + '" alt="Profile image" /> ' +
+                        customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li><li style="margin: 0 auto;"></li>' +
+                        '<li><span style="cursor: not-allowed;">@OnlineShoeShopAndChat.Resources.Language.OfflineTitle</span></li><li><a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.MessageTitle</a></li>' +
+                        '</ul><div class="clearfix"></div></div>');
+                    }
+
+                }
+                else
+                {
+                     if(customer.OnlineOrOffline == true)
+                    {
+                        $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                        '<a id="customerProfileId" style="cursor:pointer;"><img class="customersImage thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + customer.ImageUrl + '" alt="Profile image" /> ' +
+                        customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li><li style="margin: 0 auto;">' +
+                        '<a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.OnlineTitle</a></li><li></li><li></li></ul><div class="clearfix"></div></div>');
+                    }
+                    else
+                    {
+                        $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                        '<a id="customerProfileId" style="cursor:pointer;"><img class="customersImage thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + customer.ImageUrl + '" alt="Profile image" /> ' +
+                        customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li><li style="margin: 0 auto;"></li>' +
+                        '<li><span style="cursor: not-allowed;">@OnlineShoeShopAndChat.Resources.Language.OfflineTitle</span></li><li><a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.MessageTitle</a></li>' +
+                        '</ul><div class="clearfix"></div></div>');
+                    }
+
+                }
+            }
+            else
+            {
+                 if (customer.ImageUrl == null) {
+                    $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                    '<a id="customerProfileId" style="cursor:pointer;">' +
+                    '<img class="customersImage thumbnail" src="' + (customer.Gender == 0 ? "@OnlineShoeShopAndChat.Resources.Pictures.ProfilePic" : "@OnlineShoeShopAndChat.Resources.Pictures.ProfileWoman") + '" alt="Profile image" /> ' +
+                    customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li>' +
+                    '</ul><div class="clearfix"></div></div>');
+                }
+                else {
+                    $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                    '<a id="customerProfileId" style="cursor:pointer;"><img class="customersImage thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + customer.ImageUrl + '" alt="Profile image" /> ' +
+                    customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li>' +
+                    '</ul><div class="clearfix"></div></div>');
+                }
+            }
+
+            $('div.customers #customerChatId').click(function () {
+
+                notificationsHub.server.sendUserChat(customer.Id).eq(0);
+            });
+
+
+            //$("div.customers #addCustomersId").append('<div class="customers ' + (customer.Genter == 0 ? "customersMen" : "customersGirls") + '">' +
+            //'<a id="customerProfileId" style="cursor:pointer;"><img class="customersImage thumbnail" src="/images/profilePic.jpg" alt="Profile image" /> ' +
+            //customer.FirstName + " " + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">Photos</a></li>' +
+            //'<li><a href="#">Online</a></li>' + '<li style="margin: 0 auto;"></li><li style="margin: 0 auto;"></li>' + '</ul><div class="clearfix"></div></div>');
+
+
+            $('div.customers #customerProfileId').on('click', function () {
+                $.ajax({
+                    url: '@Url.Action("IndexPartialCustomersProfile", "Customers", new { Area = "Admin" })',
+                    data: { id: customer.Id },
+                    cache: false,
+                    type: "POST",
+                    dataType: "html",
+                    success: function (data) {
+                        $('#ControlNavigationId').html(data);
+                    }
+                }).eq(0);
+            });
+
+            $('div.customers #customerPhotosId').on('click', function () {
+                $.ajax({
+                    url: '@Url.Action("PhotosPartialCustomersProfile", "Customers", new { Area = "Admin" })',
+                    data: { id: customer.Id },
+                    cache: false,
+                    type: "POST",
+                    dataType: "html",
+                    success: function (data) {
+                        $('#ControlNavigationId').html(data);
+                    }
+                }).eq(0);
+            });
+
+
+        });
+
+        listing_tableAfter += '<input type="submit" class="btn btn-primary btn-lg" id="btn_prev" onclick="javascript:prevPage()" value="@OnlineShoeShopAndChat.Resources.Language.PreviousTitle" />' +
+                            '<input type="submit" class="btn btn-primary btn-lg" id="btn_next" onclick="javascript:nextPage()" value="@OnlineShoeShopAndChat.Resources.Language.NextTitle" />' +
+                            '<span id="pageCss">@OnlineShoeShopAndChat.Resources.Language.PageTitle: <span id="page"></span></span>';
+
+
+
+        //var $rows = $('a#searchCustomers');
+        //$('#searchCustomersId').keyup(function () {
+        //    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+
+        //    $rows.show().filter(function () {
+        //        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+        //        return !~text.indexOf(val);
+        //    }).hide();
+        //});
+
+        page_span.innerHTML = page + "/" + numPages();
+
+        if (page == 1) {
+            btn_prev.style.visibility = "hidden";
+        }
+        else {
+            btn_prev.style.visibility = "visible";
+        }
+
+        if (page == numPages()) {
+            btn_next.style.visibility = "hidden";
+        }
+        else {
+            btn_next.style.visibility = "visible";
+        }
+    }
+
+
+    function numPages() {
+        return Math.ceil(users.length / records_per_page);
+    }
+
+    $.connection.hub.start();
+
+(function () {
+
+    var userAuthorized = @Request.IsAuthenticated.ToString().ToLower();
+    var notificationsHub = $.connection.notifications;
+    var currentUser = '@User.Identity.Name';
+
+    $.getJSON("/Admin/Customers/GetAllUsersInRole", function (customers) {
+        if (customers != null) {
+
+            var current_page = 1;
+            var records_per_page = 5;
+
+            function numPages() {
+                return Math.ceil(users.length / records_per_page);
+            }
+
+            var page = 0;
+            if (page < 1) page = 1;
+            if (page > numPages()) page = numPages();
+
+            $("#addCustomersId").html('');
+            $.each(customers, function (index, customer) {
+                if (index < records_per_page) {
+
+                    if(userAuthorized == 'true')
+                    {
+                        if (customer.ImageUrl == null)
+                        {
+                             if(customer.OnlineOrOffline == true)
+                            {
+                                $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                                '<a id="customerProfileId" style="cursor:pointer;">' +
+                                '<img class="customersImage thumbnail" src="' + (customer.Gender == 0 ? "@OnlineShoeShopAndChat.Resources.Pictures.ProfilePic" : "@OnlineShoeShopAndChat.Resources.Pictures.ProfileWoman") + '" alt="Profile image" /> ' +
+                                customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li><li style="margin: 0 auto;">' +
+                                '<a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.OnlineTitle</a></li><li></li><li></li></ul><div class="clearfix"></div></div>');
+                            }
+                            else
+                            {
+                                $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                                '<a id="customerProfileId" style="cursor:pointer;">' +
+                                '<img class="customersImage thumbnail" src="' + (customer.Gender == 0 ? "@OnlineShoeShopAndChat.Resources.Pictures.ProfilePic" : "@OnlineShoeShopAndChat.Resources.Pictures.ProfileWoman") + '" alt="Profile image" /> ' +
+                                customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li><li style="margin: 0 auto;"></li>' +
+                                '<li><span style="cursor: not-allowed;">@OnlineShoeShopAndChat.Resources.Language.OfflineTitle</span></li><li><a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.MessageTitle</a></li>' +
+                                '</ul><div class="clearfix"></div></div>');
+                            }
+
+                        }
+                        else
+                        {
+                            if(customer.OnlineOrOffline == true)
+                            {
+                                $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                                '<a id="customerProfileId" style="cursor:pointer;"><img class="customersImage thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + customer.ImageUrl + '" alt="Profile image" /> ' +
+                                customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.MessageTitle</a></li><li style="margin: 0 auto;">' +
+                                '<a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.OnlineTitle</a></li><li></li><li></li></ul><div class="clearfix"></div></div>');
+                            }
+                            else
+                            {
+                                $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                                '<a id="customerProfileId" style="cursor:pointer;"><img class="customersImage thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + customer.ImageUrl + '" alt="Profile image" /> ' +
+                                customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li><li style="margin: 0 auto;"></li>' +
+                                '<li><span style="cursor: not-allowed;">@OnlineShoeShopAndChat.Resources.Language.OfflineTitle</span></li><li><a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.MessageTitle</a></li>' +
+                                '</ul><div class="clearfix"></div></div>');
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                      if (customer.ImageUrl == null) {
+                            $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                            '<a id="customerProfileId" style="cursor:pointer;">' +
+                            '<img class="customersImage thumbnail" src="' + (customer.Gender == 0 ? "@OnlineShoeShopAndChat.Resources.Pictures.ProfilePic" : "@OnlineShoeShopAndChat.Resources.Pictures.ProfileWoman") + '" alt="Profile image" /> ' +
+                            customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li>' +
+                            '</ul><div class="clearfix"></div></div>');
+                        }
+                        else {
+                            $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                            '<a id="customerProfileId" style="cursor:pointer;"><img class="customersImage thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + customer.ImageUrl + '" alt="Profile image" /> ' +
+                            customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li>' +
+                            '</ul><div class="clearfix"></div></div>');
+                        }
+                    }
+
+                    $('div.customers #customerChatId').click(function () {
+
+                        notificationsHub.server.sendUserChat(customer.Id).eq(0);
+                    });
+
+
+                    //$("#addCustomersId").append('<div class="customers ' + (customer.Genter == 0 ? "customersMen" : "customersGirls") + '">' +
+                    //'<a id="customerProfileId" style="cursor:pointer;"><img class="customersImage thumbnail" src="/images/profilePic.jpg" alt="Profile image" /> ' +
+                    //customer.FirstName + " " + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">Photos</a></li>' +
+                    //'<li><a href="#">Online</a></li>' + '<li style="margin: 0 auto;"></li><li style="margin: 0 auto;"></li>' + '</ul><div class="clearfix"></div></div>');
+
+
+                    $('div.customers #customerProfileId').on('click', function () {
+                        $.ajax({
+                            url: '@Url.Action("IndexPartialCustomersProfile", "Customers", new { Area = "Admin" })',
+                            data: { id: customer.Id },
+                            cache: false,
+                            type: "POST",
+                            dataType: "html",
+                            success: function (data) {
+                                $('#ControlNavigationId').html(data);
+                            }
+                        }).eq(0);
+                    });
+
+                    $('div.customers #customerPhotosId').on('click', function () {
+                        $.ajax({
+                            url: '@Url.Action("PhotosPartialCustomersProfile", "Customers", new { Area = "Admin" })',
+                            data: { id: customer.Id },
+                            cache: false,
+                            type: "POST",
+                            dataType: "html",
+                            success: function (data) {
+                                $('#ControlNavigationId').html(data);
+                            }
+                        }).eq(0);
+                    });
+                }
+            });
+
+            $("#addCustomersAfterId").append('<input type="submit" class="btn btn-primary btn-lg" id="btn_prev" onclick="javascript:prevPage()" value="@OnlineShoeShopAndChat.Resources.Language.PreviousTitle" />' +
+                '<input type="submit" class="btn btn-primary btn-lg" id="btn_next" onclick="javascript:nextPage()" value="@OnlineShoeShopAndChat.Resources.Language.NextTitle" />' +
+                        '<span id="pageCss">@OnlineShoeShopAndChat.Resources.Language.PageTitle: <span id="page"></span></span>');
+
+
+            var btn_next = document.getElementById("btn_next");
+            var btn_prev = document.getElementById("btn_prev");
+            var page_span = document.getElementById("page");
+            page_span.innerHTML = page + "/" + numPages();
+
+            if (page == 1) {
+                btn_prev.style.visibility = "hidden";
+            } else {
+                btn_prev.style.visibility = "visible";
+            }
+
+            if (page == numPages()) {
+                btn_next.style.visibility = "hidden";
+            }
+            else {
+                btn_next.style.visibility = "visible";
+            }
+        }
+    });
+
+
+    var countOfGetUserChatArrayClick = [];
+    var countOfGetUserChatClick = 1;
+
+    notificationsHub.client.getUserChat = function (fromUser, toUser, messages) {
+
+        $('.msg_wrap').show("fold");
+        $('.msg_box').show("fold");
+
+        countOfGetUserChatArrayClick.push(' ');
+
+        var chatMsg_footer = $(".msg_footer");
+        chatMsg_footer.empty();
+        var chatMsg_inputButton = $(".msg_inputButton");
+        chatMsg_inputButton.empty();
+        $(".msg_body").empty();
+        var fullName = toUser.FirstName + " " + toUser.LastName;
+        var chatMsg_body = $(".msg_body");
+
+        if (fullName.length > 21) {
+            $('.msg_head').html(fullName.substring(0, 20) + "..." + '<div class="close">X</div>');
+        }
+        else {
+            $('.msg_head').html(fullName + '<div class="close">X</div>');
+        }
+
+
+        $.each(messages, function (key, item) {
+            if (item.Item3 != toUser.Id) {
+
+                if (fromUser.ImageUrl == null) {
+                    chatMsg_body.append('<div class="msgAFullwidth"><div class="msgAPhoto"><img src="@OnlineShoeShopAndChat.Resources.Pictures.ProfilePic"><div class="msg_a msgAPhoto">' +
+                    $.emoticons.replace(item.Item1) + '</div></div></div>');
+                }
+                else {
+                    chatMsg_body.append('<div class="msgAFullwidth"><div class="msgAPhoto"><img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + fromUser.ImageUrl + '"><div class="msg_a msgAPhoto">' +
+                    $.emoticons.replace(item.Item1) + '</div></div></div>');
+                }
+
+            }
+            else {
+                chatMsg_body.append('<div class="msg_b">' + $.emoticons.replace(item.Item1) + '</div>');
+            }
+        });
+        chatMsg_body.append('<div class="msg_push"></div>');
+        // $(".msg_body").append(' <div class="msgAPhoto"><img src="/Content/images/winter-soldier.jpg"><div class="msg_a msgAPhoto">This is from A	</div></div>' +
+        //'<div class="msgAPhoto"><img src="/Content/images/winter-soldier.jpg"><div class="msg_a msgAPhoto">dadad	</div></div>' +
+        //'<div class="msgAPhoto"><img src="/Content/images/winter-soldier.jpg"><div class="msg_a msgAPhoto">fddf	</div></div>' +
+        //'<div class="msg_b">This is from B, and its amazingly kool nah... i know it even i liked it :)</div>' +
+        //'<div class="msgAPhoto"><img src="/Content/images/winter-soldier.jpg"><div class="msg_a msgAPhoto">Wow, Thats great to hear from you man </div></div>' +
+        //' <div class="msg_push"></div>');
+
+
+        //var scroll_Thumb_Body = $('.msg_body');
+        //scroll_Thumb_Body.animate({ scrollTop: scroll_Thumb_Body.prop('scrollHeight') }, 1000);
+        var scrollHeight = 0;
+        $('.msg_body div').each(function (i, value) {
+            scrollHeight += parseInt($(this).height());
+        });
+        scrollHeight += '';
+        $('.msg_body').animate({ scrollTop: scrollHeight });
+
+        chatMsg_footer.append('<textarea rows="2" id="textAreaId" class="msg_input" placeholder="@OnlineShoeShopAndChat.Resources.Language.MessageInputText"></textarea>');
+
+        chatMsg_inputButton.append('<input id="btnIconsTextarea" class="btn btn-danger" value="@OnlineShoeShopAndChat.Resources.Language.EmojiTitle" type="button">' +
+            '<input class="btn btn-primary userMen" id="btnTextarea" type="button" value="@OnlineShoeShopAndChat.Resources.Language.SendBtn">');
+
+
+        $('.close').on('click', function () {
+            $(".msg_box").hide("fold", 1000);
+            var userName = '@User.Identity.Name';
+            notificationsHub.server.closeChat(userName);
+        });
+
+        var countOfClick = 0;
+        var countOfFocus = 0;
+        $('.msg_body').click(function (e) {
+            e.preventDefault();
+            var countOfClick2 = countOfClick++;
+            if (countOfClick2 == 0) {
+                var countOfGetUserChat2 = countOfGetUserChatClick++;
+                if (countOfGetUserChatArrayClick.length == countOfGetUserChat2) {
+                    notificationsHub.server.sendMessageAsRead(toUser.ConnectionId, fromUser.Id);
+                }
+            }
+        });
+
+        $('#textAreaId').focus(function (e) {
+            e.preventDefault();
+            notificationsHub.server.sendMessageAsRead(toUser.ConnectionId, fromUser.Id)[0];
+        });
+
+
+        $('#textAreaId').keypress(function (e) {
+            if ($(this).val().trim() != '' && e.keyCode == 13) {
+                e.preventDefault();
+                var msg = $(this).val();
+                $(this).val('');
+                if (msg != '')
+                    $('<div class="msg_b">' + $.emoticons.replace(msg) + '</div>').insertBefore('.msg_push');
+                $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
+                notificationsHub.server.sendChatMessage(toUser.ConnectionId, fromUser.Id, msg);
+            }
+        });
+
+        $('#btnTextarea').on('click', function (e) {
+            e.preventDefault();
+            var message = $('#textAreaId').val();
+            $('#textAreaId').val('');
+            if (message != '') {
+                $('<div><div class="msg_b">' + $.emoticons.replace(message) + '</div></div>').insertBefore('.msg_push');
+                $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
+                notificationsHub.server.sendChatMessage(toUser.ConnectionId, fromUser.Id, message);
+            }
+        });
+
+        $('#btnIconsTextarea').on('click', function (e) {
+            e.preventDefault();
+            $('#textAreaId').emojiPicker({
+                width: '320px',
+                height: '400px',
+                button: false,
+                fadeTime: 400,
+                emojiSet: 'apple'
+            });
+            $('#textAreaId').emojiPicker('toggle');
+        });
+    };
+
+
+
+	[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {
+		new SelectFx(el);
+	});
+
+
+	var selectedLi = null;
+	var selectedLiCount = 0;
+	$('.cs-options ul li').on('click', function () {
+	    var valLi = $('.cs-selected').data('value');
+
+	    if (valLi == selectedLi) {
+	        selectedLiCount = selectedLiCount + 1;
+	        if ((selectedLiCount % 2) == 1) {
+	            selectedLi = '-' + selectedLi;
+
+	            $.ajax({
+	                url: '/Admin/Customers/GetAllUsersInRole',
+	                dataType: "json",
+	                type: "POST",
+	                contentType: 'application/json; charset=utf-8',
+	                data: "{ sortBy:" + JSON.stringify(selectedLi) + "}",
+	                success: function (data) {
+	                    users = data;
+
+
+	                    if (users != null) {
+
+	                        var current_page = 1;
+	                        var records_per_page = 5;
+
+	                        function numPages() {
+	                            return Math.ceil(users.length / records_per_page);
+	                        }
+
+	                        var page = 0;
+	                        if (page < 1) page = 1;
+	                        if (page > numPages()) page = numPages();
+
+	                        $("#addCustomersId").html('');
+	                        $.each(users, function (index, customer) {
+	                            if (index < records_per_page) {
+
+	                                if(userAuthorized == 'true')
+	                                {
+	                                    if (customer.ImageUrl == null)
+	                                    {
+	                                        if(customer.OnlineOrOffline == true)
+                                            {
+                                                $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                                                '<a id="customerProfileId" style="cursor:pointer;">' +
+                                                '<img class="customersImage thumbnail" src="' + (customer.Gender == 0 ? "@OnlineShoeShopAndChat.Resources.Pictures.ProfilePic" : "@OnlineShoeShopAndChat.Resources.Pictures.ProfileWoman") + '" alt="Profile image" /> ' +
+                                                customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li><li style="margin: 0 auto;">' +
+                                                '<a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.OnlineTitle</a></li><li></li><li></li></ul><div class="clearfix"></div></div>');
+                                            }
+                                            else
+                                            {
+                                                $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                                                '<a id="customerProfileId" style="cursor:pointer;">' +
+                                                '<img class="customersImage thumbnail" src="' + (customer.Gender == 0 ? "@OnlineShoeShopAndChat.Resources.Pictures.ProfilePic" : "@OnlineShoeShopAndChat.Resources.Pictures.ProfileWoman") + '" alt="Profile image" /> ' +
+                                                customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li><li style="margin: 0 auto;"></li>' +
+                                                '<li><span style="cursor: not-allowed;">@OnlineShoeShopAndChat.Resources.Language.OfflineTitle</span></li><li><a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.MessageTitle</a></li>' +
+                                                '</ul><div class="clearfix"></div></div>');
+                                            }
+
+	                                    }
+	                                    else
+	                                    {
+	                                         if(customer.OnlineOrOffline == true)
+                                            {
+                                                $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                                                '<a id="customerProfileId" style="cursor:pointer;"><img class="customersImage thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + customer.ImageUrl + '" alt="Profile image" /> ' +
+                                                customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li><li style="margin: 0 auto;">' +
+                                                '<a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.OnlineTitle</a></li><li></li><li></li></ul><div class="clearfix"></div></div>');
+                                            }
+                                            else
+                                            {
+                                                $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                                                '<a id="customerProfileId" style="cursor:pointer;"><img class="customersImage thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + customer.ImageUrl + '" alt="Profile image" /> ' +
+                                                customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li><li style="margin: 0 auto;"></li>' +
+                                                '<li><span style="cursor: not-allowed;">@OnlineShoeShopAndChat.Resources.Language.OfflineTitle</span></li><li><a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.MessageTitle</a></li>' +
+                                                '</ul><div class="clearfix"></div></div>');
+                                            }
+
+	                                    }
+	                                }
+	                                else
+	                                {
+	                                   if (customer.ImageUrl == null) {
+                                            $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                                            '<a id="customerProfileId" style="cursor:pointer;">' +
+                                            '<img class="customersImage thumbnail" src="' + (customer.Gender == 0 ? "@OnlineShoeShopAndChat.Resources.Pictures.ProfilePic" : "@OnlineShoeShopAndChat.Resources.Pictures.ProfileWoman") + '" alt="Profile image" /> ' +
+                                            customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li>' +
+                                            '</ul><div class="clearfix"></div></div>');
+                                        }
+                                        else {
+                                            $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                                            '<a id="customerProfileId" style="cursor:pointer;"><img class="customersImage thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + customer.ImageUrl + '" alt="Profile image" /> ' +
+                                            customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li>' +
+                                            '</ul><div class="clearfix"></div></div>');
+                                        }
+	                                }
+
+	                                $('div.customers #customerChatId').click(function () {
+
+	                                    notificationsHub.server.sendUserChat(customer.Id).eq(0);
+
+	                                });
+
+
+	                                //$("#addCustomersId").append('<div class="customers ' + (customer.Genter == 0 ? "customersMen" : "customersGirls") + '">' +
+                                    //'<a id="customerProfileId" style="cursor:pointer;"><img class="customersImage thumbnail" src="/images/profilePic.jpg" alt="Profile image" /> ' +
+                                    //customer.FirstName + " " + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">Photos</a></li>' +
+                                    //'<li><a href="#">Online</a></li>' + '<li style="margin: 0 auto;"></li><li style="margin: 0 auto;"></li>' + '</ul><div class="clearfix"></div></div>');
+
+	                            }
+
+	                            $('div.customers #customerProfileId').on('click', function () {
+	                                $.ajax({
+	                                    url: '@Url.Action("IndexPartialCustomersProfile", "Customers", new { Area = "Admin" })',
+	                                    data: { id: customer.Id },
+	                                    cache: false,
+	                                    type: "POST",
+	                                    dataType: "html",
+	                                    success: function (data) {
+	                                        $('#ControlNavigationId').html(data);
+	                                    }
+	                                }).eq(0);
+	                            });
+
+	                            $('div.customers #customerPhotosId').on('click', function () {
+	                                $.ajax({
+	                                    url: '@Url.Action("PhotosPartialCustomersProfile", "Customers", new { Area = "Admin" })',
+	                                    data: { id: customer.Id },
+	                                    cache: false,
+	                                    type: "POST",
+	                                    dataType: "html",
+	                                    success: function (data) {
+	                                        $('#ControlNavigationId').html(data);
+	                                    }
+	                                }).eq(0);
+	                            });
+	                        });
+	                        $("#addCustomersAfterId").html('');
+	                        $("#addCustomersAfterId").append('<input type="submit" class="btn btn-primary btn-lg" id="btn_prev" onclick="javascript:prevPage()" value="@OnlineShoeShopAndChat.Resources.Language.PreviousTitle" />' +
+                                '<input type="submit" class="btn btn-primary btn-lg" id="btn_next" onclick="javascript:nextPage()" value="@OnlineShoeShopAndChat.Resources.Language.NextTitle" />' +
+                                        '<span id="pageCss">@OnlineShoeShopAndChat.Resources.Language.PageTitle: <span id="page"></span></span>');
+
+	                        var btn_next = document.getElementById("btn_next");
+	                        var btn_prev = document.getElementById("btn_prev");
+	                        var page_span = document.getElementById("page");
+	                        page_span.innerHTML = page + "/" + numPages();
+
+	                        if (page == 1) {
+	                            btn_prev.style.visibility = "hidden";
+	                        } else {
+	                            btn_prev.style.visibility = "visible";
+	                        }
+
+	                        btn_prev.click();
+
+	                        if (page == numPages()) {
+	                            btn_next.style.visibility = "hidden";
+	                        }
+	                        else {
+	                            btn_next.style.visibility = "visible";
+	                        }
+	                    }
+	                }
+	            });
+	        }
+	        else {
+
+	            $.ajax({
+	                url: '/Admin/Customers/GetAllUsersInRole',
+	                dataType: "json",
+	                type: "POST",
+	                contentType: 'application/json; charset=utf-8',
+	                data: "{ sortBy:" + JSON.stringify(valLi) + "}",
+	                success: function (data) {
+	                    users = data;
+
+
+	                    if (users != null) {
+
+	                        var current_page = 1;
+	                        var records_per_page = 5;
+
+	                        function numPages() {
+	                            return Math.ceil(users.length / records_per_page);
+	                        }
+
+	                        var page = 0;
+	                        if (page < 1) page = 1;
+	                        if (page > numPages()) page = numPages();
+
+	                        $("#addCustomersId").html('');
+	                        $.each(users, function (index, customer) {
+	                            if (index < records_per_page) {
+
+
+	                                if(userAuthorized == 'true')
+	                                {
+	                                    if (customer.ImageUrl == null)
+	                                    {
+	                                       if(customer.OnlineOrOffline == true)
+                                            {
+                                                $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                                                '<a id="customerProfileId" style="cursor:pointer;">' +
+                                                '<img class="customersImage thumbnail" src="' + (customer.Gender == 0 ? "@OnlineShoeShopAndChat.Resources.Pictures.ProfilePic" : "@OnlineShoeShopAndChat.Resources.Pictures.ProfileWoman") + '" alt="Profile image" /> ' +
+                                                customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li><li style="margin: 0 auto;">' +
+                                                '<a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.OnlineTitle</a></li><li></li><li></li></ul><div class="clearfix"></div></div>');
+                                            }
+                                            else
+                                            {
+                                                $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                                                '<a id="customerProfileId" style="cursor:pointer;">' +
+                                                '<img class="customersImage thumbnail" src="' + (customer.Gender == 0 ? "@OnlineShoeShopAndChat.Resources.Pictures.ProfilePic" : "@OnlineShoeShopAndChat.Resources.Pictures.ProfileWoman") + '" alt="Profile image" /> ' +
+                                                customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li><li style="margin: 0 auto;"></li>' +
+                                                '<li><span style="cursor: not-allowed;">Offline</span></li><li><a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.MessageTitle</a></li>' +
+                                                '</ul><div class="clearfix"></div></div>');
+                                            }
+
+	                                    }
+	                                    else
+	                                    {
+	                                        if(customer.OnlineOrOffline == true)
+                                            {
+                                                $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                                                '<a id="customerProfileId" style="cursor:pointer;"><img class="customersImage thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + customer.ImageUrl + '" alt="Profile image" /> ' +
+                                                customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li><li style="margin: 0 auto;">' +
+                                                '<a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.OnlineTitle</a></li><li></li><li></li></ul><div class="clearfix"></div></div>');
+                                            }
+                                            else
+                                            {
+                                                $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                                                '<a id="customerProfileId" style="cursor:pointer;"><img class="customersImage thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + customer.ImageUrl + '" alt="Profile image" /> ' +
+                                                customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li><li style="margin: 0 auto;"></li>' +
+                                                '<li><span style="cursor: not-allowed;">@OnlineShoeShopAndChat.Resources.Language.OfflineTitle</span></li><li><a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.MessageTitle</a></li>' +
+                                                '</ul><div class="clearfix"></div></div>');
+                                            }
+
+	                                    }
+	                                }
+	                                else
+	                                {
+	                                    if (customer.ImageUrl == null) {
+                                            $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                                            '<a id="customerProfileId" style="cursor:pointer;">' +
+                                            '<img class="customersImage thumbnail" src="' + (customer.Gender == 0 ? "@OnlineShoeShopAndChat.Resources.Pictures.ProfilePic" : "@OnlineShoeShopAndChat.Resources.Pictures.ProfileWoman") + '" alt="Profile image" /> ' +
+                                            customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li>' +
+                                            '</ul><div class="clearfix"></div></div>');
+                                        }
+                                        else {
+                                            $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                                            '<a id="customerProfileId" style="cursor:pointer;"><img class="customersImage thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + customer.ImageUrl + '" alt="Profile image" /> ' +
+                                            customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li>' +
+                                            '</ul><div class="clearfix"></div></div>');
+                                        }
+	                                }
+
+	                                $('div.customers #customerChatId').click(function () {
+
+	                                    notificationsHub.server.sendUserChat(customer.Id).eq(0);
+
+	                                });
+
+	                            }
+	                            $('div.customers #customerProfileId').on('click', function () {
+	                                $.ajax({
+	                                    url: '@Url.Action("IndexPartialCustomersProfile", "Customers", new { Area = "Admin" })',
+	                                    data: { id: customer.Id },
+	                                    cache: false,
+	                                    type: "POST",
+	                                    dataType: "html",
+	                                    success: function (data) {
+	                                        $('#ControlNavigationId').html(data);
+	                                    }
+	                                }).eq(0);
+	                            });
+
+	                            $('div.customers #customerPhotosId').on('click', function () {
+	                                $.ajax({
+	                                    url: '@Url.Action("PhotosPartialCustomersProfile", "Customers", new { Area = "Admin" })',
+	                                    data: { id: customer.Id },
+	                                    cache: false,
+	                                    type: "POST",
+	                                    dataType: "html",
+	                                    success: function (data) {
+	                                        $('#ControlNavigationId').html(data);
+	                                    }
+	                                }).eq(0);
+	                            });
+	                        });
+	                        $("#addCustomersAfterId").html('');
+	                        $("#addCustomersAfterId").append('<input type="submit" class="btn btn-primary btn-lg" id="btn_prev" onclick="javascript:prevPage()" value="@OnlineShoeShopAndChat.Resources.Language.PreviousTitle" />' +
+                                '<input type="submit" class="btn btn-primary btn-lg" id="btn_next" onclick="javascript:nextPage()" value="@OnlineShoeShopAndChat.Resources.Language.NextTitle" />' +
+                                        '<span id="pageCss">@OnlineShoeShopAndChat.Resources.Language.PageTitle: <span id="page"></span></span>');
+
+	                        var btn_next = document.getElementById("btn_next");
+	                        var btn_prev = document.getElementById("btn_prev");
+	                        var page_span = document.getElementById("page");
+	                        page_span.innerHTML = page + "/" + numPages();
+
+	                        if (page == 1) {
+	                            btn_prev.style.visibility = "hidden";
+	                        } else {
+	                            btn_prev.style.visibility = "visible";
+	                        }
+	                        btn_prev.click();
+
+	                        if (page == numPages()) {
+	                            btn_next.style.visibility = "hidden";
+	                        }
+	                        else {
+	                            btn_next.style.visibility = "visible";
+	                        }
+	                    }
+	                }
+	            });
+	        }
+
+
+	    }
+	    else {
+
+	        selectedLiCount = 0;
+
+	        $.ajax({
+	            url: '/Admin/Customers/GetAllUsersInRole',
+	            dataType: "json",
+	            type: "POST",
+	            contentType: 'application/json; charset=utf-8',
+	            data: "{ sortBy:" + JSON.stringify(valLi) + "}",
+	            success: function (data) {
+	                users = data;
+
+
+	                if (users != null) {
+
+	                    var current_page = 1;
+	                    var records_per_page = 5;
+
+	                    function numPages() {
+	                        return Math.ceil(users.length / records_per_page);
+	                    }
+
+	                    var page = 0;
+	                    if (page < 1) page = 1;
+	                    if (page > numPages()) page = numPages();
+
+	                    $("#addCustomersId").html('');
+	                    $.each(users, function (index, customer) {
+	                        if (index < records_per_page) {
+
+
+	                            if(userAuthorized == 'true')
+	                            {
+	                                if (customer.ImageUrl == null)
+	                                {
+	                                    if(customer.OnlineOrOffline == true)
+	                                    {
+	                                        $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                                            '<a id="customerProfileId" style="cursor:pointer;">' +
+                                            '<img class="customersImage thumbnail" src="/images/' + (customer.Gender == 0 ? "profilePic.jpg" : "profilePicWoman.jpg") + '" alt="Profile image" /> ' +
+                                            customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li><li style="margin: 0 auto;">' +
+                                            '<a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.OnlineTitle</a></li><li></li><li></li></ul><div class="clearfix"></div></div>');
+	                                    }
+	                                    else
+	                                    {
+	                                        $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                                            '<a id="customerProfileId" style="cursor:pointer;">' +
+                                            '<img class="customersImage thumbnail" src="/images/' + (customer.Gender == 0 ? "profilePic.jpg" : "profilePicWoman.jpg") + '" alt="Profile image" /> ' +
+                                            customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li><li style="margin: 0 auto;"></li>' +
+                                            '<li><span style="cursor: not-allowed;">@OnlineShoeShopAndChat.Resources.Language.OfflineTitle</span></li><li><a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.MessageTitle</a></li>' +
+                                            '</ul><div class="clearfix"></div></div>');
+	                                    }
+
+	                                }
+	                                else
+	                                {
+	                                    if(customer.OnlineOrOffline == true)
+                                        {
+                                            $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                                            '<a id="customerProfileId" style="cursor:pointer;"><img class="customersImage thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + customer.ImageUrl + '" alt="Profile image" /> ' +
+                                            customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li><li style="margin: 0 auto;">' +
+                                            '<a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.OnlineTitle</a></li><li></li><li></li></ul><div class="clearfix"></div></div>');
+                                        }
+                                        else
+                                        {
+                                            $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                                            '<a id="customerProfileId" style="cursor:pointer;"><img class="customersImage thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + customer.ImageUrl + '" alt="Profile image" /> ' +
+                                            customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li><li style="margin: 0 auto;"></li>' +
+                                            '<li><span style="cursor: not-allowed;">@OnlineShoeShopAndChat.Resources.Language.OfflineTitle</span></li><li><a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.MessageTitle</a></li>' +
+                                            '</ul><div class="clearfix"></div></div>');
+                                        }
+
+	                                }
+	                            }
+	                            else
+	                            {
+	                                if (customer.ImageUrl == null) {
+                                        $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                                        '<a id="customerProfileId" style="cursor:pointer;">' +
+                                        '<img class="customersImage thumbnail" src="' + (customer.Gender == 0 ? "@OnlineShoeShopAndChat.Resources.Pictures.ProfilePic" : "@OnlineShoeShopAndChat.Resources.Pictures.ProfileWoman") + '" alt="Profile image" /> ' +
+                                        customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li>' +
+                                        '</ul><div class="clearfix"></div></div>');
+                                    }
+                                    else {
+                                        $("#addCustomersId").append('<div class="customers ' + (customer.Gender == 0 ? "customersMen" : "customersGirls") + '">' +
+                                        '<a id="customerProfileId" style="cursor:pointer;"><img class="customersImage thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + customer.ImageUrl + '" alt="Profile image" /> ' +
+                                        customer.FirstName + ' ' + customer.LastName + '</a><ul><li><a id="customerPhotosId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.PhotosTitle</a></li>' +
+                                        '</ul><div class="clearfix"></div></div>');
+                                    }
+	                            }
+
+	                            $('div.customers #customerChatId').click(function () {
+
+	                                notificationsHub.server.sendUserChat(customer.Id).eq(0);
+
+	                            });
+
+	                        }
+	                        $('div.customers #customerProfileId').on('click', function () {
+	                            $.ajax({
+	                                url: '@Url.Action("IndexPartialCustomersProfile", "Customers", new { Area = "Admin" })',
+	                                data: { id: customer.Id },
+	                                cache: false,
+	                                type: "POST",
+	                                dataType: "html",
+	                                success: function (data) {
+	                                    $('#ControlNavigationId').html(data);
+	                                }
+	                            }).eq(0);
+	                        });
+
+	                        $('div.customers #customerPhotosId').on('click', function () {
+	                            $.ajax({
+	                                url: '@Url.Action("PhotosPartialCustomersProfile", "Customers", new { Area = "Admin" })',
+	                                data: { id: customer.Id },
+	                                cache: false,
+	                                type: "POST",
+	                                dataType: "html",
+	                                success: function (data) {
+	                                    $('#ControlNavigationId').html(data);
+	                                }
+	                            }).eq(0);
+	                        });
+	                    });
+	                    $("#addCustomersAfterId").html('');
+	                    $("#addCustomersAfterId").append('<input type="submit" class="btn btn-primary btn-lg" id="btn_prev" onclick="javascript:prevPage()" value="@OnlineShoeShopAndChat.Resources.Language.PreviousTitle" />' +
+                            '<input type="submit" class="btn btn-primary btn-lg" id="btn_next" onclick="javascript:nextPage()" value="@OnlineShoeShopAndChat.Resources.Language.NextTitle" />' +
+                                    '<span id="pageCss">@OnlineShoeShopAndChat.Resources.Language.PageTitle: <span id="page"></span></span>');
+
+	                    var btn_next = document.getElementById("btn_next");
+	                    var btn_prev = document.getElementById("btn_prev");
+	                    var page_span = document.getElementById("page");
+	                    page_span.innerHTML = page + "/" + numPages();
+
+	                    if (page == 1) {
+	                        btn_prev.style.visibility = "hidden";
+	                    } else {
+	                        btn_prev.style.visibility = "visible";
+	                    }
+
+	                    btn_prev.click();
+
+	                    if (page == numPages()) {
+	                        btn_next.style.visibility = "hidden";
+	                    }
+	                    else {
+	                        btn_next.style.visibility = "visible";
+	                    }
+	                }
+	            }
+	        });
+	    }
+
+	    selectedLi = $('.cs-selected').data('value');
+
+	});
+
+    window.addEventListener("load", function () {
+        changePage(1);
+    });
+
+    $.connection.hub.start();
+
+})();
+</script>

@@ -1,0 +1,227 @@
+﻿
+@using OnlineShoeShopAndChat.Models;
+
+
+
+<link href="~/Content/photosHoverbox.css" rel="stylesheet" />
+
+
+<div id="ControlNavigationId">
+    <div class="bottom-grids collections">
+        <div class="container">
+
+
+            <!---start-product-details--->
+            <div class="product-details">
+                <div class="container">
+                    <div class="product-head">
+                        @if (TempData["profileGender"] as string == OnlineShoeShopAndChat.Resources.Language.ManTitle)
+                        {
+                        <img alt="User Pic" id="imageInitial" src="@OnlineShoeShopAndChat.Resources.Pictures.PicMen" class="img-circle img-responsive">
+                        }
+                        else
+                        {
+                        <img alt="User Pic" id="imageInitial" src="@OnlineShoeShopAndChat.Resources.Pictures.PicGirl" class="img-circle img-responsive">
+                        }
+
+                        <h2>@OnlineShoeShopAndChat.Resources.Language.ProfileTitle</h2>
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="profile">
+
+                 
+                        @if (TempData["profileCover"] as string == null)
+                        {
+                        <div>
+                            <img class="image-lg image-cover" src="@OnlineShoeShopAndChat.Resources.Pictures.ProfileCover" alt="Cover" />
+                        </div>
+                        }
+                        else
+                        {
+                        <div class="removeProfileCover">
+                            <a href="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages@TempData["profileCover"]" target="_blank">
+                                <img class="image-lg image-cover" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages@TempData["profileCover"]" alt="Cover" />
+                            </a>
+                        </div>
+                        }
+                        
+
+
+   
+
+                        @if (TempData["profilePhoto"] as string == null)
+                        {
+                            if (TempData["profileGender"] as string == OnlineShoeShopAndChat.Resources.Language.ManTitle)
+                            {
+                            <img class="image-profile thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.ProfilePic" alt="Profile image" />
+                            }
+                            else
+                            {
+                            <img class="image-profile thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.ProfileWoman" alt="Profile image" />
+                            }
+                        }
+                        else
+                        {
+                        <div class="removeProfilePicture">
+                            <a href="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages@TempData["profilePhoto"]" target="_blank">
+                                <img class="image-profile thumbnail" src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages@TempData["profilePhoto"]" alt="Profile image" />
+                            </a>
+                        </div>
+                        }
+
+                        <div class="profile-text">
+                            <h3>
+                                @if ((TempData["profileFirstName"] as string != null) && (TempData["profileLastName"] as string != null))
+                                {
+                                @TempData["profileFirstName"] <span> </span> @TempData["profileLastName"]
+                                    <span> </span> if (@TempData["profileAdmin"] != null)
+                                    { <span>(@OnlineShoeShopAndChat.Resources.Language.AdminTitle)</span>}
+                                }
+                                else
+                                {
+                                <span>...</span>
+                                }
+                            </h3>
+                        </div>
+                        <div class="profile-buttons">
+                            <ul>
+                                <li>
+                                    @Ajax.ActionLink(OnlineShoeShopAndChat.Resources.Language.OverviewTitle, "IndexPartialCustomersProfile", new { id = @TempData["profileId"] },
+                                    new AjaxOptions
+                                    {
+                                        UpdateTargetId = "ControlNavigationId",
+                                        InsertionMode = InsertionMode.Replace,
+                                        HttpMethod = "Post"
+                                    })
+                                </li>
+                                <li>
+                                    @Ajax.ActionLink(OnlineShoeShopAndChat.Resources.Language.PhotosTitle, "PhotosPartialCustomersProfile", new { id = @TempData["profileId"] },
+                                    new AjaxOptions
+                                    {
+                                        UpdateTargetId = "ControlNavigationId",
+                                        InsertionMode = InsertionMode.Replace,
+                                        HttpMethod = "Post"
+                                    })
+                                </li>
+                                @if ((TempData["profileOnlineOffline"] as string != null) || (TempData["profileOnlineOffline"] as string != ""))
+                                {
+                                    if (TempData["profileOnlineOffline"] as bool? == true)
+                                    {
+                                    <li><a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.OnlineTitle</a></li>
+                                    <li></li>
+                                    <li></li>
+                                    }
+                                    else
+                                    {
+                                    <li></li>
+                                    <li><span>@OnlineShoeShopAndChat.Resources.Language.OfflineTitle</span></li>
+                                    <li><a id="customerChatId" style="cursor:pointer;">@OnlineShoeShopAndChat.Resources.Language.MessageTitle</a></li>
+                                    }
+                                }
+                            </ul>
+                            <div class="clearfix"> </div>
+                        </div>
+
+                        <div class="profilePhotos">
+                            <div class="profilePhotos-headingOverview">
+                                <h4 class="profilePhotosInline">@OnlineShoeShopAndChat.Resources.Language.AllPhotosTitle</h4>
+                            </div>
+ 
+                                <ul class="hoverbox"></ul>
+                       
+                        </div>
+
+                    </div>
+                </div>
+                <br><br><br><br><br><br>
+            </div>
+            <!---//End-product-details--->
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var notificationsHub = $.connection.notifications;
+    var currentUser = '@User.Identity.Name';
+
+    $('#customerChatId').click(function () {
+        notificationsHub.server.sendUserChat('@TempData["profileId"]');
+    });
+
+    $.connection.hub.start();
+
+    $(function () {
+
+        $.ajax({
+            url: '/Founder/Customers/GetPhotosAlbum',
+            dataType: "json",
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            data: "{ email:" + JSON.stringify('@TempData["profileEmail"]') + "}",
+            success: function (gallery) {
+                if (gallery != null) {
+                var countPhotos = 0;
+                $('.hoverbox').html('');
+                $.each(gallery, function (index, photo) {
+
+                    countPhotos = countPhotos + 1;
+                    if ((countPhotos % 4) == 0) {
+                            if (gallery.length < 5) {
+                                $('.hoverbox').append('<li><a href="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                        photo.ImageUrl + '" target="_blank"><img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + photo.ImageUrl + '" alt="Image" />' +
+                                        '<img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                        photo.ImageUrl + '" alt="image" class="previewLeft" /></a></li>');
+                            }
+                            else {
+                                if ((gallery.length - 1) == index) {
+                                    $('.hoverbox').append('<li><a href="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                        photo.ImageUrl + '" target="_blank"><img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + photo.ImageUrl + '" alt="Image" />' +
+                                        '<img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                        photo.ImageUrl + '" alt="image" class="previewLeftLast" /></a></li>');
+                                }
+                                else {
+                                    $('.hoverbox').append('<li><a href="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                        photo.ImageUrl + '" target="_blank"><img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + photo.ImageUrl + '" alt="Image" />' +
+                                        '<img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                        photo.ImageUrl + '" alt="image" class="previewLeft" /></a></li>');
+                                }
+                            }
+                        }
+                    else {
+                        if (gallery.length > 4) {
+                            if (index < 4) {
+
+                                $('.hoverbox').append('<li><a href="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                    photo.ImageUrl + '" target="_blank"><img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + photo.ImageUrl + '" alt="Image" />' +
+                                    '<img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                    photo.ImageUrl + '" alt="image" class="preview" /></a></li>');
+
+                            }
+                            else {
+
+                                $('.hoverbox').append('<li><a href="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                    photo.ImageUrl + '" target="_blank"><img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + photo.ImageUrl + '" alt="Image" />' +
+                                    '<img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                    photo.ImageUrl + '" alt="image" class="previewLastTree" /></a></li>');
+
+                            }
+                        }
+                        else {
+
+                            $('.hoverbox').append('<li><a href="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                photo.ImageUrl + '" target="_blank"><img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' + photo.ImageUrl + '" alt="Image" />' +
+                                '<img src="@OnlineShoeShopAndChat.Resources.Pictures.FolderUsersImages' +
+                                photo.ImageUrl + '" alt="description" class="preview" /></a></li>');
+
+                            }
+                        }
+                    });
+                }
+                else {
+                    $('.hoverbox').html('');
+                }
+            }
+        });
+    });
+</script>

@@ -1,0 +1,405 @@
+﻿
+
+
+
+<div id="windowRegister" style="display:none;">
+
+    <div class="centerAlign"><h3>@OnlineShoeKing.Resources.Language.CreateANewAccountTitle</h3></div>
+    <hr />
+
+    @using (Html.BeginForm("Register", "Account", new { @class = "form-horizontal", role = "form" }))
+    {
+    @Html.AntiForgeryToken()
+
+        <div class="centerAlign" id="registerValidation" style="color:#ff0000;"></div>
+
+        <div class="form-group centerAlign">
+            <div class="control-label">@OnlineShoeKing.Resources.Language.EmailTitle*</div>
+            <div class="right-side-25">
+                <input type="text" name="email" class="form-control" id="windowInputText1" />
+            </div>
+            <div class="centerAlign col-md-12" id="registerValidationEmail" style="color:#ff0000;"></div>
+        </div>
+
+        <div class="form-group centerAlign registerMargin">
+            <div class="control-label">@OnlineShoeKing.Resources.Language.FirstNameTitle*</div>
+            <div class="right-side-25">
+                <input type="text" name="firstName" class="form-control" id="windowInputText2" />
+            </div>
+            <div class="centerAlign col-md-12" id="registerValidationFirstName" style="color:#ff0000;"></div>
+        </div>
+
+
+        <div class="form-group centerAlign registerMargin">
+            <div class="control-label">@OnlineShoeKing.Resources.Language.LastNameTitle*</div>
+            <div class="right-side-25">
+                <input type="text" name="lastName" class="form-control" id="windowInputText3" />
+            </div>
+            <div class="centerAlign col-md-12" id="registerValidationLastName" style="color:#ff0000;"></div>
+        </div>
+
+        <div class="form-group centerAlign registerMargin">
+            <div class="control-label">@OnlineShoeKing.Resources.Language.GenderTitle*  </div>
+            <div class="right-side-25">
+                <select name="gender" id="gender" class="form-control" title="@OnlineShoeKing.Resources.Language.YourGenderTitle">
+                    <option value="0">@OnlineShoeKing.Resources.Language.MrTitle</option>
+                    <option value="1">@OnlineShoeKing.Resources.Language.MsTitle</option>
+                    <option value="1">@OnlineShoeKing.Resources.Language.MrsTitle</option>
+                </select>
+            </div>
+            <div class="centerAlign col-md-12" id="registerValidationGender" style="color:#ff0000;"></div>
+        </div>
+
+        <div class="form-group centerAlign registerMargin">
+            <div class="control-label">@OnlineShoeKing.Resources.Language.PasswordTitle*</div>
+            <div class="right-side-25">
+                <input type="password" class="form-control" id="windowInputVal1" name="pass" />
+            </div>
+            <div class="centerAlign col-md-12" id="registerValidationPassword" style="color:#ff0000;"></div>
+        </div>
+
+        <div class="form-group centerAlign registerMargin">
+            <div class="control-label">@OnlineShoeKing.Resources.Language.ConfirmPasswordTitle*</div>
+            <div class="right-side-25">
+                <input type="password" class="form-control" id="windowInputVal2" name="confirmPass" />
+            </div>
+            <div class="centerAlign col-md-12" id="registerValidationConfirmPassword" style="color:#ff0000;"></div>
+        </div>
+    }
+    <div class="form-group registerMargin">
+        <div class="text-center">
+            <input type="submit" id="registerButton" class="btn btn-lg" value="@OnlineShoeKing.Resources.Language.RegisterBtn" />
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+
+    var notificationsHub = $.connection.notifications;
+
+    $('#register').on("click", function () {
+        $("#windowRegister").kendoWindow({
+            visible: false,
+            draggable: false,
+            minheight: "530px",
+            width: "550px",
+            modal: true,
+            pinned: false,
+            open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+            position: {
+                top: "20%",
+                left: "30%"
+            },
+            resizable: false,
+            title: "@OnlineShoeKing.Resources.Language.Register"
+        }).data("kendoWindow");
+
+        $('#windowInputVal1').val('');
+        $('#windowInputVal2').val('');
+        $('#windowInputText1').val('');
+        $('#windowInputText2').val('');
+        $('#windowInputText3').val('');
+        $("#gender").val("0").change();
+
+        var win = $("#windowRegister").data("kendoWindow").refresh();
+
+        $('div.k-widget.k-window').removeClass("resizeCart");
+        $('div.k-widget.k-window').addClass("resizeLogin");
+
+        $(".k-window-titlebar").show();
+        $("div.k-window-content").css("max-height", "1000px");
+        $(".k-window div.k-window-content").css("margin-top", "0");
+
+        $("#registerValidation").html('');
+        $('#registerValidationEmail').html('');
+        $('#registerValidationFirstName').html('');
+        $('#registerValidationLastName').html('');
+        $('#registerValidationGender').html('');
+        $('#registerValidationPassword').html('');
+        $('#registerValidationConfirmPassword').html('');
+
+        win.center().open();
+
+        $('.k-widget').on('keypress', function (e) {
+            if (e.keyCode === 13) {
+                e.stopImmediatePropagation();
+                registerFunction();
+            }
+        });
+        $('body').css('overflow', 'hidden');
+    });
+
+    $("#windowRegister").hide();
+
+    $(document).on('click', '.k-overlay', function () {
+        var kendoWindow = $('.k-window-content.k-content', $(this).next('div.k-widget.k-window'));
+        if (kendoWindow == null || kendoWindow.length === 0) {
+            return;
+        }
+        kendoWindow.data('kendoWindow').close();
+        $('body').css('overflow', 'auto');
+    });
+
+
+
+    $('#registerButton').on("click", registerFunction);
+
+    function registerFunction() {
+        var email = $('#windowInputText1').val();
+        var firstName = $('#windowInputText2').val();
+        var lastName = $('#windowInputText3').val();
+        var gender = $('#gender').val();
+        var password = $('#windowInputVal1').val();
+        var confirmPassword = $('#windowInputVal2').val();
+        var isValidEmail = '';
+
+        $.ajax({
+            url: '/Account/IsValidEmail',
+            type: 'POST',
+            data: "{ source:" + JSON.stringify(email) + "}",
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                isValidEmail = data;
+
+                var enterEmail = '';
+                var invalidLogin = '';
+                var enterFirstName = '';
+                var enterLastName = '';
+                var enterGender = '';
+                var enterPassword = '';
+                var enterConfirmPassword = '';
+                var invalidPassword = '';
+                var invalidPasswordLength = '';
+                var invalidConfirmPasswordLength = '';
+
+                if (email === '') {
+                    enterEmail = "*@OnlineShoeKing.Resources.Language.MessageInputEmail";
+                    $('#registerValidation').html('');
+                    $('#registerValidationEmail').html(enterEmail);
+                }
+                if (email !== '') {
+                    if (isValidEmail === "false") {
+                        invalidLogin = "*@OnlineShoeKing.Resources.Language.MessageInputValidEmail";
+                        $('#registerValidation').html('');
+                        $('#registerValidationEmail').html(invalidLogin);
+                    }
+                    else {
+                        enterEmail = '';
+                        invalidLogin = '';
+                        $('#registerValidationEmail').html('');
+                    }
+                }
+                if (gender !== "0") {
+                    if (gender !== "1") {
+                        if (gender !== "2") {
+                            enterGender = "Please Men!";
+                            $('#registerValidationGender').html(enterGender);
+                        }
+                    }
+                }
+                if (gender === "0") {
+                    enterGender = '';
+                    $('#registerValidationGender').html('');
+                }
+                if (gender === "1") {
+                    enterGender = '';
+                    $('#registerValidationGender').html('');
+                }
+                if (gender === "2") {
+                    enterGender = '';
+                    $('#registerValidationGender').html('');
+                }
+
+                if (firstName === '') {
+                    enterFirstName = "*@OnlineShoeKing.Resources.Language.MessageEnterFirstName";
+                    $('#registerValidation').html('');
+                    $('#registerValidationFirstName').html(enterFirstName);
+                }
+                if (firstName !== '') {
+                    enterFirstName = '';
+                    $('#registerValidationFirstName').html('');
+                }
+                if (lastName === '') {
+                    enterLastName = "*@OnlineShoeKing.Resources.Language.MessageEnterLastName";
+                    $('#registerValidation').html('');
+                    $('#registerValidationLastName').html(enterLastName);
+                }
+                if (lastName !== '') {
+                    enterLastName = '';
+                    $('#registerValidationLastName').html('');
+                }
+                if (password === '') {
+                    enterPassword = "*@OnlineShoeKing.Resources.Language.MessageInputPassword";
+                    $('#registerValidation').html('');
+                    $('#registerValidationPassword').html(enterPassword);
+                }
+                if (password !== '') {
+                    enterPassword = '';
+                    $('#registerValidationPassword').html('');
+                }
+                if (confirmPassword === '') {
+                    enterConfirmPassword = "*@OnlineShoeKing.Resources.Language.MessageEnterConfirmPassword";
+                    $('#registerValidation').html('');
+                    $('#registerValidationConfirmPassword').html(enterConfirmPassword);
+                }
+                if (confirmPassword !== '') {
+                    enterConfirmPassword = '';
+                    $('#registerValidationConfirmPassword').html('');
+                }
+                if (((confirmPassword !== '') && (password !== '')) && ((password.length >= 2) && (confirmPassword.length >= 2))) {
+
+                    if (confirmPassword !== password) {
+                        invalidPassword = "*@OnlineShoeKing.Resources.Language.MessagePasswordAndConfirmPassword";
+                        $('#registerValidation').html('');
+                        $('#registerValidationPassword').html(invalidPassword);
+                        $('#registerValidationConfirmPassword').html(invalidPassword);
+                    }
+                    else {
+                        invalidPassword = '';
+                        $('#registerValidationPassword').html('');
+                        $('#registerValidationConfirmPassword').html('');
+                    }
+
+                }
+
+                if ((password !== '') && (password.length < 2)) {
+                    invalidPasswordLength = "*@OnlineShoeKing.Resources.Language.MessageMinimumLengthPassword";
+                    $('#registerValidation').html('');
+                    $('#registerValidationPassword').html(invalidPasswordLength);
+                }
+                if ((password !== '') && (password.length >= 2)) {
+                    invalidPasswordLength = '';
+                }
+
+                if ((confirmPassword !== '') && (confirmPassword.length < 2)) {
+                    $('#registerValidation').html('');
+                    invalidConfirmPasswordLength = "*@OnlineShoeKing.Resources.Language.MessageMinimumLengthConfirmPassword";
+                    $('#registerValidationConfirmPassword').html(invalidConfirmPasswordLength);
+                }
+                if ((confirmPassword !== '') && (confirmPassword.length >= 2)) {
+                    invalidConfirmPasswordLength = '';
+                }
+
+
+                if ((enterEmail === '') && (invalidLogin === '') && (enterFirstName === '') && (enterLastName === '') &&
+                    (enterGender === '') && (enterPassword === '') && (enterConfirmPassword === '') && (invalidPassword === '') &&
+                    (invalidPasswordLength === '') && (invalidConfirmPasswordLength === '')) {
+
+                    var user = {
+                        Email: email,
+                        FirstName: firstName,
+                        LastName: lastName,
+                        Gender: gender,
+                        Password: password
+                    }
+
+                    $.ajax({
+                        url: '/Account/RegisterAccount',
+                        type: 'POST',
+                        data: JSON.stringify(user),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (success) {
+
+                            $.connection.hub.start().done(function () {
+
+                                notificationsHub.server.connect(user.Email, user.Password);
+
+                            });
+
+                            window.location = "/";
+                        },
+                        error: function () {
+                            $('#registerValidationEmail').html('');
+                            $('#registerValidationFirstName').html('');
+                            $('#registerValidationLastName').html('');
+                            $('#registerValidationGender').html('');
+                            $('#registerValidationPassword').html('');
+                            $('#registerValidationConfirmPassword').html('');
+                            invalidLogin = "*@OnlineShoeKing.Resources.Language.MessageAccountIsTaken";
+                            $('#registerValidation').show();
+                            $('#registerValidation').html(invalidLogin);
+                        }
+                    });
+
+                }
+
+            }
+        });
+    };
+
+
+
+    var title = $("#gender").kendoDropDownList().data("kendoDropDownList");
+    title.wrapper.attr("title", $("#gender").attr("title"));
+    var tooltip = title.wrapper.kendoTooltip({
+        position: "right",
+        autoHide: true,
+        width: 280,
+        animation: {
+            open: {
+                effects: "slideIn:right",
+                duration: 300
+            },
+            close: {
+                effects: "slideIn:right",
+                reverse: true,
+                duration: 200
+            }
+        }
+    });
+
+    $('#loginButton').click(function () {
+        $('#windowValidation2').hide();
+    });
+
+    $(document).ready(function () {
+
+
+        //When load from Url
+        var accountTempData = '@TempData["accountRegister"]';
+        if (accountTempData != null && accountTempData !== '') {
+            $("#windowRegister").kendoWindow({
+                visible: true,
+                actions: ["Close"],
+                draggable: false,
+                minheight: "530px",
+                width: "550px",
+                modal: true,
+                pinned: false,
+                open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                position: {
+                    top: "10%",
+                    left: "30%"
+                },
+                resizable: false,
+                title: "@OnlineShoeKing.Resources.Language.Register",
+                refresh: true
+            }).data("kendoWindow");
+
+
+            $('#windowInputVal1').val('');
+            $('#windowInputVal2').val('');
+            $('#windowInputText1').val('');
+            $('#windowInputText2').val('');
+            $('#windowInputText3').val('');
+            $("#gender").val("0").change();
+
+            var win = $("#windowRegister").data("kendoWindow");
+            $("#registerValidation").html('');
+            $('#registerValidationEmail').html('');
+            $('#registerValidationFirstName').html('');
+            $('#registerValidationLastName').html('');
+            $('#registerValidationGender').html('');
+            $('#registerValidationPassword').html('');
+            $('#registerValidationConfirmPassword').html('');
+
+            win.center().open();
+            $('body').css('overflow', 'hidden');
+        }
+    });
+</script>

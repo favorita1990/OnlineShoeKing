@@ -1,0 +1,71 @@
+﻿@model IEnumerable<OnlineShoeKing.Models.ProductViewModel>
+
+
+@if (Model.Any())
+{
+    <div class="products-user-profile">
+        <h2>@OnlineShoeKing.Resources.Language.PurchasedProducts</h2>
+        <br>
+        <div class="row product-user-row">
+
+            @foreach (var product in Model)
+            {
+                <div class="products-user-column">
+                    <div class="product-user-card">
+                        <img src="@product.PhotoHeader" alt="@product.Name" title="@product.Name">
+                        <div class="products-user-container">
+                            <h3 class="centerAlign">@product.Name</h3>
+                            <div class="centerAlign">@OnlineShoeKing.Resources.Language.QuantityOfPurchasedProduct: @product.PurchasedProductsCount</div>
+                            <div class="centerAlign">@OnlineShoeKing.Resources.Language.PurchasedAt:</div>
+                            <div class="centerAlign products-user-added-product">@product.DateAdded</div>
+                            <p><a id="@product.ProductId" class="product-user-btn" href="/Admin/Products/Product/@product.ProductId">@OnlineShoeKing.Resources.Language.View</a></p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+<script>
+
+    $('.product-user-btn').on('click',
+        function (e) {
+            e.preventDefault();
+
+            const product_id = $(this).attr('id');
+
+            $('#add-loading').html('<div id="div-loading"></div>');
+            const dialog = $("#div-loading").kendoWindow({
+                draggable: false,
+                resizable: false,
+                modal: true,
+                actions: [""],
+                open: function (event) { $(this.element).closest(".k-window").css("position", "fixed") },
+                position: {
+                    top: "40%",
+                    left: "46%"
+                }
+            }).data("kendoWindow").content('@OnlineShoeKing.Resources.Language.Loading');
+
+            $('.k-window-actions').remove();
+            $('.k-header').addClass('resize-loading-window');
+            $('.k-header').removeClass('k-header k-window-titlebar');
+            $('.k-widget').removeClass('k-widget k-window');
+
+            $('div.k-window-content').css('padding', '1.2em 1.3em');
+            $('div.k-window-content').css('border-radius', '10px');
+
+            $('body').css('overflow', 'hidden');
+
+            $.post('/Admin/Products/ProductPartial', { productId: product_id },
+                function (data) {
+                    dialog.close();
+                    $('body').css('overflow', 'auto');
+                    $('#ControlNavigationId').html(data);
+                }).fail(function () {
+                dialog.close();
+                $('body').css('overflow', 'auto');
+            });
+        });
+</script>

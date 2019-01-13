@@ -1,0 +1,1491 @@
+﻿
+
+<link href="~/Content/cssGlegoo.css" rel="stylesheet" />
+<link href="~/Content/cssLora.css" rel="stylesheet" />
+<link href="~/Content/cssRochester.css" rel="stylesheet" />
+
+
+<script src="~/Scripts/modernizr.LogOutDropdown.js"></script>
+
+<link href="~/Content/styleLogOutSort.css" rel="stylesheet" />
+<link href="~/Content/cs-selectLogOutSort.css" rel="stylesheet" />
+
+<link href="~/Content/cssLogOutFont.css" rel="stylesheet" />
+<link href="~/Content/cs-skin-underlineLogOutSort.css" rel="stylesheet" />
+<link href="~/Content/styleCategories.css" rel="stylesheet" />
+
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+
+<div class="header">
+    <div class="container">
+        <div id="demo_top_wrapper">
+            <div id="sticky_navigation_wrapper">
+                <div id="sticky_navigation">
+                    <div class="first_container navigation-bar">
+                        <div class="navigation">
+                            <div class="logo">
+                                <a href="/Home/Index">
+                                    SK
+                                    <span class="logo-small-title">Shoe King</span>
+                                </a>
+                            </div>
+                            <span class="menu"></span>
+                            <script>
+                                $("span.menu").click(function () {
+                                    $(".navig").slideToggle("slow", function () {
+                                        // Animation complete.
+                                    });
+                                });
+                            </script>
+                            <div class="navig">
+                                <ul>
+                                    <li>
+                                        <a class="language-btn">
+                                            <span></span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/Products/Women" class="women-header">@OnlineShoeKing.Resources.Language.Women</a>
+                                    </li>
+                                    <li>
+                                        <a href="/Products/Men" class="men-header">@OnlineShoeKing.Resources.Language.Men</a>
+                                    </li>
+                                    <li><a href="/Customers/Index" class="customers-header">@OnlineShoeKing.Resources.Language.Customers</a></li>
+                                    <li>
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <a href="/Admin/Home/About" class="about-header about-admin">@OnlineShoeKing.Resources.Language.AboutUs</a>
+                                        }
+                                        else if (User.IsInRole("Founder"))
+                                        {
+                                            <a href="/Founder/Home/About" class="about-header about-founder">@OnlineShoeKing.Resources.Language.AboutUs</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="/Home/About" class="about-header about-user">@OnlineShoeKing.Resources.Language.AboutUs</a>
+                                        }
+                                    </li>
+                                    @if (!User.Identity.IsAuthenticated)
+                                    {
+                                        <li>
+                                            <a href="/Home/Contact" class="contact-header">@OnlineShoeKing.Resources.Language.ContactUs</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="navigation-right">
+                            <ul class="login-side">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <li id="loginInfoLiId" class="login-info-li">
+                                    </li>
+                                    <li class="resize-log-out-dropdown" title="Settings">
+                                        <div id="logInLogOut" class="wrapper-dropdown" tabindex="1">
+                                            <ul class="dropdown">
+                                                @if (User.IsInRole("Founder"))
+                                                {
+                                                    <li><a href="@Url.Action("Index", "Home", new { Area = "Founder" })"><i class="glyphicon glyphicon-home"></i>@OnlineShoeKing.Resources.Language.Home</a></li>
+                                                    <li><a href="@Url.Action("Index", "Manage", new { Area = "Founder" })" id="settings"><i class="glyphicon glyphicon-cog"></i>@OnlineShoeKing.Resources.Language.Settings</a></li>
+                                                }
+                                                else
+                                                {
+                                                    if (User.IsInRole("Admin"))
+                                                    {
+                                                        <li><a href="@Url.Action("Index", "Home", new { Area = "Admin" })"><i class="glyphicon glyphicon-home"></i>@OnlineShoeKing.Resources.Language.Home</a></li>
+                                                        <li><a href="@Url.Action("Index", "Manage", new { Area = "Admin" })" id="settings"><i class="glyphicon glyphicon-cog"></i>@OnlineShoeKing.Resources.Language.Settings</a></li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li><a href="@Url.Action("Index", "Home")"><i class="glyphicon glyphicon-home"></i>@OnlineShoeKing.Resources.Language.Home</a></li>
+                                                        <li><a href="@Url.Action("Index", "Manage")" id="settings"><i class="glyphicon glyphicon-cog"></i>@OnlineShoeKing.Resources.Language.Settings</a></li>
+                                                    }
+                                                }
+                                                <li>
+                                                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                                    {
+                                                        @Html.AntiForgeryToken()
+
+                                                        <a href="javascript:document.getElementById('logoutForm').submit()">
+                                                            <i class="glyphicon glyphicon-remove"></i>@OnlineShoeKing.Resources.Language.LogOut
+                                                        </a>
+                                                    }
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+
+                                }
+                                else
+                                {
+                                    <li>
+                                        <span></span><a id="login">@OnlineShoeKing.Resources.Language.LogIn</a>
+                                        <a id="register">@OnlineShoeKing.Resources.Language.Register</a>
+                                    </li>
+                                }
+                                <li>
+                                    <button class="search" title="@OnlineShoeKing.Resources.Language.SearchTitle"></button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="bascket-container">
+        <div class="bascket-container-inside">
+            <div class="shopping-cart-user"><span class="glyphicon glyphicon-shopping-cart"></span><a>@OnlineShoeKing.Resources.Language.Basket (<span class="shopping-cart-count">0</span>)</a></div>
+            <div class="favorites-user"><span class="glyphicon glyphicon-star"></span><a>@OnlineShoeKing.Resources.Language.Favorites (<span class="favorites-count">0</span>)</a></div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="messages-user"><span class="glyphicon glyphicon-comment"></span><a>(<span class="messages-user-count">0</span>)</a></div>
+            }
+            @if (User.IsInRole("Admin") || User.IsInRole("Founder"))
+            {
+                <div class="orders-user"><span class="glyphicon glyphicon-list-alt"></span><a>@OnlineShoeKing.Resources.Language.OrdersTitle (<span class="orders-user-count">0</span>)</a></div>
+                <div class="products-user"><span class="glyphicon glyphicon-book"></span><a>@OnlineShoeKing.Resources.Language.Products</a></div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<div id="window_search" style="display: none;">
+    <div class="search-main">
+        <input type="text" class="form-control search-text" placeholder="@OnlineShoeKing.Resources.Language.SearchTitle"/>
+        <button type="button" class="btn btn-default search-btn">
+            <span class="glyphicon glyphicon-search"></span> @OnlineShoeKing.Resources.Language.SearchTitle
+        </button>
+        <span class="arr-up-search" id="arr-products-search">&uarr;</span>
+    </div>
+    <div class="advanced-search-main" style="display: none;">
+        <div class="search-by-price">@OnlineShoeKing.Resources.Language.SearchByPrice</div>
+        <div class="flex advanced-search-btns">
+            <input type="text" class="form-control search-text-from" placeholder="@OnlineShoeKing.Resources.Language.From" /> 
+            <span class="search-separate-from-to">-</span> 
+            <input type="text" class="form-control search-text-to" placeholder="@OnlineShoeKing.Resources.Language.To" />
+        </div>
+    </div>
+</div>
+
+
+<div id="window_favorites" style="display:none;">
+   
+</div>
+
+<div id="window_bascket" style="display:none;">
+    <div class="centerAlign">
+        <h3 class="shopping-cart-header">@OnlineShoeKing.Resources.Language.ShoppingCart <span class="close-window">X</span></h3>
+    </div>
+    <div class="shopping-cart-no-products"></div>
+    <div class="shopping-cart-window">
+
+    </div>
+
+    <div class="checkoutCart" id="checkoutCartId">
+        <div class="checkoutBtnDiv">
+            <span class="shopping-cart-block">
+                @OnlineShoeKing.Resources.Language.MessageTotal:
+                <span class="checkoutTotalSpan" id="cartTotalId">321lv</span>
+            </span>
+            <button class="btn btn-warning checkoutBtn" id="btnCheckoutCartId">@OnlineShoeKing.Resources.Language.Order</button>
+        </div>
+    </div>
+</div>
+
+<div id="window_messages" style="display:none;">
+    <div class="centerAlign"><h3 class="messages-user-header">@OnlineShoeKing.Resources.Language.MessagesTitle</h3></div>
+
+    <div class="messages-user-body">
+       
+    </div>
+
+</div>
+
+<div id="window_cart_order" class="cart-order-block" style="display:none;">
+
+    <div class="form-group centerAlign margin-top-10">
+        <div class="control-label margin-top-10">@OnlineShoeKing.Resources.Language.CityTitle</div>
+        <div class="cart-order-right-size">
+            <input type="text" name="name" class="form-control" id="cartOrderCityId" />
+        </div>
+        <div class="centerAlign col-xs-12 col-md-12" id="validationCartOrderCityId" style="color:#ff0000;"></div>
+    </div>
+
+
+    <div class="form-group centerAlign cart-order-address-top">
+        <div class="control-label margin-top-10">@OnlineShoeKing.Resources.Language.AddressTitle</div>
+        <div class="cart-order-right-size">
+            <input type="text" name="name" class="form-control" id="cartOrderAddressId" />
+        </div>
+        <div class="centerAlign col-xs-12 col-md-12" id="validationCartOrderAddressId" style="color:#ff0000;"></div>
+    </div>
+
+    <div class="form-group centerAlign">
+        <div class="control-label margin-top-10 margin-top-minus-5">@OnlineShoeKing.Resources.Language.PostOfficeTitle</div>
+        <div class="cart-order-right-size">
+            <input type="text" name="name" class="form-control" id="cartOrderPostOfiiceId" />
+        </div>
+        <div class="centerAlign col-xs-12 col-md-12" id="validationCartOrderPostOfiiceId" style="color:#ff0000;"></div>
+    </div>
+
+    <div class="form-group centerAlign margin-top-minus-5">
+        <div class="control-label margin-top-10 margin-top-minus-5">@OnlineShoeKing.Resources.Language.PhoneNumberTitle</div>
+        <div class="cart-order-right-size">
+            <input type="text" name="name" class="form-control" id="cartOrderPhoneNumberId" />
+        </div>
+        <div class="centerAlign col-xs-12 col-md-12" id="validationCartOrderPhoneNumberId" style="color:#ff0000;"></div>
+    </div>
+
+    <div class="form-group windowProductMargin header-btns-block">
+        <div class="text-center body-btns-block">
+            <input type="submit" id="btnCartOrderId" class="btn btn-lg btnWindowProductSave" value="@OnlineShoeKing.Resources.Language.OrderBtn" />
+        </div>
+    </div>
+</div>
+
+<div id="windowCartProblem" style="display:none;">
+    <div class="centerAlign"><h3 style="color: #f68236;">@OnlineShoeKing.Resources.Language.ProblemTitle</h3></div>
+    <hr />
+
+    <div id="cartUserProblemId">
+        <div class="centerAlign"><h3 style="color: #f68236;">@OnlineShoeKing.Resources.Language.NoProblems</h3></div>
+
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/signalr")
+<script src="/signalr/hubs"></script>
+
+<script>
+    var notificationsHub = $.connection.notifications;
+    $.connection.hub.start().done(function () {
+        $("#logoutForm").on("click", function () {
+            notificationsHub.server.disconnect();
+        });
+    });
+</script>
+
+<!-- Modal -->
+<div class="language-window"></div>
+
+@*Login partial*@
+@Html.Partial("~/Views/Shared/AccountPartials/_LoginPartial.cshtml")
+
+@*Register partial*@
+@Html.Partial("~/Views/Shared/AccountPartials/_RegisterPartial.cshtml")
+
+<div id="add-loading"></div>
+
+<script src="~/Scripts/classieLogOut.js"></script>
+<script src="~/Scripts/selectFxLogOut.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('.chat_head').click(function () {
+            $('.chat_body').slideToggle('slow');
+        });
+
+        $('.msg_head').click(function () {
+            $('.msg_wrap').slideToggle('slow');
+        });
+
+    });
+
+
+    function DropDown(el) {
+        this.dd = el;
+        this.initEvents();
+    }
+    DropDown.prototype = {
+        initEvents: function () {
+            const obj = this;
+
+            obj.dd.on('click', function (event) {
+                $(this).toggleClass('active');
+                event.stopPropagation();
+            });
+        }
+    }
+
+    $('.close-window').on('click', function () {
+        $(".k-window-action").click();
+    });
+
+    $('.search').on('click', function () {
+        $('#window_search').show();
+        $("#window_search").kendoWindow({
+            visible: true,
+            draggable: false,
+            minheight: "200px",
+            width: "40%",
+            modal: true,
+            pinned: false,
+            open: function (e) { $(this.element).closest(".k-window").css({ "position": "fixed", 'min-height': '30px' }) },
+            position: {
+                top: "15%",
+                left: "28%"
+            },
+            resizable: false
+        }).data("kendoWindow");
+
+        $("div.k-window-content").css("max-height", "430px");
+        $(".k-window-titlebar").hide();
+        $(".k-window div.k-window-content").css("margin-top", "-30px");
+        const win = $("#window_search").data("kendoWindow").refresh();
+
+        $('div.k-widget.k-window').removeClass("resizeLogin");
+        $('div.k-widget.k-window').removeClass("resizeCart");
+        $('div.k-widget.k-window').addClass("search-window");
+
+        $('body').css('overflow', 'hidden');
+
+        win.open();
+    });
+
+    $('.arr-up-search').on('click', function () {
+        $('.advanced-search-main').slideToggle('slow');
+
+        if ($(this).html() === '\u2191') {
+            $(this).html('\u2193');
+        }
+        else {
+            $(this).html('\u2191');
+        }
+    });
+
+
+    $('.search-text').val('');
+    $('.search-text-from').val('');
+    $('.search-text-to').val('');
+
+    $('.search-btn').on('click', function () {
+
+        var text = $('.search-text').val();
+        var price_from = $('.search-text-from').val();
+        var price_to = $('.search-text-to').val();
+
+        if (text === '' && price_from === '' && price_to === '') {
+            alert('@OnlineShoeKing.Resources.Language.EnterAtLeastOneFeeld');
+        }
+        else {
+
+            let url = '/Products/SearchPartial';
+            if ('@User.IsInRole("Founder")' === 'True') {
+                url = '/Founder//Products/SearchPartial';
+            }
+            else if ('@User.IsInRole("Admin")' === 'True') {
+                url = '/Admin//Products/SearchPartial';
+            }
+
+            $.post(url, { search: text, priceFrom: price_from, priceTo: price_to }, function (data) {
+                $('#ControlNavigationId').html(data);
+            });
+        }
+    });
+
+    $('.women-header').on('click',
+        function(e) {
+            e.preventDefault();
+            onBegin();
+            let url = '/Products/WomenPartial';
+            if ('@User.IsInRole("Founder")' === 'True') {
+                url = '/Founder/Products/WomenPartial';
+            }
+            else if ('@User.IsInRole("Admin")' === 'True') {
+                url = '/Admin/Products/WomenPartial';
+            }
+            $.get(url,
+                function (data) {
+                    onComplete();
+                    $('#ControlNavigationId').html(data);
+                });
+        });
+
+    $('.men-header').on('click',
+        function (e) {
+            e.preventDefault();
+            onBegin();
+            let url = '/Products/MenPartial';
+            if ('@User.IsInRole("Founder")' === 'True') {
+                url = '/Founder/Products/MenPartial';
+            }
+            else if ('@User.IsInRole("Admin")' === 'True') {
+                url = '/Admin/Products/MenPartial';
+            }
+            $.get(url,
+                function (data) {
+                    onComplete();
+                    $('#ControlNavigationId').html(data);
+                });
+        });
+
+    $('.customers-header').on('click',
+        function (e) {
+            e.preventDefault();
+            onBegin();
+            let url = '/Customers/indexPartial';
+            if ('@User.IsInRole("Founder")' === 'True') {
+                url = '/Founder/Customers/indexPartial';
+            }
+            else if ('@User.IsInRole("Admin")' === 'True') {
+                url = '/Admin/Customers/indexPartial';
+            }
+            $.get(url,
+                function (data) {
+                    onComplete();
+                    $('#ControlNavigationId').html(data);
+                });
+        });
+
+    $('.about-user').on('click',
+        function (e) {
+            e.preventDefault();
+            onBegin();
+            $.get('/Home/AboutPartial',
+                function (data) {
+                    onComplete();
+                    $('#ControlNavigationId').html(data);
+                });
+        });
+    $('.about-admin').on('click',
+        function (e) {
+            e.preventDefault();
+            onBegin();
+            $.get('/Admin/Home/AboutPartial',
+                function (data) {
+                    onComplete();
+                    $('#ControlNavigationId').html(data);
+                });
+        });
+    $('.about-founder').on('click',
+        function (e) {
+            e.preventDefault();
+            onBegin();
+            $.get('/Founder/Home/AboutPartial',
+                function (data) {
+                    onComplete();
+                    $('#ControlNavigationId').html(data);
+                });
+        });
+
+    $('.contact-header').on('click',
+        function (e) {
+            e.preventDefault();
+            onBegin();
+            $.get('/Home/ContactPartial',
+                function (data) {
+                    onComplete();
+                    $('#ControlNavigationId').html(data);
+                });
+        });
+
+    notificationsHub = $.connection.notifications;
+
+    $('.messages-user').on('click',
+        function () {
+            $('#window_messages').show();
+            $("#window_messages").kendoWindow({
+                visible: true,
+                draggable: false,
+                minheight: "200px",
+                width: "30%",
+                modal: true,
+                pinned: false,
+                open: function (e) { $(this.element).closest(".k-window").css({ "position": "fixed", 'min-height': '30px' }) },
+                position: {
+                    top: "15%",
+                    left: "35%"
+                },
+                resizable: false
+            }).data("kendoWindow");
+
+            $("div.k-window-content").css("max-height", "430px");
+            $(".k-window-titlebar").hide();
+            $(".k-window div.k-window-content").css("margin-top", "-30px");
+            const win = $("#window_messages").data("kendoWindow").refresh();
+
+            $('div.k-widget.k-window').removeClass("resizeLogin");
+            $('div.k-widget.k-window').addClass("resizeCart");
+
+            $('body').css('overflow', 'hidden');
+            notificationsHub.server.messagesOfUser();
+
+            win.open();
+        });
+
+    $('.favorites-user').on('click',
+        function() {
+            $('#window_favorites').show();
+            $("#window_favorites").kendoWindow({
+                visible: true,
+                draggable: false,
+                minheight: "200px",
+                width: "30%",
+                modal: true,
+                pinned: false,
+                open: function (e) { $(this.element).closest(".k-window").css({"position": "fixed", 'min-height': '30px'})},
+                position: {
+                    top: "15%",
+                    left: "35%"
+                },
+                resizable: false
+            }).data("kendoWindow");
+
+            $("div.k-window-content").css("max-height", "430px");
+            $(".k-window-titlebar").hide();
+            $(".k-window div.k-window-content").css("margin-top", "-30px");
+            const win = $("#window_favorites").data("kendoWindow").refresh();
+
+            $('div.k-widget.k-window').removeClass("resizeLogin");
+            $('div.k-widget.k-window').addClass("resizeCart");
+
+            $('body').css('overflow', 'hidden');
+
+            win.open();
+        });
+
+    $('.shopping-cart-user').on('click',
+        function () {
+            $('#window_bascket').show();
+            $("#window_bascket").kendoWindow({
+                visible: true,
+                draggable: false,
+                minheight: "200px",
+                width: "30%",
+                modal: true,
+                pinned: false,
+                open: function (e) { $(this.element).closest(".k-window").css({ "position": "fixed", 'min-height': '30px' }) },
+                position: {
+                    top: "15%",
+                    left: "35%"
+                },
+                resizable: false
+            }).data("kendoWindow");
+
+            $("div.k-window-content").css("max-height", "500px");
+            $(".k-window-titlebar").hide();
+            $(".k-window div.k-window-content").css("margin-top", "-30px");
+            const win = $("#window_bascket").data("kendoWindow").refresh();
+
+            $('div.k-widget.k-window').removeClass("resizeLogin");
+            $('div.k-widget.k-window').addClass("resizeCart");
+
+            $('body').css('overflow', 'hidden');
+
+            win.open();
+        });
+
+
+    $('#btnCheckoutCartId').on('click', function () {
+
+        $("#window_cart_order").kendoWindow({
+            visible: false,
+            draggable: false,
+            minheight: "480px",
+            width: "400px",
+            modal: true,
+            pinned: false,
+            open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+            position: {
+                top: "14%",
+                left: "35%"
+            },
+            resizable: false,
+            title: ''
+        }).data("kendoWindow");
+
+        $.post('/Home/Checkout', function (answer) {
+            if (answer === 'success') {
+                $('#window_favorites').hide();
+                $('.k-window').hide();
+                $('.k-window-title').html('Last step');
+                var winCartOrder = $("#window_cart_order").data("kendoWindow").refresh();
+
+                $('div.k-widget.k-window').addClass("resizeLogin");
+                $('div.k-widget.k-window').removeClass("resizeCart");
+
+                $(".k-window-titlebar").show();
+                $(".k-window-titlebar").css("margin-top", "-38px");
+                $(".k-upload-sync").removeClass('k-upload-sync');
+                $(".k-upload").css("background", "none");
+                $(".k-upload").css("border", "none");
+                $(".k-upload-files").css("border", "none !important");
+                $("div.k-window-content").css("max-height", "660px");
+                $(".k-window div.k-window-content").css("margin-top", "0");
+                $('.k-upload').addClass('k-upload-remove-border');
+
+                winCartOrder.open();
+
+                $('#btnCartOrderId').on('click', function () {
+
+                    const cartOrderCity = $('#cartOrderCityId').val().trim();
+                    const cartOrderAddress = $('#cartOrderAddressId').val().trim();
+                    const cartOrderPostOfiice = $('#cartOrderPostOfiiceId').val().trim();
+                    const cartOrderPhoneNumber = $('#cartOrderPhoneNumberId').val().trim();
+
+                    const validationCartOrderCity = $('#validationCartOrderCityId');
+                    const validationCartOrderAddress = $('#validationCartOrderAddressId');
+                    const validationCartOrderPostOfiice = $('#validationCartOrderPostOfiiceId');
+                    const validationCartOrderPhoneNumber = $('#validationCartOrderPhoneNumberId');
+
+                    if (cartOrderCity === '') {
+                        validationCartOrderCity.html('@OnlineShoeKing.Resources.Language.MessageInputCity');
+                    }
+                    else {
+                        validationCartOrderCity.html('');
+                    }
+
+                    if (cartOrderAddress === '') {
+                        validationCartOrderAddress.html('@OnlineShoeKing.Resources.Language.MessageInputAdderess');
+                    }
+                    else {
+                        validationCartOrderAddress.html('');
+                    }
+
+                    if (cartOrderPostOfiice === '') {
+                        validationCartOrderPostOfiice.html('@OnlineShoeKing.Resources.Language.MessageInputPostOfiice');
+                    }
+                    else {
+                        validationCartOrderPostOfiice.html('');
+                    }
+
+                    if (cartOrderPhoneNumber === '') {
+                        validationCartOrderPhoneNumber.html('@OnlineShoeKing.Resources.Language.MessageInputPhoneNumber');
+                    }
+                    else {
+                        const phoneNumber = /^\d{10}$/;
+                        if (cartOrderPhoneNumber.match(phoneNumber)) {
+                            validationCartOrderPhoneNumber.html('');
+                        }
+                        else {
+                            validationCartOrderPhoneNumber.html('@OnlineShoeKing.Resources.Language.MessageInputRightPhoneNumber');
+                        }
+                    }
+
+                    const cartFormData = new FormData();
+
+                    if ((validationCartOrderCity.html() === '') && (validationCartOrderAddress.html() === '') &&
+                        (validationCartOrderPostOfiice.html() === '') && (validationCartOrderPhoneNumber.html() === '')) {
+
+                        cartFormData.append("cartOrderCity", cartOrderCity);
+                        cartFormData.append("cartOrderAddress", cartOrderAddress);
+                        cartFormData.append("cartOrderPostOfiice", cartOrderPostOfiice);
+                        cartFormData.append("cartOrderPhoneNumber", cartOrderPhoneNumber);
+
+                        $.ajax({
+                            url: '/Home/CartOrder',
+                            type: "POST",
+                            processData: false,
+                            contentType: false,
+                            data: cartFormData,
+                            success: function (order) {
+
+                                winCartOrder.close();
+
+                                if (order === 'success') {
+                                    notificationsHub.server.updateOrderMessages();
+                                    CheckoutSuccess();
+                                }
+                                else if (order === 'problem') {
+                                    cartProblem();
+                                }
+                                else if (order === 'login') {
+                                    CheckoutLogin();
+                                }
+
+                            }
+                        });
+                    }
+                });
+            }
+            else if (answer === 'problem') {
+                cartProblem();
+            }
+            else if (answer === 'login') {
+                CheckoutLogin();
+            }
+        });
+    });
+
+    function CheckoutSuccess() {
+
+        $('#window_bascket').hide();
+        $('.k-window').hide();
+        $('.shopping-cart-no-products').show();
+        $('.shopping-cart-no-products').html('<div class="centerAlign"><h3 style="color: #f68236;">' + '@OnlineShoeKing.Resources.Language.MessageInputPostOfiice' + '</h3></div');
+        $('.shopping-cart-window').html('');
+        $('.shopping-cart-count').text('0');
+        $('.shopping-cart-count').css('color', '#222222');
+        $('#checkoutCartId').hide();
+
+        //alert that is product added
+        const win = $("<div>").kendoWindow({
+            modal: true,
+            open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+            position: {
+                top: "40%",
+                left: "45%"
+            }
+        }).getKendoWindow();
+
+        // set the content
+        win.content('@OnlineShoeKing.Resources.Language.MessageOrderMessageWasSent');
+        // center it and open it
+        win.open();
+    };
+
+    function cartProblem() {
+        $.post("/Home/CheckoutProblem", function (cartProducts) {
+
+            $('#cartUserProblemId').html('');
+
+            if (cartProducts.length > 0) {
+
+                const cartMessage = cartProducts.length > 1 ? '@OnlineShoeKing.Resources.Language.MessageInputRightPhoneNumber' :
+                    '@OnlineShoeKing.Resources.Language.MessageProductsAreNotAvailable';
+
+                $('#cartUserProblemId').append('<div class="imgCart text-center">' + cartMessage + '</div>');
+
+                $.each(cartProducts, function (index, product) {
+
+                    if (product.ProductInCart.Specials) {
+
+                        $('#cartUserProblemId').append('<div class="favorites-user-column" id="removeProductId' + index + '"><div class="favorites-user-card">' +
+                                '<a class="favorites-user-img" href="/Founder/Products/Product/' + product.ProductId + '"><img src="' + product.ProductInCart.Photo + '" alt="' + product.ProductInCart.Name + '" title="' + product.ProductInCart.Name + '"></a><div class="product-user-container">' +
+                                '<div class="center favorites-product-headear">' + '@OnlineShoeKing.Resources.Language.MessageOrderWasSent' + '</div><div class="centerAlign">' +
+                                '<a class="favorites-product-name" href="/Founder/Products/Product/' + product.ProductId + '">' + product.ProductInCart.Name + '</a></div>' +
+                                '<div class="center favorites-product-header">' + '@OnlineShoeKing.Resources.Language.MessageProductsAreNotAvailable' + '</div>' +
+                                '<div class="centerAlign">' + product.ProductId + '</div><div class="center favorites-product-headear">' + '@OnlineShoeKing.Resources.Language.MessageProductIsNotAvailable' + ' </div><div class="centerAlign favorites-product-headear-bottom">' +
+                                '<span class="product-price-underline"><span class="product-price-red">' + product.ProductInCart.Price + '</span></span><span class="product-price-green"> ' +
+                                product.ProductInCart.PromotionPrice + '@OnlineShoeKing.Resources.Language.Leva' + '</span></div></div></div></div>');
+                    }
+                    else {
+                        $('#cartUserProblemId').append('<div class="favorites-user-column" id="removeProductId' + index + '"><div class="favorites-user-card">' +
+                                '<a class="favorites-user-img" href="/Founder/Products/Product/' + product.ProductId + '"><img src="' + product.ProductInCart.Photo + '" alt="' + product.ProductInCart.Name + '" title="' + product.ProductInCart.Name + '"></a><div class="product-user-container">' +
+                                '<div class="center favorites-product-headear">' + '@OnlineShoeKing.Resources.Language.ProductNumberTitle' + '</div><div class="centerAlign">' +
+                                '<a class="favorites-product-name" href="/Founder/Products/Product/' + product.ProductId + '">' + product.ProductInCart.Name + '</a></div>' +
+                                '<div class="center favorites-product-header">' + '@OnlineShoeKing.Resources.Language.PriceTitle' + ' </div>' +
+                                '<div class="centerAlign">' + product.ProductId + '</div><div class="center favorites-product-headear">' + '@OnlineShoeKing.Resources.Language.NameTitle' +
+                                ' </div><div class="centerAlign favorites-product-headear-bottom"><span>' + product.ProductInCart.Price + '@OnlineShoeKing.Resources.Language.Leva' + '</span></div></div></div></div>');
+                    }
+
+                    $('a.favorites-user-img, a.favorites-product-name').click(function (e) {
+                        e.stopImmediatePropagation();
+                        e.preventDefault();
+
+
+                        let url = '/Products/ProductPartial';
+                        if ('@User.IsInRole("Founder")' === 'True') {
+                            url = '/Founder//Products/ProductPartial';
+                        }
+                        else if ('@User.IsInRole("Admin")' === 'True') {
+                            url = '/Admin//Products/ProductPartial';
+                        }
+
+                        $.ajax({
+                            url: url,
+                            dataType: "html",
+                            type: "POST",
+                            cache: false,
+                            data: { productId: product.ProductId },
+                            success: function (productHtmlPartial) {
+
+                                $(".k-window-action").click();
+                                $('body').css('overflow', 'auto');
+                                $('#ControlNavigationId').html(productHtmlPartial);
+                            },
+                            error: function (error) {
+                                $('body').css('overflow', 'auto');
+                            }
+                        });
+                    });
+                });
+            }
+            else {
+                $('#cartUserProblemId').html('<div class="centerAlign"><h3 style="color: #f68236;">@OnlineShoeKing.Resources.Language.NoProblems</h3></div>');
+            }
+
+            $('#window_bascket').hide();
+            $('.k-window').hide();
+            $('.resizeLogin').hide();
+            $('#windowCartProblem').show();
+            $("#windowCartProblem").kendoWindow({
+                visible: true,
+                draggable: false,
+                minheight: "200px",
+                width: "30%",
+                modal: true,
+                pinned: false,
+                open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                position: {
+                    top: "15%",
+                    left: "35%"
+                },
+                resizable: false
+            }).data("kendoWindow");
+
+
+            $("div.k-window-content").css("max-height", "430px");
+            $(".k-window-titlebar").hide();
+            $(".k-window div.k-window-content").css("margin-top", "-30px");
+            $("#windowValidation").html('');
+            const win = $("#windowCartProblem").data("kendoWindow").refresh();
+
+            $('div.k-widget.k-window').removeClass("resizeLogin");
+            $('div.k-widget.k-window').addClass("resizeCart");
+
+            win.open();
+
+        });
+    }
+
+    $.getJSON("/Home/GetOrderMessagesCount", function (messagesCount) {
+        if (messagesCount > 0) {
+            $('.orders-user-count').text(messagesCount);
+            $('.orders-user-count').css('color', '#12bf40');
+        } else {
+            $('.orders-user-count').text(messagesCount);
+            $('.orders-user-count').css('color', '#222222');
+        }
+    });
+
+    function CheckoutLogin() {
+
+        $('#window_bascket').hide();
+        $('.k-window').hide();
+
+        $("#windowLogin").kendoWindow({
+            visible: false,
+            draggable: false,
+            minheight: "480px",
+            width: "500px",
+            modal: true,
+            pinned: false,
+            open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+            position: {
+                top: "20%",
+                left: "33%"
+            },
+            resizable: false,
+            title: "@OnlineShoeKing.Resources.Language.LogIn"
+        }).data("kendoWindow");
+
+        $("#windowValidation").html('');
+        var win = $("#windowLogin").data("kendoWindow").refresh();
+
+        $('div.k-widget.k-window').removeClass("resizeCart");
+        $('div.k-widget.k-window').addClass("resizeLogin");
+
+        $(".k-window-titlebar").show();
+        $("div.k-window-content").css("max-height", "1000px");
+        $(".k-window div.k-window-content").css("margin-top", "0");
+
+        $('#windowInputVal').val('');
+        $('#windowInputText').val('');
+
+        $('#windowValidation').hide();
+        $('#windowValidationEmail').html('');
+        $('#windowValidationPassword').html('');
+
+        win.open();
+
+        $('.k-widget').on('keypress', function (e) {
+            if (e.keyCode === 13) {
+                e.stopImmediatePropagation();
+                loginFunction();
+            }
+        });
+
+        $('body').css('overflow', 'hidden');
+    };
+
+    $.getJSON("/Home/GetCartProducts", function (cartProducts) {
+        if (cartProducts.length > 0) {
+
+            var countCart = cartProducts.length;
+
+            $('.shopping-cart-count').text(countCart);
+            $('.shopping-cart-count').css('color', '#12bf40');
+            $('#cartUserId').html('');
+            $('#checkoutCartId').show();
+            $('.shopping-cart-window').html('');
+            $('.shopping-cart-window').show();
+            $('.shopping-cart-no-products').hide();
+
+            $.each(cartProducts, function (index, product) {
+
+                if (product.ProductInCart.Specials) {
+
+                    $('.shopping-cart-window').append('<div class="favorites-user-column" id="removeProductId' + index + '"><div class="favorites-user-card">' +
+                        '<a class="favorites-user-img" href="/Founder/Products/Product/' + product.ProductId + '"><img src="' + product.ProductInCart.Photo + '" alt="' + product.ProductInCart.Name + '" title="' + product.ProductInCart.Name + '"></a><div class="product-user-container">' +
+                        '<div class="center favorites-product-headear">' + '@OnlineShoeKing.Resources.Language.NameTitle' + '</div><div class="centerAlign">' +
+                        '<a class="favorites-product-name" href="/Founder/Products/Product/' + product.ProductId + '">' + product.ProductInCart.Name + '</a></div>' +
+                        '<div class="center favorites-product-header">' + '@OnlineShoeKing.Resources.Language.ProductNumberTitle' + '</div>' +
+                        '<div class="centerAlign">' + product.ProductId + '</div><div class="center favorites-product-headear">' + '@OnlineShoeKing.Resources.Language.PriceTitle' + ' </div><div class="centerAlign favorites-product-headear-bottom">' +
+                        '<span class="product-price-underline"><span class="product-price-red">' + product.ProductInCart.Price + '</span></span><span class="product-price-green">' +
+                        product.ProductInCart.PromotionPrice + '@OnlineShoeKing.Resources.Language.Leva' + '</span></div>' +
+                        '<p class="flex"><a href="#" class="remove-product-cart-btn">' + '@OnlineShoeKing.Resources.Language.RemoveTitle' + '</a></p></div></div></div>');
+                }
+                else {
+
+                    $('.shopping-cart-window').append('<div class="favorites-user-column" id="removeProductId' + index + '"><div class="favorites-user-card">' +
+                        '<a class="favorites-user-img" href="/Founder/Products/Product/' + product.ProductId + '"><img src="' + product.ProductInCart.Photo + '" alt="' + product.ProductInCart.Name + '" title="' + product.ProductInCart.Name + '"></a><div class="product-user-container">' +
+                        '<div class="center favorites-product-headear">' + '@OnlineShoeKing.Resources.Language.NameTitle' + '</div><div class="centerAlign">' +
+                        '<a class="favorites-product-name" href="/Founder/Products/Product/' + product.ProductId + '">' + product.ProductInCart.Name + '</a></div>' +
+                        '<div class="center favorites-product-header">' + '@OnlineShoeKing.Resources.Language.ProductNumberTitle' + ' </div>' +
+                        '<div class="centerAlign">' + product.ProductId + '</div><div class="center favorites-product-headear">' + '@OnlineShoeKing.Resources.Language.PriceTitle' +
+                        ' </div><div class="centerAlign favorites-product-headear-bottom"><span>' + product.ProductInCart.Price + '@OnlineShoeKing.Resources.Language.Leva' + '</span></div>' +
+                        '<p class="flex"><a href="#" class="remove-product-cart-btn">' + '@OnlineShoeKing.Resources.Language.RemoveTitle' + '</a></p></div></div></div>');
+                }
+
+                $('a.favorites-user-img, a.favorites-product-name').click(function (e) {
+                    e.stopImmediatePropagation();
+                    e.preventDefault();
+
+                    let url = '/Products/ProductPartial';
+                    if ('@User.IsInRole("Founder")' === 'True') {
+                        url = '/Founder//Products/ProductPartial';
+                    }
+                    else if ('@User.IsInRole("Admin")' === 'True') {
+                        url = '/Admin//Products/ProductPartial';
+                    }
+
+                    $.ajax({
+                        url: url,
+                        dataType: "html",
+                        type: "POST",
+                        cache: false,
+                        data: { productId: product.ProductId },
+                        success: function (productHtmlPartial) {
+
+                            $(".k-window-action").click();
+                            $('body').css('overflow', 'auto');
+                            $('#ControlNavigationId').html(productHtmlPartial);
+                        },
+                        error: function (error) {
+                            $('body').css('overflow', 'auto');
+                        }
+                    });
+                });
+
+                $('a.remove-product-cart-btn').on('click', function (e) {
+                    e.stopImmediatePropagation();
+                    e.preventDefault();
+
+                    $.ajax({
+                        url: '/Home/RemoveProductFromCart',
+                        dataType: "json",
+                        type: "POST",
+                        contentType: 'application/json; charset=utf-8',
+                        data: "{ productId:" + JSON.stringify(product.ProductId) + "}",
+                        success: function (total) {
+
+                            countCart = countCart - 1;
+
+                            if (countCart > 0) {
+                                $('#cartTotalId').text(total + '@OnlineShoeKing.Resources.Language.Leva');
+                                $('.checkoutCartId').show();
+                            }
+                            else {
+                                $('.shopping-cart-no-products').show();
+                                $('.shopping-cart-no-products').html('<div class="centerAlign"><h3 style="color: #f68236;">' + '@OnlineShoeKing.Resources.Language.NoProducts' + '</h3></div');
+                                $('#checkoutCartId').hide();
+                                $('.shopping-cart-window').hide();
+                            }
+
+                            if (countCart !== 0) {
+                                $('.shopping-cart-count').html(countCart);
+                                $('.shopping-cart-count').css('color', '#12bf40');
+
+                            } else {
+                                $('.shopping-cart-count').html(countCart);
+                                $('.shopping-cart-count').css('color', '#222222');
+                            }
+                            $('div#removeProductId' + index).remove();
+                        },
+                        error: function (error) {
+                            alert('@OnlineShoeKing.Resources.Language.MessageRefreshPage');
+                        }
+                    });
+                });
+            });
+
+            $('#cartTotalId').text(cartProducts[cartProducts.length - 1].Total + '@OnlineShoeKing.Resources.Language.Leva');
+        }
+        else {
+            $('.shopping-cart-no-products').show();
+            $('.shopping-cart-no-products').html('<div class="centerAlign"><h3 style="color: #f68236;">' + '@OnlineShoeKing.Resources.Language.NoProducts' + '</h3></div');
+            $('.shopping-cart-count').text('0');
+            $('.shopping-cart-count').css('color', '#222222');
+            //$('#checkoutCartId').hide();
+            //$('.shopping-cart-window').hide();
+        }
+    });
+
+    var language;
+    $('.language-btn').on('click', function () {
+
+        $.getJSON("/Home/Language", function (languageValue) {
+
+            if (languageValue === '2') {
+                $('.language-window').html(
+                    '<div class="add-language-window"><span class="language-window-title">' + '@OnlineShoeKing.Resources.Language.LanguageTitle' + '</span><select id="language-dropdown" class="form-control">' +
+                    '<option value="2" selected>' + '@OnlineShoeKing.Resources.Language.Bulgarian' +
+                    '</option><option value="1">' + '@OnlineShoeKing.Resources.Language.English' + '</option></select></div>');
+            }
+            else {
+                $('.language-window').html(
+                    '<div class="add-language-window"><span class="language-window-title">' + '@OnlineShoeKing.Resources.Language.LanguageTitle' + '</span><select id="language-dropdown" class="form-control">' +
+                    '<option value="1" selected>' + '@OnlineShoeKing.Resources.Language.English' +
+                    '</option><option value="2">' + '@OnlineShoeKing.Resources.Language.Bulgarian' + '</option></select></div>');
+            }
+
+            $("#language-dropdown").kendoDropDownList().data("kendoDropDownList");
+
+            language = $(".add-language-window").kendoWindow({
+                draggable: false,
+                resizable: false,
+                modal: true,
+                actions: [""],
+                open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                position: {
+                    top: "30%",
+                    left: "43%"
+                }
+            }).data("kendoWindow");
+
+            $('.k-window-actions').remove();
+            $('.k-window').addClass('resize-loading-window');
+            $('.k-header').removeClass('k-header k-window-titlebar');
+            $('.k-widget').removeClass('k-widget k-window');
+
+            $('div.k-window-content').css('padding', '1.2em 1.3em');
+            $('div.k-window-content').css('border-radius', '10px');
+
+            $('body').css('overflow', 'hidden');
+
+            $('#language-dropdown').on('change', function () {
+                const selected_language = $('#language-dropdown option:selected').val();
+
+                $.ajax({
+                    url: '@Url.Action("Language", "Home", new { Area = "" })',
+                    data: { lang: selected_language },
+                    cache: false,
+                    type: "POST",
+                    dataType: "html",
+                    success: function () {
+                        location.reload();
+                    }
+                });
+            });
+        });
+    });
+
+    $(document).on("click", ".k-overlay", function () {
+        $('body').css('overflow', 'auto');
+        language.close();
+    });
+
+    $(function () {
+
+        $.get('/Products/GetFavoritesCount', function (count) {
+            if (count > 0) {
+                $('.favorites-count').html(count);
+                $('.favorites-count').css('color', '#12bf40');
+            }
+            else {
+                $('.favorites-count').html('0');
+            }
+        });
+
+
+        let url_favorites = '/Products/GetFavorites';
+        if ('@User.IsInRole("Founder")' === 'True') {
+            url_favorites = '/Founder//Products/GetFavorites';
+        }
+        else if ('@User.IsInRole("Admin")' === 'True') {
+            url_favorites = '/Admin//Products/GetFavorites';
+        }
+
+        $.get(url_favorites, function (data) {
+            $('#window_favorites').html(data);
+        });
+
+        $.getJSON('/Home/Language', function (languageValue) {
+
+            if (languageValue === '2') {
+                $('.language-btn').removeClass().addClass('language-btn icon-bg');
+                $('.language-btn').html('<span>' + '@OnlineShoeKing.Resources.Language.BG' + '</span>');
+            }
+            else {
+                $('.language-btn').removeClass().addClass('language-btn icon-eng');
+                $('.language-btn').html('<span>' + '@OnlineShoeKing.Resources.Language.UKTitle' + '</span>');
+            }
+        });
+
+        const d = new DropDown($('#logInLogOut'));
+
+        const IsAuthenticated = '@User.Identity.IsAuthenticated'.toString();
+
+        if (IsAuthenticated === 'True') {
+
+            $.getJSON("/Home/GetCurrentUser", function (user) {
+
+                $('#loginInfoLiId').html('');
+                $('#loginInfoLiId').append('<a href="@Url.Action("Index", "Profile")">' +
+                    '<img src="' + user.ImageUrl + '" alt="' + user.FirstName + '" title="' + user.FirstName + '"/> ' + user.FirstName + '</a>');
+            });
+        }
+    });
+
+    $('.orders-user').on('click', function () {
+
+        window.location.href = '@Url.Action("Index", "Order")';
+    });
+
+    $('.products-user').on('click', function () {
+
+        window.location.href = '@Url.Action("Index", "ProductPanel")';
+    });
+
+    var dialog = $("#div-loading").kendoWindow();
+
+    $(document).on("click", ".k-overlay", function () {
+        dialog.close();
+        $('body').css('overflow', 'auto');
+    });
+
+    function onBegin() {
+        $('#add-loading').html('<div id="div-loading"></div>');
+        dialog = $("#div-loading").kendoWindow({
+            draggable: false,
+            resizable: false,
+            modal: true,
+            actions: [""],
+            open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+            position: {
+                top: "40%",
+                left: "46%"
+            }
+        }).data("kendoWindow").content('@OnlineShoeKing.Resources.Language.Loading');
+
+        $('.k-window-actions').remove();
+        $('.k-header').addClass('resize-loading-window');
+        $('.k-header').removeClass('k-header k-window-titlebar');
+        $('.k-widget').removeClass('k-widget k-window');
+
+        $('div.k-window-content').css('padding', '1.2em 1.3em');
+        $('div.k-window-content').css('border-radius', '10px');
+
+        $('body').css('overflow', 'hidden');
+    };
+
+
+    $(document).on("click", ".k-overlay", function () {
+        $('body').css('overflow', 'auto');
+    });
+
+    function onComplete() {
+        dialog.close();
+        $('body').css('overflow', 'auto');
+    };
+
+
+    function breadCrumb(url) {
+        onBegin();
+
+        @*$('#add-loading').html('<div id="div-loading"></div>');
+        const loading_dialog = $("#div-loading").kendoWindow({
+            draggable: false,
+            resizable: false,
+            modal: true,
+            actions: [""],
+            open: function (event) { $(this.element).closest(".k-window").css("position", "fixed") },
+            position: {
+                top: "40%",
+                left: "46%"
+            }
+        }).data("kendoWindow").content('@OnlineShoeKing.Resources.Language.Loading');
+
+        $('.k-window-actions').remove();
+        $('.k-header').addClass('resize-loading-window');
+        $('.k-header').removeClass('k-header k-window-titlebar');
+        $('.k-widget').removeClass('k-widget k-window');
+
+        $('div.k-window-content').css('padding', '1.2em 1.3em');
+        $('div.k-window-content').css('border-radius', '10px');
+
+        $.ajax({
+            url: '@Url.Action("CategoryPartial", "Products", new { Area = "" })',
+            dataType: 'html',
+            type: 'GET',
+            data: { categoryId: '6' },
+            success: function (data) {
+                loading_dialog.close();
+                $('#ControlNavigationId').html(data);
+            },
+            errorr: function () {
+                loading_dialog.close();
+            }
+        });*@
+
+        $.get(url, function (data) {
+            onComplete();
+            $('#ControlNavigationId').html(data);
+        });
+    };
+
+    function breadCrumbCategory(url, categori_id) {
+        onBegin();
+        $.ajax({
+            url: '@Url.Action("CategoryPartial", "Products", new { Area = "" })',
+            dataType: 'html',
+            type: 'POST',
+            data: { categoryId: categori_id },
+            success: function (data) {
+                onComplete();
+                $('#ControlNavigationId').html(data);
+            },
+            errorr: function () {
+                loading_dialog.close();
+            }
+        });
+    };
+
+    function breadCrumbCategoryFounder(url, categori_id) {
+        onBegin();
+        $.ajax({
+            url: '@Url.Action("CategoryPartial", "Products", new { Area = "Founder" })',
+            dataType: 'html',
+            type: 'POST',
+            data: { categoryId: categori_id },
+            success: function (data) {
+                onComplete();
+                $('#ControlNavigationId').html(data);
+            },
+            errorr: function () {
+                loading_dialog.close();
+            }
+        });
+    };
+
+    function breadCrumbCategoryAdmin(url, categori_id) {
+        onBegin();
+        $.ajax({
+            url: '@Url.Action("CategoryPartial", "Products", new { Area = "Admin" })',
+            dataType: 'html',
+            type: 'POST',
+            data: { categoryId: categori_id },
+            success: function (data) {
+                onComplete();
+                $('#ControlNavigationId').html(data);
+            },
+            errorr: function () {
+                loading_dialog.close();
+            }
+        });
+    };
+
+    notificationsHub.client.messagesOfUsers = function (messages) {
+
+        $('.messages-user-body').html('');
+
+        $.each(messages, function (key, message) {
+
+            if (message.Item6.Item2 === false) {
+                if (message.Item4 === false) {
+                    $('.messages-user-body').append('<div class="message-header"><span class="glyphicon glyphicon-remove delete-message" style="display: none;"></span>' +
+                        '<div class="messageUser blink"><img src="' + message.Item5 + '" alt="message" title="message">' +
+                        '<div>' + message.Item2 + ' <span>( ' + message.Item3 + ' )</span><span class="unread-message-user">' + '@OnlineShoeKing.Resources.Language.MessageUnread' + '</span></div></div></div>');
+                }
+                else {
+                    $('.messages-user-body').append('<div class="message-header"><span class="glyphicon glyphicon-remove delete-message" style="display: none;"></span>' +
+                        '<div class="messageUser"><img src="' + message.Item5 + '" alt="message" title="message"><div>' + message.Item2 + ' <span>( ' + message.Item3 + ' )</span></div></div></div>');
+                }
+            }
+            else {
+                if (message.Item4 === false) {
+                    $('.messages-user-body').append('<div class="message-header"><span class="glyphicon glyphicon-remove delete-message" style="display: none;"></span>' +
+                        '<div class="messageUser blink"><div class="message-no-img-size" >' + message.Item2 + ' <span class="unread-message-user">' +
+                        '@OnlineShoeKing.Resources.Language.MessageUnread' + '</span></div></div></div>');
+                }
+                else {
+                    $('.messages-user-body').append(
+                        '<div class="message-header"><span class="glyphicon glyphicon-remove delete-message" style="display: none;"></span>' +
+                        '<div class="messageUser"><div class="message-no-img-size">' + message.Item2 + ' </div></div></div>');
+                }
+            }
+
+
+            $('.messageUser').click(function (e) {
+                e.stopImmediatePropagation();
+
+                if (message.Item6.Item2 === false) {
+                    notificationsHub.server.sendUserChat(message.Item1);
+                }
+                else {
+                    const currentItem = $(e.currentTarget);
+                    currentItem.removeClass('blink');
+                    currentItem.find('.unread-message-user').remove();
+                    notificationsHub.server.sendUserOrderRead(message.Item1, false);
+                }
+            });
+
+            $('.delete-message').click(function (e) {
+                e.stopImmediatePropagation();
+
+                if (message.Item6.Item2 === false) {
+                    $(e.currentTarget).parent().remove();
+                    notificationsHub.server.deleteChatMessage(message.Item1);
+                }
+                else {
+                    $(e.currentTarget).parent().remove();
+                    notificationsHub.server.sendUserOrderRead(message.Item1, true);
+                }
+            });
+        });
+    };
+
+    notificationsHub.client.getUserChat = function (fromUser, toUser, messages) {
+
+        $('.msg_wrap').show("fold");
+        $('.msg_box').show("fold");
+
+        var chatMsg_footer = $(".msg_footer");
+        chatMsg_footer.empty();
+        var chatMsg_inputButton = $(".msg_inputButton");
+        chatMsg_inputButton.empty();
+        $(".msg_body").empty();
+        var fullName = toUser.FirstName + " " + toUser.LastName;
+        var chatMsg_body = $(".msg_body");
+
+        if (fullName.length > 21) {
+            $('.msg_head').html(fullName.substring(0, 20) + "..." + '<div class="close">X</div>');
+        }
+        else {
+            $('.msg_head').html(fullName + '<div class="close">X</div>');
+        }
+
+
+        $.each(messages, function (key, item) {
+            if (item.Item3 !== toUser.Id) {
+
+                if (fromUser.ImageUrl === null) {
+                    chatMsg_body.append('<div class="msgAFullwidth"><div class="msgAPhoto"><img src="' + fromUser.ImageUrl + '" alt="message" title="message"><div class="msg_a msgAPhoto">' +
+                    $.emoticons.replace(item.Item1) + '</div></div></div>');
+                }
+                else {
+                    chatMsg_body.append('<div class="msgAFullwidth"><div class="msgAPhoto"><img src="' + fromUser.ImageUrl + '" alt="message" title="message"><div class="msg_a msgAPhoto">' +
+                    $.emoticons.replace(item.Item1) + '</div></div></div>');
+                }
+
+            }
+            else {
+                chatMsg_body.append('<div class="msg_b">' + $.emoticons.replace(item.Item1) + '</div>');
+            }
+        });
+
+        chatMsg_body.append('<div class="msg_push"></div>');
+
+        var scrollHeight = 0;
+        $('.msg_body div').each(function (i, value) {
+            scrollHeight += parseInt($(this).height());
+        });
+        scrollHeight += '';
+        $('.msg_body').animate({ scrollTop: scrollHeight });
+
+        chatMsg_footer.append('<textarea rows="2" id="textAreaId" class="msg_input" placeholder="@OnlineShoeKing.Resources.Language.MessageInputText"></textarea>');
+
+        chatMsg_inputButton.append('<input id="btnIconsTextarea" class="btn btn-danger" value="@OnlineShoeKing.Resources.Language.EmojiTitle" type="button">' +
+            '<input class="btn btn-primary" id="btnTextarea" type="button" value="@OnlineShoeKing.Resources.Language.SendBtn">');
+
+
+        $('.close').on('click', function () {
+            $(".msg_box").hide("fold", 1000);
+            notificationsHub.server.closeChat();
+        });
+
+        $('.msg_body').click(function (e) {
+            e.stopImmediatePropagation();
+
+            notificationsHub.server.sendMessageAsRead(toUser.Id);
+        });
+
+        $('#textAreaId').focus(function (e) {
+            e.stopImmediatePropagation();
+
+            notificationsHub.server.sendMessageAsRead(toUser.Id);
+        });
+
+        $('#textAreaId').keypress(function (e) {
+            if ($(this).val().trim() !== '' && e.keyCode === 13) {
+                e.preventDefault();
+                var msg = $(this).val();
+                $(this).val('');
+                if (msg !== '')
+                    $('<div class="msg_b">' + $.emoticons.replace(msg) + '</div>').insertBefore('.msg_push');
+                $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
+                notificationsHub.server.sendChatMessage(toUser.Id, msg);
+            }
+        });
+
+        $('#btnTextarea').on('click', function (e) {
+            e.preventDefault();
+            var message = $('#textAreaId').val();
+            $('#textAreaId').val('');
+            if (message !== '') {
+                $('<div><div class="msg_b">' + $.emoticons.replace(message) + '</div></div>').insertBefore('.msg_push');
+                $('.msg_body').scrollTop($('.msg_body')[0].scrollHeight);
+                notificationsHub.server.sendChatMessage(toUser.Id, message);
+            }
+        });
+
+        $('#btnIconsTextarea').on('click', function (e) {
+            e.preventDefault();
+            $('#textAreaId').emojiPicker({
+                width: '320px',
+                height: '400px',
+                button: false,
+                fadeTime: 400,
+                emojiSet: 'apple'
+            });
+            $('#textAreaId').emojiPicker('toggle');
+        });
+    };
+
+    notificationsHub.client.getUnreadUserMessages = function (messagesCount) {
+        if (messagesCount > 0) {
+
+            $(".messages-user-count").css('color', '#12bf40');
+            $(".messages-user-count").text(messagesCount);
+        }
+        else {
+            $(".messages-user-count").text('0');
+            $(".messages-user-count").css('color', '#222222');
+        }
+    }
+
+    notificationsHub.client.getUnreadOrderMessages = function (messagesCount) {
+
+        if (messagesCount > 0) {
+            $('.orders-user-count').text(messagesCount);
+            $('.orders-user-count').css('color', '#12bf40');
+        } else {
+            $('.orders-user-count').text(messagesCount);
+            $('.orders-user-count').css('color', '#222222');
+        }
+    }
+
+
+    //$.connection.hub.start();
+</script>

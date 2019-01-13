@@ -1,0 +1,151 @@
+﻿@using OnlineShoeKing.Models.ViewModels
+
+@{
+    var breadCrumb = (BreadCrumbVm)TempData["breadCrumb"];
+}
+
+<div id="ControlNavigationId">
+    <meta name="description" content="Contact page of Online Shoe King is about to connect to admin." />
+    <meta name="keywords" content="Shoe King, Online, Shoe, King, Men, Women, Product, Contact page, home, page, connect" />
+    <script type="text/javascript">
+        document.title = 'Contact | Shoe King';
+        window.history.pushState(
+            null,
+            null,
+            '/Home/Contact'
+        );
+    </script>
+
+    <div class="pag-nav">
+        <ul class="p-list">
+            @if (breadCrumb != null)
+            {
+                if (breadCrumb.Controller != null)
+                {
+                    <li><a href="@breadCrumb.Controller" onclick="breadCrumb('@breadCrumb.ControllerPartial'); return false;">@breadCrumb.ControllerName</a></li>
+                    <li>
+                        &nbsp;/&nbsp;
+                    </li>
+                }
+                if (breadCrumb.ActionName != null)
+                {
+                    <li class="act">@breadCrumb.ActionName</li>
+                }
+            }
+        </ul>
+    </div>
+
+    <div class="coats">
+        <h3 class="c-head">Contact</h3>
+        <p>@OnlineShoeKing.Resources.Language.OfficeIsLocatedWordsTitle</p>
+        <p>@OnlineShoeKing.Resources.Language.ReachOurOnlineWordsTitle</p>
+    </div>
+    <div class="contact-map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2934.7286595117407!2d23.347473950898376!3d42.64591197906655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40aa841f234e6fd1%3A0xcf17511633fdc8ad!2z0J3QsNGG0LjQvtC90LDQu9C90LAg0KHQv9C-0YDRgtC90LAg0JDQutCw0LTQtdC80LjRjyDigJ7QktCw0YHQuNC7INCb0LXQstGB0LrQuOKAnA!5e0!3m2!1sbg!2sbg!4v1488401592482"> </iframe>
+    </div>
+    <div class="contact-box" >
+        <form>
+            <div class="form" >
+                <div class="" >
+                    <small>@OnlineShoeKing.Resources.Language.SubjectTitle</small>
+                    <div class="text" >
+                        <input type="text" id="sendSubjectId" placeholder="@OnlineShoeKing.Resources.Language.YourSubjectHereTitle" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-t" >
+                <small>@OnlineShoeKing.Resources.Language.NameTitle</small>
+                <div class="text" >
+                    <input type="text" id="sendNameId" placeholder="@OnlineShoeKing.Resources.Language.YourNameHereTitle" />
+                </div>
+            </div>
+            <div class="form-y" >
+                <small>@OnlineShoeKing.Resources.Language.EmailTitle</small>
+                <div class="text" >
+                    <input type="text" id="sendEmailId" placeholder="@OnlineShoeKing.Resources.Language.YourEmailhereTitle" />
+                </div>
+            </div>
+            <div class="clearfix" ></div>
+            <div class="form" >
+                <small>@OnlineShoeKing.Resources.Language.MessageTitle</small>
+                <div class="text" >
+                    <textarea id="sendTextId"></textarea>
+                </div>
+            </div>
+            <div id="alertSuccessSendMessageId" ></div>
+            <div class="row" >
+                <div class="col-sm-12 col-md-12 col-lg-12" >
+                    <div class="centerAlign" id="validationSendEmailId" style="color: #ff0000; font-weight: bold;" ></div>
+                </div>
+            </div>
+        </form>
+        
+        <div class="text" >
+            <input type="submit" id="sendEmailBtnId" value="@OnlineShoeKing.Resources.Language.SendBtn" />
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+ 
+
+    $('#sendEmailBtnId').on('click', function () {
+
+        var name = $('#sendNameId').val();
+        var email = $('#sendEmailId').val();
+        var subject = $('#sendSubjectId').val();
+        var text = $('#sendTextId').val();
+        var validationPoll = $('#validationSendEmailId').html('');
+
+
+
+        if ((name === '') || (email === '') || (subject === '') || (text === '')) {
+            validationPoll.css('color', '#ff0000');
+            validationPoll.append('<br/>@OnlineShoeKing.Resources.Language.MessageUnfilledFields<br/>');
+        }
+        else {
+            $.ajax({
+                url: '/Home/IsValidEmail',
+                type: 'POST',
+                data: "{ source:" + JSON.stringify(email) + "}",
+                contentType: 'application/json; charset=utf-8',
+                success: function (isValidEmail) {
+
+                    $.ajax({
+                        url: '/Home/SendEmail',
+                        type: 'POST',
+                        data: "{ name:" + JSON.stringify(name) + ", email:" + JSON.stringify(email) +
+                            ", subject:" + JSON.stringify(subject) + ", text:" + JSON.stringify(text) + "}",
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+
+                            $("#alertSuccessSendMessageId").kendoDialog();
+                            var dialog = $("#alertSuccessSendMessageId").data("kendoDialog");
+                            dialog.content("@OnlineShoeKing.Resources.Language.MessageWasSentTitle");
+                            dialog.open();
+
+                            $('#sendNameId').html('');
+                            $('#sendEmailId').html('');
+                            $('#sendSubjectId').html('');
+                            $('#sendTextId').html('');
+                            $('#validationSendEmailId').html('');
+
+                            $(document).on("click", ".k-overlay", function () {
+                                dialog.close();
+                            });
+                        },
+                        error: function () {
+                            validationPoll.append('@OnlineShoeKing.Resources.Language.MessageHaveAProblem<br/>');
+                        }
+                    });
+                },
+                error: function () {
+                    validationPoll.append('<br/>@OnlineShoeKing.Resources.Language.MessageNotValidEmail<br/>');
+                }
+            });
+        }
+    });
+
+</script>

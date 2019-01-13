@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "Products";
+}
+
+@if (TempData["allCollections"] as string != null)
+{
+    @Html.Partial("_ProductPartialAllCollections")
+}
+else
+{
+    @Html.Partial("_ProductPartialCollections")
+}
+
+
+@Scripts.Render("~/bundles/jqueryunob")
+
+<script>
+    $('#ulControlNavigationId li').removeClass('active');
+</script>

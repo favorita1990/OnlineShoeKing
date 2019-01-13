@@ -1,0 +1,1044 @@
+﻿@model IEnumerable<OnlineShoeShopAndChat.Models.ProductViewModel>
+
+<div id="ControlNavigationId">
+    <script type="text/javascript">
+        document.title = 'ProductPanel - Shoe King';
+        window.history.pushState(
+            null,
+            null,
+            '/Admin/ProductPanel'
+            );
+    </script>
+    <div class="bottom-grids collections">
+        <div class="container">
+            <div class="product-head">
+                <img alt="User Pic" id="imageInitial" src="@TempData["directoryOfProductIco"]" class="img-circle img-responsive">
+                <h2>@OnlineShoeShopAndChat.Resources.Language.Products</h2>
+                <div class="clearfix"> </div>
+            </div>
+
+            @(Html.Kendo().Grid(Model)
+                .Name("Grid")
+                .Columns(columns =>
+                {
+                columns.Bound(e => e.ProductId).Width(150).ClientTemplate("<img src='#=PhotoHeader#' height='62' width='62'/><span>" +
+                            " #=ProductId#</span>").Title(OnlineShoeShopAndChat.Resources.Language.ProductIdTitle);
+                columns.Bound(e => e.Name).Width(200).Title(OnlineShoeShopAndChat.Resources.Language.ProductNameTitle);
+                columns.Bound(e => e.Price).ClientTemplate("#=Price#$").Width(200).Title(OnlineShoeShopAndChat.Resources.Language.PriceTitle);
+                columns.Bound(e => e.PromotionPercent).ClientTemplate("#=PromotionPercent#%").Width(165).Title(OnlineShoeShopAndChat.Resources.Language.PromotionTitle + " %");
+                columns.Bound(e => e.PromotionPrice).ClientTemplate("#=PromotionPrice#$").Width(165).Title(OnlineShoeShopAndChat.Resources.Language.PromotionTitle + " $");
+                columns.Bound(e => e.Status).Width(100).ClientTemplate("#= Status ? '" + OnlineShoeShopAndChat.Resources.Language.ProductInStockTitle +
+                "' : '" + OnlineShoeShopAndChat.Resources.Language.ProductIsNotInStockTitle + "' #").Hidden().Title(OnlineShoeShopAndChat.Resources.Language.StockTitle);
+                columns.Bound(e => e.DateAdded).Width(200).Hidden().Title(OnlineShoeShopAndChat.Resources.Language.AddedTitle);
+                columns.Bound(e => e.CreatedBy).Width(200).Hidden().Title(OnlineShoeShopAndChat.Resources.Language.CreatedByTitle);
+                columns.Bound(e => e.DateUpdated).Width(200).Hidden().Title(OnlineShoeShopAndChat.Resources.Language.LastUpdateTitle);
+                columns.Bound(e => e.UpdatedBy).Width(200).Hidden().Title(OnlineShoeShopAndChat.Resources.Language.UpdatedByTitle);
+                columns.Bound(e => e.Deleted).Width(200).Hidden().Title(OnlineShoeShopAndChat.Resources.Language.DeletedTitle);
+                columns.Bound(e => e.CategoryName).Width(200).Hidden().Title(OnlineShoeShopAndChat.Resources.Language.CategoryNameTitle);
+                columns.Template(@<text></text>)
+                    .ClientTemplate("<a class='k-button k-button-icontext' onclick='editProductWindow(#=ProductId#);'><span class='k-icon k-i-edit'></span>" + OnlineShoeShopAndChat.Resources.Language.EditTitle + "</a>" +
+                    "<a class='k-button k-button-icontext' onclick='deleteProductWindow(#=ProductId#);'><span class='k-icon k-i-close'></span>" + OnlineShoeShopAndChat.Resources.Language.DeleteBtn + "</a>").Width(180);
+                })
+            .ToolBar(toolbar => toolbar
+            .Template("<a class='k-button k-button-icontext' onclick='createProductWindow();'><span class='k-icon k-i-add'></span>" + OnlineShoeShopAndChat.Resources.Language.AddNewProductTitle + "</a>"))
+            //.Editable(editable => editable.Mode(GridEditMode.PopUp).Window(w => w.Events(e => e.Open(""))))
+            .Editable(editable => editable.Mode(GridEditMode.PopUp))
+            .Sortable()
+            .Pageable(pageable => pageable
+            .Refresh(true)
+            .PageSizes(new int[] { 5, 10, 20, 50 })
+            .ButtonCount(5)
+            .Messages(m => m
+            .Next(OnlineShoeShopAndChat.Resources.Language.NextPageTitle)
+            .Previous(OnlineShoeShopAndChat.Resources.Language.PreviousPageTitle)
+            .First(OnlineShoeShopAndChat.Resources.Language.FirstPageTitle)
+            .Last(OnlineShoeShopAndChat.Resources.Language.LastPageTitle)
+            .Refresh(OnlineShoeShopAndChat.Resources.Language.RefreshPageTitle)
+            .Display("{1} " + OnlineShoeShopAndChat.Resources.Language.OfTitle + " {2} " + OnlineShoeShopAndChat.Resources.Language.ItemsTitle)
+            .Empty(OnlineShoeShopAndChat.Resources.Language.NoItemsToDisplayTitle)
+            .Page(OnlineShoeShopAndChat.Resources.Language.PageTitle)
+            .Of(OnlineShoeShopAndChat.Resources.Language.OfTitle + " {0}")
+            .ItemsPerPage(OnlineShoeShopAndChat.Resources.Language.ProductsOfPageTitle)))
+            .Scrollable(a => a.Height("auto"))
+            .ClientDetailTemplateId("templateSizeOfProduct")
+            //.HtmlAttributes(new { style = "height:500px;" })
+            .DataSource(dataSource => dataSource
+            .Ajax()
+            .PageSize(5)
+            //.Events(events => events.Error("error_handler").Sync("refreshGrid"))
+            .Model(model =>
+            {
+                model.Id(p => p.ProductId);
+            })
+            .Read(read => read.Action("GetAllProducts", "ProductPanel").Type(HttpVerbs.Post))
+            //.ServerOperation(false)
+            )
+            .Selectable(selectable => selectable
+            .Mode(GridSelectionMode.Multiple)
+            .Type(GridSelectionType.Cell))
+            .Navigatable()
+            .AllowCopy(true)
+            .Reorderable(reorderable => reorderable.Columns(true))
+            .Resizable(resizable => resizable.Columns(true))
+            .Groupable(g => g.Messages(m => m
+            .Empty(OnlineShoeShopAndChat.Resources.Language.GroupByColumnTitle)))
+            .ColumnMenu(c => c
+            .Messages(m => m
+            .SortAscending(OnlineShoeShopAndChat.Resources.Language.SortAscendingTitle)
+            .SortDescending(OnlineShoeShopAndChat.Resources.Language.SortDescendingTitle)
+            .Lock(OnlineShoeShopAndChat.Resources.Language.LockTitle)
+            .Unlock(OnlineShoeShopAndChat.Resources.Language.UnlockTitle)
+            .ColumnSettings(OnlineShoeShopAndChat.Resources.Language.ColumnSettingsTitle)
+            .Columns(OnlineShoeShopAndChat.Resources.Language.ColumnsTitle)
+            .Filter(OnlineShoeShopAndChat.Resources.Language.FilterTitle)))
+            .Filterable(filterable => filterable
+                .Messages(m => m
+                .Operator(OnlineShoeShopAndChat.Resources.Language.OperatorTitle)
+                .Search(OnlineShoeShopAndChat.Resources.Language.SearchTitleGrid)
+                .Title("")
+                .Value(OnlineShoeShopAndChat.Resources.Language.ValueTitle)
+                .Info(OnlineShoeShopAndChat.Resources.Language.ShowItemWithValueTitle)
+                .Filter(OnlineShoeShopAndChat.Resources.Language.FilterTitleGrid)
+                .Clear(OnlineShoeShopAndChat.Resources.Language.ClearTitle)
+                .Cancel(OnlineShoeShopAndChat.Resources.Language.CancelTitle))
+                .Extra(false)
+                .Operators(operators => operators
+                .ForString(str => str.Clear()
+                .StartsWith(OnlineShoeShopAndChat.Resources.Language.StartsWithTitle)
+                .IsEqualTo(OnlineShoeShopAndChat.Resources.Language.IsEqualToTitle)
+                .Contains(OnlineShoeShopAndChat.Resources.Language.ContainsTitle)
+                )
+                .ForNumber(str => str.Clear()
+                .IsEqualTo(OnlineShoeShopAndChat.Resources.Language.IsEqualToTitle)
+                .IsGreaterThan(OnlineShoeShopAndChat.Resources.Language.IsGreaterThanTitle)
+                .IsGreaterThanOrEqualTo(OnlineShoeShopAndChat.Resources.Language.IsGreaterThanOrEqualToTitle)
+                .IsLessThan(OnlineShoeShopAndChat.Resources.Language.IsLessThanTitle)
+                .IsLessThanOrEqualTo(OnlineShoeShopAndChat.Resources.Language.IsLessThanOrEqualTo)))
+            )
+            )
+
+
+            <script id="templateSizeOfProduct" type="text/kendo-tmpl">
+                @(Html.Kendo().TabStrip()
+                .Name("tabStrip_#=ProductId#")
+                .SelectedIndex(0)
+                .Animation(animation => animation.Open(open => open.Fade(FadeDirection.In)))
+                .Items(items =>
+                {
+                    items.Add().Text(OnlineShoeShopAndChat.Resources.Language.SizesOfProductTitle).Content(@<text>
+                    @(Html.Kendo().Grid<OnlineShoeShopAndChat.Models.SizesOfProduct>()
+                            .Name("Grid-Size-#=ProductId#")
+                            .Columns(columns =>
+                            {
+                                columns.Bound(o => o.SizeId).Title(OnlineShoeShopAndChat.Resources.Language.SizeIdTitle);
+                                columns.Bound(o => o.Size).Title(OnlineShoeShopAndChat.Resources.Language.SizeTitle);
+                                columns.Bound(o => o.Quantity).ClientTemplate("\\#= Quantity \\#").Title(OnlineShoeShopAndChat.Resources.Language.QuantityTitle);
+                            })
+                            .DataSource(dataSource => dataSource
+                                .Ajax()
+                                .PageSize(5)
+                                .Read(read => read.Action("GetSizeOfProductPanel", "ProductPanel", new { productId = "#=ProductId#" }).Type(HttpVerbs.Post))
+                            )
+                            .Pageable(pageable => pageable
+                            .PageSizes(new int[] { 5, 10, 20, 50 })
+                            .ButtonCount(5)
+                            .Messages(m => m
+                            .Next(OnlineShoeShopAndChat.Resources.Language.NextPageTitle)
+                            .Previous(OnlineShoeShopAndChat.Resources.Language.PreviousPageTitle)
+                            .First(OnlineShoeShopAndChat.Resources.Language.FirstPageTitle)
+                            .Last(OnlineShoeShopAndChat.Resources.Language.LastPageTitle)
+                            .Refresh(OnlineShoeShopAndChat.Resources.Language.RefreshPageTitle)
+                            .Display("{1} " + OnlineShoeShopAndChat.Resources.Language.OfTitle + " {2} " + OnlineShoeShopAndChat.Resources.Language.ItemsTitle)
+                            .Empty(OnlineShoeShopAndChat.Resources.Language.NoItemsToDisplayTitle)
+                            .Page(OnlineShoeShopAndChat.Resources.Language.PageTitle)
+                            .Of(OnlineShoeShopAndChat.Resources.Language.OfTitle + " {0}")
+                            .ItemsPerPage(OnlineShoeShopAndChat.Resources.Language.ProductsOfPageTitle)))
+                            .Scrollable(a => a.Height("auto"))
+                            .Pageable()
+                            .Sortable()
+                            .Selectable(selectable => selectable
+                            .Mode(GridSelectionMode.Multiple)
+                            .Type(GridSelectionType.Cell))
+                            .Navigatable()
+                            .Reorderable(reorderable => reorderable.Columns(true))
+                            .Resizable(resizable => resizable.Columns(true))
+                            .Groupable(g => g.Messages(m => m
+                            .Empty(OnlineShoeShopAndChat.Resources.Language.GroupByColumnTitle)))
+                            .ColumnMenu(c => c
+                            .Messages(m => m
+                            .SortAscending(OnlineShoeShopAndChat.Resources.Language.SortAscendingTitle)
+                            .SortDescending(OnlineShoeShopAndChat.Resources.Language.SortDescendingTitle)
+                            .Lock(OnlineShoeShopAndChat.Resources.Language.LockTitle)
+                            .Unlock(OnlineShoeShopAndChat.Resources.Language.UnlockTitle)
+                            .ColumnSettings(OnlineShoeShopAndChat.Resources.Language.ColumnSettingsTitle)
+                            .Columns(OnlineShoeShopAndChat.Resources.Language.ColumnsTitle)
+                            .Filter(OnlineShoeShopAndChat.Resources.Language.FilterTitle)))
+                            .Filterable(filterable => filterable
+                                .Messages(m => m
+                                .Operator(OnlineShoeShopAndChat.Resources.Language.OperatorTitle)
+                                .Search(OnlineShoeShopAndChat.Resources.Language.SearchTitleGrid)
+                                .Title("")
+                                .Value(OnlineShoeShopAndChat.Resources.Language.ValueTitle)
+                                .Info(OnlineShoeShopAndChat.Resources.Language.ShowItemWithValueTitle)
+                                .Filter(OnlineShoeShopAndChat.Resources.Language.FilterTitleGrid)
+                                .Clear(OnlineShoeShopAndChat.Resources.Language.ClearTitle)
+                                .Cancel(OnlineShoeShopAndChat.Resources.Language.CancelTitle))
+                                .Extra(false)
+                                .Operators(operators => operators
+                                .ForString(str => str.Clear()
+                                .StartsWith(OnlineShoeShopAndChat.Resources.Language.StartsWithTitle)
+                                .IsEqualTo(OnlineShoeShopAndChat.Resources.Language.IsEqualToTitle)
+                                .Contains(OnlineShoeShopAndChat.Resources.Language.ContainsTitle)
+                                )
+                                .ForNumber(str => str.Clear()
+                                .IsEqualTo(OnlineShoeShopAndChat.Resources.Language.IsEqualToTitle)
+                                .IsGreaterThan(OnlineShoeShopAndChat.Resources.Language.IsGreaterThanTitle)
+                                .IsGreaterThanOrEqualTo(OnlineShoeShopAndChat.Resources.Language.IsGreaterThanOrEqualToTitle)
+                                .IsLessThan(OnlineShoeShopAndChat.Resources.Language.IsLessThanTitle)
+                                .IsLessThanOrEqualTo(OnlineShoeShopAndChat.Resources.Language.IsLessThanOrEqualTo)))
+                            )
+                            .ToClientTemplate()
+                    )
+                    </text>
+                    );
+
+                    items.Add().Text(OnlineShoeShopAndChat.Resources.Language.PhotosOfProductTitle).Content(@<text>
+                        @(Html.Kendo().Grid<OnlineShoeShopAndChat.Models.PhotoOfProductVM>()
+                            .Name("Grid-Photo-#=ProductId#")
+                            .Columns(columns =>
+                            {
+                                columns.Bound(o => o.Photo).ClientTemplate("<img src='" + Url.Content(OnlineShoeShopAndChat.Resources.Pictures.PhotoInAdminPanel) + "\\#=Photo\\#' height='110' width='170'/><span>" +
+                                " \\#=Photo\\#</span>");
+                                columns.Bound(o => o.PhotoId).Title(OnlineShoeShopAndChat.Resources.Language.PhotoIdTitle);
+                            })
+                            .DataSource(dataSource => dataSource
+                                .Ajax()
+                                .PageSize(3)
+                                .Read(read => read.Action("GetPhotoOfProductPanel", "ProductPanel", new { productId = "#=ProductId#" }).Type(HttpVerbs.Post))
+                            )
+                            .Pageable(pageable => pageable
+                            .PageSizes(new int[] { 3, 6, 10, 20 })
+                            .ButtonCount(3)
+                            .Messages(m => m
+                            .Next(OnlineShoeShopAndChat.Resources.Language.NextPageTitle)
+                            .Previous(OnlineShoeShopAndChat.Resources.Language.PreviousPageTitle)
+                            .First(OnlineShoeShopAndChat.Resources.Language.FirstPageTitle)
+                            .Last(OnlineShoeShopAndChat.Resources.Language.LastPageTitle)
+                            .Refresh(OnlineShoeShopAndChat.Resources.Language.RefreshPageTitle)
+                            .Display("{1} " + OnlineShoeShopAndChat.Resources.Language.OfTitle + " {2} " + OnlineShoeShopAndChat.Resources.Language.ItemsTitle)
+                            .Empty(OnlineShoeShopAndChat.Resources.Language.NoItemsToDisplayTitle)
+                            .Page(OnlineShoeShopAndChat.Resources.Language.PageTitle)
+                            .Of(OnlineShoeShopAndChat.Resources.Language.OfTitle + " {0}")
+                            .ItemsPerPage(OnlineShoeShopAndChat.Resources.Language.ProductsOfPageTitle)))
+                            .Scrollable(a => a.Height("auto"))
+                            .Pageable()
+                            .Sortable()
+                            .Selectable(selectable => selectable
+                            .Mode(GridSelectionMode.Multiple)
+                            .Type(GridSelectionType.Cell))
+                            .Navigatable()
+                            .Reorderable(reorderable => reorderable.Columns(true))
+                            .Resizable(resizable => resizable.Columns(true))
+                            .Groupable(g => g.Messages(m => m
+                            .Empty(OnlineShoeShopAndChat.Resources.Language.GroupByColumnTitle)))
+                            .ColumnMenu(c => c
+                            .Messages(m => m
+                            .SortAscending(OnlineShoeShopAndChat.Resources.Language.SortAscendingTitle)
+                            .SortDescending(OnlineShoeShopAndChat.Resources.Language.SortDescendingTitle)
+                            .Lock(OnlineShoeShopAndChat.Resources.Language.LockTitle)
+                            .Unlock(OnlineShoeShopAndChat.Resources.Language.UnlockTitle)
+                            .ColumnSettings(OnlineShoeShopAndChat.Resources.Language.ColumnSettingsTitle)
+                            .Columns(OnlineShoeShopAndChat.Resources.Language.ColumnsTitle)
+                            .Filter(OnlineShoeShopAndChat.Resources.Language.FilterTitle)))
+                            .Filterable(filterable => filterable
+                                .Messages(m => m
+                                .Operator(OnlineShoeShopAndChat.Resources.Language.OperatorTitle)
+                                .Search(OnlineShoeShopAndChat.Resources.Language.SearchTitleGrid)
+                                .Title("")
+                                .Value(OnlineShoeShopAndChat.Resources.Language.ValueTitle)
+                                .Info(OnlineShoeShopAndChat.Resources.Language.ShowItemWithValueTitle)
+                                .Filter(OnlineShoeShopAndChat.Resources.Language.FilterTitleGrid)
+                                .Clear(OnlineShoeShopAndChat.Resources.Language.ClearTitle)
+                                .Cancel(OnlineShoeShopAndChat.Resources.Language.CancelTitle))
+                                .Extra(false)
+                                .Operators(operators => operators
+                                .ForString(str => str.Clear()
+                                .StartsWith(OnlineShoeShopAndChat.Resources.Language.StartsWithTitle)
+                                .IsEqualTo(OnlineShoeShopAndChat.Resources.Language.IsEqualToTitle)
+                                .Contains(OnlineShoeShopAndChat.Resources.Language.ContainsTitle)
+                                )
+                                .ForNumber(str => str.Clear()
+                                .IsEqualTo(OnlineShoeShopAndChat.Resources.Language.IsEqualToTitle)
+                                .IsGreaterThan(OnlineShoeShopAndChat.Resources.Language.IsGreaterThanTitle)
+                                .IsGreaterThanOrEqualTo(OnlineShoeShopAndChat.Resources.Language.IsGreaterThanOrEqualToTitle)
+                                .IsLessThan(OnlineShoeShopAndChat.Resources.Language.IsLessThanTitle)
+                                .IsLessThanOrEqualTo(OnlineShoeShopAndChat.Resources.Language.IsLessThanOrEqualTo)))
+                            )
+                            .ToClientTemplate()
+                        )
+                    </text>
+                    );
+
+                    items.Add().Text(OnlineShoeShopAndChat.Resources.Language.DescriptionTitle).Content(
+                        "<div class='employee-details'>" +
+                            "<ul>" +
+                                "<li>#= Description #</li>" +
+                            "</ul>" +
+                        "</div>"
+                    );
+                })
+                .ToClientTemplate())
+
+
+            </script>
+        </div>
+
+
+        <div id="categoriesGridId">
+
+        </div>
+
+    </div>
+
+    <div id="windowProductId" style="display:none;">
+
+        <br />
+        <div class="form-group centerAlign">
+            <div class="col-md-2 control-label margin-top-10">@OnlineShoeShopAndChat.Resources.Language.NameTitle</div>
+            <div class="col-md-7">
+                <input type="text" name="name" class="form-control" id="windowProductInputNameId" />
+            </div>
+        </div>
+        <br />
+        <div class="centerAlign col-md-12 margin-bottom-10" id="windowProductValidationNameId" style="color:#ff0000;"></div>
+
+        <div class="form-group centerAlign">
+            <div class="col-md-11 control-label">
+                @OnlineShoeShopAndChat.Resources.Language.AddMainPhotoTitle
+            </div>
+            <br />
+            <div class="col-md-11">
+                <input name="files" id="imgMainProductId" type="file" />
+            </div>
+            <br />
+            <div class="centerAlign col-md-12 margin-bottom-20" id="windowProductValidationImgMainId" style="color:#ff0000;"></div>
+        </div>
+     
+        <div class="form-group centerAlign">
+            <div class="col-md-11 control-label">
+                @OnlineShoeShopAndChat.Resources.Language.AddSlidePhotosTitle
+            </div>
+            <br />
+            <div class="col-md-11">
+                <input name="files" id="imgBodyProductId" type="file" />
+            </div>
+            <br />
+            <div class="centerAlign col-md-12 margin-bottom-20" id="windowProductValidationImgBodyId" style="color:#ff0000;"></div>
+        </div>
+
+        <div class="form-group centerAlign">
+            <div class="col-md-2 control-label margin-top-10">@OnlineShoeShopAndChat.Resources.Language.PriceTitle</div>
+            <div class="col-md-7">
+                <input type="text" class="form-control" id="windowProductPriceId" name="productPrice" />
+            </div>
+        </div>
+        <br />
+        <div class="centerAlign col-md-12 margin-bottom-20" id="windowProductValidationPriceId" style="color:#ff0000;"></div>
+
+
+        <div class="form-group centerAlign margin-bottom-20">
+            <div class="col-md-2 control-label">@OnlineShoeShopAndChat.Resources.Language.Discounts</div>
+            <div class="col-md-2">
+                <select name="productSpecials" id="productSpecialsId" class="form-control" title="Do you want discount of this product?">
+                    <option value="0">@OnlineShoeShopAndChat.Resources.Language.NoTitle</option>
+                    <option value="1">@OnlineShoeShopAndChat.Resources.Language.YesTitle</option>
+                </select>
+            </div>
+        </div>
+        <br />
+        <div class="centerAlign col-md-12 margin-bottom-20" id="windowProductValidationSpecialsId" style="color:#ff0000;"></div>
+
+
+        <div class="form-group centerAlign windowProductMargin" style="display: none;" id="promotionPercentHideShowId">
+            <br />
+            <div class="col-md-2 control-label">@OnlineShoeShopAndChat.Resources.Language.PromotionTitle %</div>
+            <div class="col-md-7">
+                <input type="text" class="form-control" id="productPromotionPercentId" name="PromotionPercent" />
+            </div>
+            <br />
+            <div class="centerAlign col-md-12 margin-bottom-20" id="windowProductValidationPromotionPercentId" style="color:#ff0000;"></div>
+        </div>
+
+
+        <div class="form-group centerAlign margin-bottom-20">
+            <div class="col-md-2 control-label">@OnlineShoeShopAndChat.Resources.Language.StatusTitle</div>
+            <div class="col-md-2">
+                <select name="productStatus" id="productStatusId" class="form-control" title="">
+                    <option value="1">@OnlineShoeShopAndChat.Resources.Language.ProductInStockTitle</option>
+                    <option value="0">@OnlineShoeShopAndChat.Resources.Language.ProductIsNotInStockTitle</option>
+                </select>
+            </div>
+        </div>
+        <br />
+        <div class="centerAlign col-md-12 margin-bottom-20" id="windowProductValidationStatusId" style="color:#ff0000;"></div>
+
+        <div id="dropdownProductCategoriesId">
+
+        </div>
+
+
+        <div class="form-group centerAlign windowProductMargin">
+            <div class="col-md-11 control-label examp-size-quantity" id="exampSizeQuantityId" style="display: none;">@OnlineShoeShopAndChat.Resources.Language.ExampleSizeQuantityTitle</div>
+            <div class="col-md-2 control-label">@OnlineShoeShopAndChat.Resources.Language.SizeQuantityTitle</div>
+            <div class="col-md-7">
+                <input type="text" class="form-control" id="windowProductSizeId" name="ProductSize" />
+            </div>
+        </div>
+
+        <br />
+        <div class="centerAlign col-md-12 margin-bottom-20" id="windowProductValidationProductSizeId" style="color:#ff0000;"></div>
+
+        <div class="form-group centerAlign windowProductMargin">
+            <div class="col-md-2 control-label labelDescription">@OnlineShoeShopAndChat.Resources.Language.DescriptionTitle</div>
+            <div class="col-md-7">
+                <textarea class="form-control textareaDescription" rows="1" id="windowProductDescriptionId" name="DescriptionId"></textarea>
+            </div>
+            <br />
+            <div class="centerAlign col-md-12 margin-bottom-20" id="windowProductValidationDescriptionId" style="color:#ff0000;"></div>
+        </div>
+        <br />
+        <div class="form-group windowProductMargin margin-bottom-20 header-btns-block">
+            <div class="text-center body-btns-block">
+                <input type="submit" id="btnWindowProductSaveId" class="btn btn-lg btnWindowProductSave" value="@OnlineShoeShopAndChat.Resources.Language.SaveBtn" />
+                <input type="submit" id="btnWindowProductCancelId" class="btn btn-lg btnWindowProductCancel" value="@OnlineShoeShopAndChat.Resources.Language.CancelTitle" />
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<script>
+
+    //function dataBound() {
+    //    this.expandRow(this.tbody.find("tr.k-master-row").first());
+    //}
+
+    var productAddCheck = true;
+
+    $('#ulControlNavigationId li').removeClass('active');
+
+    $(window).resize(function () {
+        var containerH = $("#container").height();
+        var tableH = grid.element.height();
+        var bodyH = grid.table.height();
+        grid.table.height(containerH - tableH + bodyH - 1);
+    });
+
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+
+    function clearCurrentSessionPhotos() {
+        $.post('@Url.Action("ClearCurrentSessionPhotos", "ProductPanel", "Admin")', function () {
+        });
+    }
+
+   
+    function editProductWindow(productId) {
+
+        clearCurrentSessionPhotos();
+
+        productAddCheck = false;
+
+        productWindow('@OnlineShoeShopAndChat.Resources.Language.EditProductTitle');
+
+        $.ajax({
+            url: '/Admin/ProductPanel/GetProductById',
+            type: 'POST',
+            dataType: 'Json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({ productId: productId }),
+            success: function (product) {
+
+                $('#windowProductInputNameId').val(product.Name);
+                $('#windowProductPriceId').val(product.Price);
+              
+                if (product.Specials == true) {
+                    $("#productSpecialsId").val("1").change();
+                    $("#productSpecialsId").kendoDropDownList().data("kendoDropDownList").value('1');
+                    $('#productPromotionPercentId').val(product.PromotionPercent);
+                }
+                else {
+                    $('#productSpecialsId').val();
+                }
+
+
+                if (product.Status == true) {
+                    $("#productStatusId").val("1").change();
+                    $("#productStatusId").kendoDropDownList().data("kendoDropDownList").value('1');
+                }
+                else {
+                    $("#productStatusId").val("0").change();
+                    $("#productStatusId").kendoDropDownList().data("kendoDropDownList").value('0');
+                }
+            
+                $('#productCategoriesId').val(product.CategoryId).change();
+                $("#productCategoriesId").kendoDropDownList().data("kendoDropDownList").value(product.CategoryId);
+                var sizeField = '';
+                $.each(product.SizesOfProduct, function (index, size) {
+
+                    if (product.SizesOfProduct.length == (index + 1)) {
+                        sizeField = sizeField + size.Size + '-' + size.Quantity;
+                    }
+                    else {
+                        sizeField = size.Size + '-' + size.Quantity + ',' + ' ' + sizeField;
+                    }
+                });
+
+                $('#windowProductSizeId').val(sizeField);
+                
+                $('#windowProductDescriptionId').val(product.Description);
+                jQuery("#windowProductDescriptionId").scrollTop(jQuery("#windowProductDescriptionId")[0].scrollHeight);
+            },
+            error: function (error) {
+                alert('@OnlineShoeShopAndChat.Resources.Language.MessageRefreshPage');
+            }
+        })
+    }
+
+    function deleteProductWindow(e) {
+
+        //var r = confirm("Press a button!");
+        if (confirm("@OnlineShoeShopAndChat.Resources.Language.MessageRemoveThisProduct") == true) {
+            
+            $.ajax({
+                url: '/Admin/ProductPanel/DeleteProductById',
+                type: 'POST',
+                dataType: 'Json',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({ productId: productId }),
+                success: function (success) {
+
+                    var win = $("<div>").kendoWindow({
+                        modal: true,
+                        open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                        position: {
+                            top: "40%",
+                            left: "45%"
+                        }
+                    }).getKendoWindow();
+
+                    $('.k-pager-refresh').click();
+
+                    win.content("@OnlineShoeShopAndChat.Resources.Language.MessageProductWasRemoved");
+                    win.open();
+                },
+                error: function (error) {
+                    alert('@OnlineShoeShopAndChat.Resources.Language.MessageRefreshPage');
+                }
+            })
+        }
+        //else {
+        //    alert("You pressed Cancel!");
+        //}
+    }
+
+    function createProductWindow() {
+
+        clearCurrentSessionPhotos();
+
+        productAddCheck = true;
+
+        productWindow('@OnlineShoeShopAndChat.Resources.Language.AddNewProductTitle');
+    }
+
+
+    var winProduct = null;
+
+    function productWindow(title) {
+
+        $('.k-window-title').html(title)
+        winProduct = $("#windowProductId").data("kendoWindow").refresh();
+        $(".k-window-titlebar").show();
+        $(".k-window-titlebar").css("margin-top", "-38px");
+        $(".k-upload-sync").removeClass('k-upload-sync');
+        $(".k-upload").css("background", "none");
+        $(".k-upload").css("border", "none");
+        $(".k-upload-files").css("border", "none !important");
+        $("div.k-window-content").css("max-height", "660px");
+        $(".k-window div.k-window-content").css("margin-top", "0");
+        $('.k-upload').addClass('k-upload-remove-border');
+
+        $('#windowProductInputNameId').val('');
+        $('#windowProductValidationNameId').html('');
+        $('#windowProductValidationImgMainId').html('');
+        $('#windowProductValidationImgBodyId').html('');
+        $(".k-upload-files.k-reset").find("li").remove();
+        $('#windowProductPriceId').val('');
+        $('#windowProductValidationPriceId').html('');
+        $("#productSpecialsId").val("0").change();
+        $("#productSpecialsId").kendoDropDownList().data("kendoDropDownList").value('0');
+        $("#productStatusId").val("1").change();
+        $("#productStatusId").kendoDropDownList().data("kendoDropDownList").value('1');
+        $('#windowProductValidationCategoriesId').html('');
+        $('#windowCategoryValidationCategoriesId').html('');
+        $('#productPromotionPercentId').val('');
+        $('#windowProductValidationPromotionPercentId').html('');
+        $('#windowProductSizeId').val('');
+        $('#windowProductValidationProductSizeId').html('');
+        $('#windowProductDescriptionId').val('');
+        $('#windowProductValidationDescriptionId').html('');
+
+        //winProduct.center().open();
+        winProduct.open();
+
+        $("#dropdownProductCategoriesId").load('@Url.Action("DropdownProductCategories", "ProductPanel")');
+
+        $('#btnWindowProductCancelId').on('click', function () {
+
+            winProduct.close();
+        });
+    }
+
+    $('#btnWindowProductSaveId').on('click', function () {
+
+        var inputName = $('#windowProductInputNameId').val().trim();
+        var inputMainFileCount = $('#imgMainProductId').data("kendoUpload").getFiles().length;
+        var inputBodyFilesCount = $("#imgBodyProductId").data("kendoUpload").getFiles().length;
+        var inputPrice = $('#windowProductPriceId').val().trim();
+        var inputSpecials = $('#productSpecialsId').val(); 
+        var inputStatus = $('#productStatusId').val();
+        var inputCategoryStatus = $('#categoryStatusId').val();
+        var inputPromotionPercent = $('#productPromotionPercentId').val().trim();
+        var inputCategories = $('#productCategoriesId').val();
+        var inputCategoryText = $('#productCategoryTextId').val();
+        var inputCategoryFileCount = $("#imgCategoryProductId").data("kendoUpload").getFiles().length;
+        var inputListSize = $('#windowProductSizeId').val().split(",").map(function (item) {
+            return item.trim();
+        });;
+        var inputDescription = $('#windowProductDescriptionId').val().trim();
+
+        var productValidationNameId = $('#windowProductValidationNameId');
+        var productValidationImgMainId = $('#windowProductValidationImgMainId');
+        var productValidationImgBodyId = $('#windowProductValidationImgBodyId');
+        var productValidationPriceId = $('#windowProductValidationPriceId');
+        var productValidationPromotionPercentId = $('#windowProductValidationPromotionPercentId');
+        var productValidationCategoriesId = $('#windowProductValidationCategoriesId');
+        var productValidationCategoriesTextId = $('#windowProductValidationCategoriesTextId');
+        var productValidationCategoriesImgId = $('#windowProductValidationImgCategoryId');
+        var productValidationProductSizeId = $('#windowProductValidationProductSizeId');
+        var productValidationDescriptionId = $('#windowProductValidationDescriptionId');
+
+        var checkInputListNumberSize = true;
+        var checkInputListNumberQuantity = true;
+        var checkInputListSize = false;
+        var checkInputListQuantity = false;
+        var checkInputNumbercorrect = true;
+        var checkInputNumbercorrectQuantity = true;
+        var checkInputRepeatNumberSize = true;
+
+        var inputListSizeNew = [];
+        var inputListQuantityNew = [];
+
+        for (var i = 0; i < inputListSize.length; i++) {
+
+            if (inputListSize[i] != '') {
+                var inputSizeQuantity = inputListSize[i].split("-").map(function (item) {
+                    return item.trim();
+                });;
+
+                if (isNaN(Number(inputSizeQuantity[0]))) {
+                    checkInputListNumberSize = false;
+                }
+                if (isNaN(Number(inputSizeQuantity[1]))) {
+                    checkInputListNumberQuantity = false;
+                }
+                if (inputSizeQuantity[0] != '') {
+                    checkInputListSize = true;
+
+                    if (Number(inputSizeQuantity[0]) < 10 || Number(inputSizeQuantity[0]) > 55) {
+                        checkInputNumbercorrect = false;
+                    }
+                    else {
+                        inputListSizeNew.push(inputSizeQuantity[0]);
+                    }
+                }
+                if (inputSizeQuantity[1] != '') {
+                    checkInputListQuantity = true;
+
+                    if (Number(inputSizeQuantity[1]) < 0 || Number(inputSizeQuantity[1]) > 1000) {
+                        checkInputNumbercorrectQuantity = false;
+                    }
+                    else {
+                        inputListQuantityNew.push(inputSizeQuantity[1]);
+                    }
+                }
+            }
+        }
+
+
+        if (checkInputNumbercorrect && checkInputListSize && checkInputListNumberSize) {
+
+            for (var i = 0; i < inputListSizeNew.length; i++) {
+
+                var numRepeat = 0;
+
+                for (var j = 0; j < inputListSize.length; j++) {
+                    if (inputListSize[j] != '') {
+                        var inputSizeQuantity = inputListSize[j].split("-").map(function (item) {
+                            return item.trim();
+                        });;
+
+                        if (inputSizeQuantity[0] != '') {
+
+                            if (inputSizeQuantity[0] == inputListSizeNew[i]) {
+                                numRepeat = numRepeat + 1;
+                            }
+                        }
+                    }
+
+                    if (numRepeat > 1) {
+                        checkInputRepeatNumberSize = false;
+                    }
+                }
+            }
+        }
+
+
+        if (inputName == '') {
+            productValidationNameId.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputName');
+        }
+        else {
+            productValidationNameId.html('');
+        }
+
+        if (productAddCheck == true) {
+            if (inputMainFileCount == 0) {
+                productValidationImgMainId.html('@OnlineShoeShopAndChat.Resources.Language.MessageUploadMainProductImage');
+            }
+            else {
+                productValidationImgMainId.html('');
+            }
+
+            if (inputBodyFilesCount == 0) {
+                productValidationImgBodyId.html('@OnlineShoeShopAndChat.Resources.Language.MessageUploadSlideProductImage');
+            }
+            else {
+                productValidationImgBodyId.html('');
+            }
+        }
+
+        if (inputPrice == '') {
+            productValidationPriceId.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputPrice');
+        }
+        else {
+            if (isNaN(Number(inputPrice))) {
+                productValidationPriceId.html('@OnlineShoeShopAndChat.Resources.Language.MessageIncorrectPrice');
+            }
+            else {
+                productValidationPriceId.html('');
+            }
+        }
+
+        if (inputSpecials == '0') {
+            productValidationPromotionPercentId.html('');
+        }
+        if (inputSpecials == '1') {
+            if (inputPromotionPercent == '') {
+                productValidationPromotionPercentId.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputPromotionPercent');
+            }
+            else {
+                if (isNaN(Number(inputPromotionPercent))) {
+                    productValidationPromotionPercentId.html('@OnlineShoeShopAndChat.Resources.Language.MessageIncorrectPromotionPercent');
+                }
+                else {
+                    if (Number(inputPromotionPercent) < 0 || Number(inputPromotionPercent) > 100) {
+                        productValidationPromotionPercentId.html('@OnlineShoeShopAndChat.Resources.Language.MessagePromotionPercentMustBe');
+                    }
+                    else {
+                        productValidationPromotionPercentId.html('');
+                    }
+                }
+            }
+        }
+
+        if (inputCategories == '-1') {
+            productValidationCategoriesId.html('@OnlineShoeShopAndChat.Resources.Language.MessageChoiceOneField');
+        }
+        else {
+            if (inputCategories == '0') {
+                if (inputCategoryText == '') {
+                    productValidationCategoriesTextId.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputCategory');
+                }
+                else {
+                    productValidationCategoriesTextId.html('');
+                }
+
+
+                if (inputCategoryFileCount == 0) {
+                    productValidationCategoriesImgId.html('@OnlineShoeShopAndChat.Resources.Language.MessageUploadMainCategoryImage');
+                }
+                else {
+                    productValidationCategoriesImgId.html('');
+                }
+            }
+            else {
+                productValidationCategoriesId.html('');
+            }
+        }
+
+        if (!checkInputListNumberSize && !checkInputListNumberQuantity) {
+            productValidationProductSizeId.html('@OnlineShoeShopAndChat.Resources.Language.MessageIncorrectSizeAndQuantity');
+        }
+        else {
+            if (!checkInputListNumberSize) {
+                productValidationProductSizeId.html('@OnlineShoeShopAndChat.Resources.Language.MessageIncorrectSize');
+            }
+            if (!checkInputListNumberQuantity) {
+                productValidationProductSizeId.html('@OnlineShoeShopAndChat.Resources.Language.MessageIncorrectQuantity');
+            }
+            else {
+                if (!checkInputListSize && !checkInputListQuantity) {
+                    productValidationProductSizeId.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputSizeAndQuantity');
+                }
+                else {
+                    if (!checkInputListSize) {
+                        productValidationProductSizeId.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputSize');
+                    }
+                    else if (!checkInputListQuantity) {
+                        productValidationProductSizeId.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputQuantity');
+                    }
+                    else {
+                        if (!checkInputNumbercorrect && !checkInputNumbercorrectQuantity) {
+                            productValidationProductSizeId.html('@OnlineShoeShopAndChat.Resources.Language.MessageSizeAndQuantityMustBe');
+                        }
+                        else {
+                            if (!checkInputNumbercorrect) {
+                                productValidationProductSizeId.html('@OnlineShoeShopAndChat.Resources.Language.MessageSizeMustBe');
+                            }
+                            else if (!checkInputNumbercorrectQuantity) {
+                                productValidationProductSizeId.html('@OnlineShoeShopAndChat.Resources.Language.MessageQuantityMustBe');
+                            }
+                            else {
+                                if (!checkInputRepeatNumberSize) {
+                                    productValidationProductSizeId.html('@OnlineShoeShopAndChat.Resources.Language.MessageThereAreEqualNumberSize');
+                                }
+                                else {
+                                    productValidationProductSizeId.html('');
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //if (!checkInputListNumberSize) {
+        //    productValidationProductSizeId.html('Incorrect size!');
+        //}
+        //else {
+        //    if (!checkInputListSize) {
+        //        productValidationProductSizeId.html('Input size!');
+        //    }
+        //    else {
+        //        if (!checkInputNumbercorrect) {
+        //            productValidationProductSizeId.html('Size must be between 10 - 55!');
+        //        }
+        //        else {
+        //            productValidationProductSizeId.html('');
+        //        }
+        //    }
+        //}
+
+        if (inputDescription == '') {
+            productValidationDescriptionId.html('@OnlineShoeShopAndChat.Resources.Language.MessageInputDescription');
+        }
+        else {
+            productValidationDescriptionId.html('');
+        }
+
+        var productFormData = new FormData();
+
+        //var file_data = $('#imgBodyProductInsideId')[0].files;
+        //for (var i = 0; i < inputBodyFiles.length; i++) {
+        //    alert(inputBodyFiles[i].name);
+        //    productFormData.append("img" + i, inputBodyFiles[i]);
+        //}
+
+        if ((productValidationNameId.html() == '') && (productValidationPriceId.html() == '') && (productValidationPromotionPercentId.html() == '') &&
+            (productValidationCategoriesId.html() == '') && (productValidationProductSizeId.html() == '') && (productValidationDescriptionId.html() == '') &&
+            (productValidationImgMainId.html() == '') && (productValidationImgBodyId.html() == '') && (productValidationCategoriesTextId.html() == '') &&
+            (productValidationCategoriesImgId.html() == '')) {
+
+            productFormData.append("inputName", inputName);
+            productFormData.append("inputPrice", inputPrice);
+            productFormData.append("inputSpecials", inputSpecials); 
+            productFormData.append("inputStatus", inputStatus);
+            productFormData.append("inputCategoryStatus", inputCategoryStatus);
+            productFormData.append("inputPromotionPercent", inputPromotionPercent);
+            productFormData.append("inputCategories", inputCategories);
+            productFormData.append("inputCategoryText", inputCategoryText);
+            productFormData.append("inputListSize", inputListSizeNew);
+            productFormData.append("inputListQuantity", inputListQuantityNew);
+            productFormData.append("inputDescription", inputDescription);
+
+            $.ajax({
+                url: '/Admin/ProductPanel/CreateEditProduct',
+                type: "POST",
+                processData: false,
+                contentType: false,
+                data: productFormData,
+                success: function (success) {
+
+
+                    //var grid = $("#Grid").data("kendoGrid");
+                    //grid.dataSource.read();
+
+                    winProduct.close();
+
+                    //alert that is product added
+                    var win = $("<div>").kendoWindow({
+                        modal: true,
+                        open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+                        position: {
+                            top: "40%",
+                            left: "45%"
+                        }
+                    }).getKendoWindow();
+
+                    $('.k-pager-refresh').click();
+
+                    // set the content
+                    win.content(success);
+                    // center it and open it
+                    win.open();
+                },
+                error: function (e) {
+                    alert('@OnlineShoeShopAndChat.Resources.Language.MessageRefreshPage');
+                }
+            });
+        }
+    });
+
+
+
+
+    //var productSpecials = $("#productSpecialsId").kendoDropDownList().data("kendoDropDownList");
+    //productSpecials.wrapper.attr("title", $("#productSpecialsId").attr("title"));
+    //var tooltip = productSpecials.wrapper.kendoTooltip({
+    //    position: "right",
+    //    autoHide: true,
+    //    width: 200,
+    //    animation: {
+    //        open: {
+    //            effects: "slideIn:right",
+    //            duration: 300
+    //        },
+    //        close: {
+    //            effects: "slideIn:right",
+    //            reverse: true,
+    //            duration: 200
+    //        }
+    //    }
+    //});
+
+
+    $('#productSpecialsId').change(function () {
+
+        let value = this.value;
+
+        if (value == '1') {
+            $('#promotionPercentHideShowId').fadeIn("slow");
+        }
+        else {
+            $('#promotionPercentHideShowId').hide(500);
+        }
+    });
+
+    $('#windowProductSizeId').focus(function() { // Define focus handler
+        $('#exampSizeQuantityId').fadeIn(1000);
+    }).blur(function() {
+        $('#exampSizeQuantityId').fadeOut(1000);
+    });
+
+    //data = new FormData();
+    //data.append("file", $('#a-can-uploadrl')[0].files[0]);
+    //data.append("testo", Form.vm.get("testoHome"));
+
+    kendo.ui.Upload.fn._supportsDrop = function () { return false; }
+    $("#imgMainProductId").kendoUpload({
+        multiple: false,
+        async: {
+            saveUrl: "/Admin/ProductPanel/SaveMainImgProduct",
+            removeUrl: "/Admin/ProductPanel/RemoveMainImgProduct",
+            //batch: true,
+            autoUpload: true
+        },
+        localization: {
+            select: 'Upload',
+            headerStatusUploaded:"",
+            statusUploaded:""
+            //remove: '',
+            //cancel: ''
+        },
+        validation: {
+            allowedExtensions: [".gif", ".jpg", ".png", ".jpeg"]
+        }
+    });
+
+    $("#imgBodyProductId").kendoUpload({
+        multiple: true,
+        async: {
+            saveUrl: "/Admin/ProductPanel/SaveBodyImgProduct",
+            removeUrl: "/Admin/ProductPanel/RemoveBodyImgProduct",
+            autoUpload: true
+        },
+        localization: {
+            select: 'Upload',
+            headerStatusUploaded: "",
+            statusUploaded: ""
+        },
+        validation: {
+            allowedExtensions: [".gif", ".jpg", ".png", ".jpeg"]
+        }
+    });
+
+    function refreshGrid(e) {
+        grid = $("#Grid").data("kendoGrid");
+        grid.dataSource.read();
+    }
+
+    (function () {
+
+        $("#windowProductId").kendoWindow({
+            visible: false,
+            draggable: false,
+            minheight: "480px",
+            width: "400px",
+            modal: true,
+            pinned: false,
+            open: function (e) { $(this.element).closest(".k-window").css("position", "fixed") },
+            position: {
+                top: "4%",
+                left: "35%"
+            },
+            resizable: false,
+            title: title,
+        }).data("kendoWindow");
+
+        $.post("/Admin/ProductPanel/CategoriesGrid", function (categoriesView) {
+            $("#categoriesGridId").html(categoriesView);
+        });
+
+    })();
+</script>

@@ -1,0 +1,37 @@
+@import url('commonLanguages.css');
+@import url('iconsLanguages.css');
+
+.cd-dropdown ul {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+}
+
+.cd-dropdown > span,
+.cd-dropdown ul li {
+	box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+
+.cd-dropdown ul li {
+	position: absolute;
+	width: 100%;
+	pointer-events: none;
+}
+
+.cd-active.cd-dropdown ul li {
+	pointer-events: auto;
+}
+
+.cd-active.cd-dropdown ul li span {
+	-webkit-transition: all 0.2s linear 0s;
+	-moz-transition: all 0.2s linear 0s;
+	-ms-transition: all 0.2s linear 0s;
+	-o-transition: all 0.2s linear 0s;
+	transition: all 0.2s linear 0s;
+}
+
+.cd-active.cd-dropdown ul li span:hover {
+	background: linear-gradient(to bottom, rgba(235,164,235,1) 0%, rgba(235,164,235,1) 9%, 
+	rgba(189,7,189,1) 27%, rgba(245,159,245,1) 59%, rgba(181,0,181,1) 100%);
+	color: #fff;
+}

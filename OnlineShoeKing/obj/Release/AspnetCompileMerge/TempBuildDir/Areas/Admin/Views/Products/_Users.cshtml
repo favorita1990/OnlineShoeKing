@@ -1,0 +1,68 @@
+﻿@model IEnumerable<OnlineShoeKing.Models.UserViewModel>
+
+
+@if (Model.Any())
+{
+    <div class="product-user">
+        <h2>@OnlineShoeKing.Resources.Language.PurchasedBy</h2>
+        <br>
+        <div class="row product-user-row">
+
+            @foreach (var user in Model)
+            {
+                <div class="product-user-column">
+                    <div class="product-user-card">
+                        <img src="@user.ImageUrl" alt="@user.FirstName" title="@user.FirstName">
+                        <div class="product-user-container">
+                            <h3 class="centerAlign">@user.FullName</h3>
+                            <p><a id="@user.Email" class="product-user-btn" href="/Admin/Customers/Profile?email=@user.Email">@OnlineShoeKing.Resources.Language.View</a></p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+<script>
+
+    $('.product-user-btn').on('click',
+        function (e) {
+            e.preventDefault();
+
+            const email = $(this).attr('id');
+
+            $('#add-loading').html('<div id="div-loading"></div>');
+            const dialog = $("#div-loading").kendoWindow({
+                draggable: false,
+                resizable: false,
+                modal: true,
+                actions: [""],
+                open: function (event) { $(this.element).closest(".k-window").css("position", "fixed") },
+                position: {
+                    top: "40%",
+                    left: "46%"
+                }
+            }).data("kendoWindow").content('@OnlineShoeKing.Resources.Language.Loading');
+
+            $('.k-window-actions').remove();
+            $('.k-header').addClass('resize-loading-window');
+            $('.k-header').removeClass('k-header k-window-titlebar');
+            $('.k-widget').removeClass('k-widget k-window');
+
+            $('div.k-window-content').css('padding', '1.2em 1.3em');
+            $('div.k-window-content').css('border-radius', '10px');
+
+            $('body').css('overflow', 'hidden');
+
+            $.get('/Admin/Customers/IndexProfile', { email: email },
+                function (data) {
+                    dialog.close();
+                    $('body').css('overflow', 'auto');
+                    $('#ControlNavigationId').html(data);
+                }).fail(function () {
+                dialog.close();
+                $('body').css('overflow', 'auto');
+            });
+        });
+</script>
